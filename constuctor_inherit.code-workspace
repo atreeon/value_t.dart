@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "example"
+		},
+		{
+			"path": "constructor_inherit_generator"
+		},
+		{
+			"path": "constructor_inherit"
+		}
+	],
+	"settings": {}
+}

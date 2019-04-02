@@ -1,0 +1,3 @@
+class creeConst {
+  const creeConst();
+}

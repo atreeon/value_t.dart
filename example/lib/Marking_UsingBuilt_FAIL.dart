@@ -1,0 +1,45 @@
+import 'package:built_value/built_value.dart';
+
+part 'Marking_UsingBuilt_FAIL.g.dart';
+
+/*
+Works with mixins...even more complicated to understand!!!
+MarkingCorrect -> MarkingAnswered -> MarkingState, we don't get the properties of MarkingState here
+Also, using built_value adds a lot of boiler plate code - very unreadable!
+*/
+
+abstract class MarkingState {
+  String get fullWord;
+}
+
+abstract class MarkingAnswered extends MarkingState {}
+
+abstract class MarkingUnanswered
+    implements
+        Built<MarkingUnanswered, MarkingUnansweredBuilder>,
+        MarkingState {
+  factory MarkingUnanswered([updates(MarkingUnansweredBuilder b)]) =
+      _$MarkingUnanswered;
+  MarkingUnanswered._();
+}
+
+abstract class MarkingCorrect
+    implements Built<MarkingCorrect, MarkingCorrectBuilder>, MarkingAnswered {
+  factory MarkingCorrect([updates(MarkingCorrectBuilder b)]) = _$MarkingCorrect;
+  MarkingCorrect._();
+}
+
+abstract class MarkingIncorrect
+    implements Built<MarkingIncorrect, MarkingIncorrectBuilder> {
+  List<String> get infoMessages;
+  String get answer;
+
+  factory MarkingIncorrect([updates(MarkingIncorrectBuilder b)]) =
+      _$MarkingIncorrect;
+  MarkingIncorrect._();
+}
+
+main() {
+  var unansweredResult = MarkingUnanswered((b) => b..fullWord = "Blah");
+  // var correctResult = MarkingCorrect((b) => b..)
+}
