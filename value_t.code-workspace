@@ -4,10 +4,10 @@
 			"path": "example"
 		},
 		{
-			"path": "constructor_inherit_generator"
+			"path": "value_t_generator"
 		},
 		{
-			"path": "constructor_inherit"
+			"path": "value_t"
 		}
 	],
 	"settings": {}

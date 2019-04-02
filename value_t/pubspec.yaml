@@ -1,5 +1,5 @@
-name: constructor_inherit
-description: Inherits the constructor of its superclasses
+name: value_t
+description: Annotation for value_t_generator
 version: 1.0.0
 author: Adrian
  

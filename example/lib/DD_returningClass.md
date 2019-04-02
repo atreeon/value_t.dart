@@ -1,4 +1,4 @@
-## How do we declare our classes
+## How do we declare our classes?
 
 #### Answer - $Animal & code gen creates Animal
 

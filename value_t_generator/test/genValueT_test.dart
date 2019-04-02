@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:constructor_inherit_generator/src/ElementForConstructorInherit.dart';
-import 'package:constructor_inherit_generator/src/genType.dart';
+import 'package:value_t_generator/src/ElementForValueT.dart';
+import 'package:value_t_generator/src/genValueT.dart';
 import "package:test/test.dart";
 
 void main() {
@@ -105,13 +105,13 @@ void main() {
 //     test("3", () => exp_parameterList({}, ""));
 //   });
 
-  group("genType", () {
-    void exp_genType(ElementSuperType element, String expected) {
-      var result = genType(element, "\$MyClass");
+  group("genValueT", () {
+    void exp_genValueT(ElementSuperType element, String expected) {
+      var result = genValueT(element, "\$MyClass");
       expect(result, expected);
     }
 
-    test("1", () => exp_genType(example1, //
+    test("1", () => exp_genValueT(example1, //
         """class MyClass implements \$MyClass {
 
 final String fullWord;
@@ -128,7 +128,7 @@ fullWord == null ? this.fullWord : fullWord,
 );}
 """));
 
-    test("4", () => exp_genType(exampleDuplicates, //
+    test("4", () => exp_genValueT(exampleDuplicates, //
         """class MyClass implements \$MyClass {
 
 final String answer;
@@ -157,7 +157,7 @@ infoMessages == null ? this.infoMessages : infoMessages,
   });
 }
 
-//     test("2", () => exp_genType(example2, """MyClass myClass(
+//     test("2", () => exp_genValueT(example2, """MyClass myClass(
 // String fullWord
 // ){
 // var r = MyClass();
@@ -165,7 +165,7 @@ infoMessages == null ? this.infoMessages : infoMessages,
 // r.fullWord= fullWord;
 // return r;}"""));
 
-//     test("3", () => exp_genType(example3, """MyClass myClass(
+//     test("3", () => exp_genValueT(example3, """MyClass myClass(
 // String answer, List<String> infoMessages, String fullWord
 // ){
 // var r = MyClass();
@@ -175,7 +175,7 @@ infoMessages == null ? this.infoMessages : infoMessages,
 // r.fullWord= fullWord;
 // return r;}"""));
 
-//     test("4", () => exp_genType(exampleDuplicates, """MyClass myClass(
+//     test("4", () => exp_genValueT(exampleDuplicates, """MyClass myClass(
 // String answer, List<String> infoMessages, String fullWord
 // ){
 // var r = MyClass();

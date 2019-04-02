@@ -1,4 +1,4 @@
-import 'package:constructor_inherit/ValueT.dart';
+import 'package:value_t/ValueT.dart';
 
 part 'Marking_ValueT.g.dart';
 

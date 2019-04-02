@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      value_t_generator|value_t:
+        enabled: true
+ 
+builders:
+  value_t:
+    target: ":value_t_generator"
+    import: "package:value_t_generator/builder.dart"
+    builder_factories: ["valueTBuilder"]
+    build_extensions: {".dart": [".x.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

@@ -3,7 +3,7 @@ import 'package:built_value/built_value.dart';
 part 'Marking_UsingBuilt_FAIL.g.dart';
 
 /*
-Works with mixins...even more complicated to understand!!!
+Works with mixins...even more complicated to understand
 MarkingCorrect -> MarkingAnswered -> MarkingState, we don't get the properties of MarkingState here
 Also, using built_value adds a lot of boiler plate code - very unreadable!
 */

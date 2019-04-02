@@ -1,10 +1,10 @@
-import 'package:constructor_inherit_generator/src/ElementForConstructorInherit.dart';
+import 'package:value_t_generator/src/ElementForValueT.dart';
 
-String genType(ElementSuperType element, String className) {
+String genValueT(ElementSuperType element, String className) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
 
-  // if (className[0] != "\$") throw Exception('classes must start with \$');
+  if (className[0] != "\$") throw Exception('classes must start with \$');
 
   className = className.substring(1);
 

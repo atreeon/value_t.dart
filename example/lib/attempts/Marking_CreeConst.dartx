@@ -1,4 +1,4 @@
-import 'package:constructor_inherit/constructor_inherit.dart';
+import 'package:value_t/constructor_inherit.dart';
 
 part 'Marking_CreeConst.g.dart';
 

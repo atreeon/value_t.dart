@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
-import 'package:constructor_inherit/ValueT.dart';
-import 'package:constructor_inherit/constructor_inherit.dart';
-import 'package:constructor_inherit_generator/src/ElementForConstructorInherit.dart';
-import 'package:constructor_inherit_generator/src/createFactory.dart';
-import 'package:constructor_inherit_generator/src/genType.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:value_t/ValueT.dart';
+import 'package:value_t_generator/src/ElementForValueT.dart';
+import 'package:value_t_generator/src/genValueT.dart';
 
 String addSpaces(int number) {
   var str = "";
@@ -37,7 +35,6 @@ List<ElementAccessor> createAccessors(
         List<PropertyAccessorElement> accessors) =>
     accessors
         .where((x) => x.isGetter)
-        // .where((x) => x.name.substring(x.name.length - 1) != "=")
         .map((x) => ElementAccessor(x.name, x.returnType.toString()))
         .toList();
 
@@ -52,17 +49,14 @@ ElementSuperType createElementSuperType(ClassElement classElement) {
       createAccessors(classElement.accessors));
 }
 
-class ConstructorInheritGenerator extends GeneratorForAnnotation<ValueT> {
+class ValueTGenerator extends GeneratorForAnnotation<ValueT> {
   @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
     var sb = StringBuffer();
     if (element is ClassElement) {
-      // var blah = createElementSuperType(element);
-      // sb.writeln("//" + element.displayName);
-      // toStringElementSuperType(blah, 0, sb);
-      // toStringElementSuperType(blah, 0, sb)
-      sb.writeln(genType(createElementSuperType(element), element.displayName));
+      sb.writeln(
+          genValueT(createElementSuperType(element), element.displayName));
     }
 
     return sb.toString();

@@ -1,3 +1,0 @@
-class CreeConst {
-  const CreeConst();
-}
