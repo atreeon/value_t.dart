@@ -1,23 +1,23 @@
 // part 'partTest_g.dart';
 
-abstract class PartTest {
+abstract class $PartTest {
   String get fullWord;
 }
 
-class _PartTest implements PartTest {
+class PartTest implements $PartTest {
   final String fullWord;
-  _PartTest(this.fullWord) {
+  PartTest(this.fullWord) {
     assert(this.fullWord != null);
   }
 
-  _PartTest copyWith({
+  PartTest copyWith({
     String fullWord,
   }) =>
-      _PartTest(
+      PartTest(
         fullWord == null ? this.fullWord : fullWord,
       );
 }
 
-_PartTest partTest(String fullWord) {
-  return _PartTest(fullWord);
+PartTest partTest(String fullWord) {
+  return PartTest(fullWord);
 }

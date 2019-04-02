@@ -1,3 +1,5 @@
+import 'package:quiver/core.dart';
+
 class ElementSuperType {
   final ElementSuperType elementSuperType;
   final List<ElementAccessor> elementAccessors;
@@ -13,4 +15,5 @@ class ElementAccessor {
   ElementAccessor(this.name, this.type);
 
   bool operator ==(o) => o is ElementAccessor && name == o.name;
+  int get hashCode => hash2(name.hashCode, type.hashCode);
 }

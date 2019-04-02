@@ -4,47 +4,55 @@ String genType(ElementSuperType element, String className) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
 
-  // var classDef = "class _${className} implements ${className} {";
-  // var fieldList = sb.writeln(parameterList(fields));
-  // sb.writeln("){");
-  // sb.writeln("var r = ${className}();");
-  // sb.writeln(getSetFields(fields));
-  // sb.write("return r;}");
+  // if (className[0] != "\$") throw Exception('classes must start with \$');
+
+  className = className.substring(1);
+
+  [
+    () => classDefinition(className),
+    () => finalFields(fields),
+    () => constructor(className, fields),
+    () => constructorAssertions(fields),
+    () => copyWithSignature(className),
+    () => copyWithParams(fields),
+    () => copyWithCreate(className),
+    () => copyWithLines(fields),
+    () => closing(),
+  ].forEach((x) => sb.writeln(x()));
 
   return sb.toString();
 }
 
-// String getFinalFields(Set<ElementAccessor> fields) {
-//   if (fields.length == 0) return "";
+String classDefinition(String className) =>
+    "class ${className} implements \$${className} {";
 
-//   var r =
-//       fields.keys.fold("", (v, k) => "${v}\nfinal ${fields[k]} r.${k}= ${k};");
+String finalFields(List<ElementAccessor> fields) =>
+    fields.fold("", (v, k) => "${v}\nfinal ${k.type} ${k.name};");
 
-//   return r;
-// }
+String constructor(String className, List<ElementAccessor> fields) =>
+    "${className}(" + fields.fold("", (v, k) => "${v}this.${k.name},\n") + "){";
 
-String getSetFields(Map<String, String> fields) {
-  if (fields.length == 0) return "";
+String constructorAssertions(List<ElementAccessor> fields) =>
+    fields.fold("", (v, k) => "${v}\nassert(this.${k.name} != null);") + "}";
 
-  var r =
-      fields.keys.fold("", (v, k) => "${v}\nfinal ${fields[k]} r.${k}= ${k};");
+String copyWithSignature(String className) => "${className} copyWith({";
 
-  return r;
-}
+String copyWithParams(List<ElementAccessor> fields) =>
+    fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n") + "}) =>";
 
-String parameterList(Map<String, String> fields) {
-  if (fields.length == 0) return "";
+String copyWithCreate(String className) => "${className}(";
 
-  var r = fields.keys.fold("", (v, k) => "${v} ${fields[k]} ${k},");
+String copyWithLines(List<ElementAccessor> fields) => fields.fold(
+    "", (v, k) => "${v}\n${k.name} == null ? this.${k.name} : ${k.name},");
 
-  return r.substring(1, r.length - 1);
-}
+String closing() => ");}";
 
-Set<ElementAccessor> distinctFields(ElementSuperType element) {
+//reusable
+List<ElementAccessor> distinctFields(ElementSuperType element) {
   var fields = Set<ElementAccessor>();
-  fields = getAccessors(fields, element);
-
-  return fields;
+  var r = getAccessors(fields, element).toList();
+  r.sort((a, b) => a.name.compareTo(b.name));
+  return r;
 }
 
 Set<ElementAccessor> getAccessors(

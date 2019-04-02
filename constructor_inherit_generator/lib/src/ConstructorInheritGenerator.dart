@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
+import 'package:constructor_inherit/ValueT.dart';
 import 'package:constructor_inherit/constructor_inherit.dart';
 import 'package:constructor_inherit_generator/src/ElementForConstructorInherit.dart';
 import 'package:constructor_inherit_generator/src/createFactory.dart';
+import 'package:constructor_inherit_generator/src/genType.dart';
 import 'package:source_gen/source_gen.dart';
 
 String addSpaces(int number) {
@@ -50,8 +52,7 @@ ElementSuperType createElementSuperType(ClassElement classElement) {
       createAccessors(classElement.accessors));
 }
 
-class ConstructorInheritGenerator
-    extends GeneratorForAnnotation<creeConst> {
+class ConstructorInheritGenerator extends GeneratorForAnnotation<ValueT> {
   @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
@@ -61,8 +62,7 @@ class ConstructorInheritGenerator
       // sb.writeln("//" + element.displayName);
       // toStringElementSuperType(blah, 0, sb);
       // toStringElementSuperType(blah, 0, sb)
-      sb.writeln(
-          createFactory(createElementSuperType(element), element.displayName));
+      sb.writeln(genType(createElementSuperType(element), element.displayName));
     }
 
     return sb.toString();

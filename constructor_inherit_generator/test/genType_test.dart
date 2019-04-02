@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:constructor_inherit_generator/src/ElementForConstructorInherit.dart';
-import 'package:constructor_inherit_generator/src/createFactory.dart';
+import 'package:constructor_inherit_generator/src/genType.dart';
 import "package:test/test.dart";
 
 void main() {
-  Function deepEq = const DeepCollectionEquality().equals;
+  Function deepEq = const DeepCollectionEquality.unordered().equals;
 
   var example1 = ElementSuperType(
       ElementSuperType(
@@ -56,89 +56,133 @@ void main() {
 
   group("distinctFields", () {
     void exp_distinctFields(
-        ElementSuperType element, Map<String, String> expected) {
-      var result = distinctFields(element);
+        ElementSuperType element, List<ElementAccessor> expected) {
+      var result = distinctFields(element).toList();
       expect(deepEq(result, expected), true);
     }
 
-    test("1", () => exp_distinctFields(example1, {"fullWord": "String"}));
-
-    test("2", () => exp_distinctFields(example2, {"fullWord": "String"}));
-
     test(
-        "3",
-        () => exp_distinctFields(example3, {
-              "fullWord": "String",
-              "answer": "String",
-              "infoMessages": "List<String>"
-            }));
-
-    test(
-        "4",
-        () => exp_distinctFields(exampleDuplicates, {
-              "fullWord": "String",
-              "answer": "String",
-              "infoMessages": "List<String>"
-            }));
-  });
-
-  group("parameterList", () {
-    void exp_parameterList(Map<String, String> fields, String expected) {
-      var result = parameterList(fields);
-      expect(result, expected);
-    }
-
-    test("1",
-        () => exp_parameterList({"fullWord": "String"}, "String fullWord"));
+        "1",
+        () => exp_distinctFields(
+            example1, [ElementAccessor("fullWord", "String")]));
 
     test(
         "2",
-        () => exp_parameterList({"fullWord": "String", "answer": "String"},
-            "String fullWord, String answer"));
+        () => exp_distinctFields(
+            example2, [ElementAccessor("fullWord", "String")]));
 
-    test("3", () => exp_parameterList({}, ""));
+    test(
+        "3",
+        () => exp_distinctFields(example3, [
+              ElementAccessor("fullWord", "String"),
+              ElementAccessor("answer", "String"),
+              ElementAccessor("infoMessages", "List<String>"),
+            ]));
+
+    test(
+        "4",
+        () => exp_distinctFields(exampleDuplicates, [
+              ElementAccessor("fullWord", "String"),
+              ElementAccessor("answer", "String"),
+              ElementAccessor("infoMessages", "List<String>"),
+            ]));
   });
 
-  group("createFactory", () {
-    void exp_createFactory(ElementSuperType element, String expected) {
-      var result = createFactory(element, "MyClass");
+//   group("parameterList", () {
+//     void exp_parameterList(Map<String, String> fields, String expected) {
+//       var result = parameterList(fields);
+//       expect(result, expected);
+//     }
+
+//     test("1",
+//         () => exp_parameterList({"fullWord": "String"}, "String fullWord"));
+
+//     test(
+//         "2",
+//         () => exp_parameterList({"fullWord": "String", "answer": "String"},
+//             "String fullWord, String answer"));
+
+//     test("3", () => exp_parameterList({}, ""));
+//   });
+
+  group("genType", () {
+    void exp_genType(ElementSuperType element, String expected) {
+      var result = genType(element, "\$MyClass");
       expect(result, expected);
     }
 
-    test("1", () => exp_createFactory(example1, """MyClass myClass(
-String fullWord
+    test("1", () => exp_genType(example1, //
+        """class MyClass implements \$MyClass {
+
+final String fullWord;
+MyClass(this.fullWord,
 ){
-var r = MyClass();
 
-r.fullWord= fullWord;
-return r;}"""));
+assert(this.fullWord != null);}
+MyClass copyWith({
+String fullWord,
+}) =>
+MyClass(
 
-    test("2", () => exp_createFactory(example2, """MyClass myClass(
-String fullWord
+fullWord == null ? this.fullWord : fullWord,
+);}
+"""));
+
+    test("4", () => exp_genType(exampleDuplicates, //
+        """class MyClass implements \$MyClass {
+
+final String answer;
+final String fullWord;
+final List<String> infoMessages;
+MyClass(this.answer,
+this.fullWord,
+this.infoMessages,
 ){
-var r = MyClass();
 
-r.fullWord= fullWord;
-return r;}"""));
+assert(this.answer != null);
+assert(this.fullWord != null);
+assert(this.infoMessages != null);}
+MyClass copyWith({
+String answer,
+String fullWord,
+List<String> infoMessages,
+}) =>
+MyClass(
 
-    test("3", () => exp_createFactory(example3, """MyClass myClass(
-String answer, List<String> infoMessages, String fullWord
-){
-var r = MyClass();
-
-r.answer= answer;
-r.infoMessages= infoMessages;
-r.fullWord= fullWord;
-return r;}"""));
-
-    test("4", () => exp_createFactory(exampleDuplicates, """MyClass myClass(
-String answer, List<String> infoMessages, String fullWord
-){
-var r = MyClass();
-
-r.answer= answer;
-r.infoMessages= infoMessages;
-r.fullWord= fullWord;
-return r;}"""));
+answer == null ? this.answer : answer,
+fullWord == null ? this.fullWord : fullWord,
+infoMessages == null ? this.infoMessages : infoMessages,
+);}
+"""));
   });
 }
+
+//     test("2", () => exp_genType(example2, """MyClass myClass(
+// String fullWord
+// ){
+// var r = MyClass();
+
+// r.fullWord= fullWord;
+// return r;}"""));
+
+//     test("3", () => exp_genType(example3, """MyClass myClass(
+// String answer, List<String> infoMessages, String fullWord
+// ){
+// var r = MyClass();
+
+// r.answer= answer;
+// r.infoMessages= infoMessages;
+// r.fullWord= fullWord;
+// return r;}"""));
+
+//     test("4", () => exp_genType(exampleDuplicates, """MyClass myClass(
+// String answer, List<String> infoMessages, String fullWord
+// ){
+// var r = MyClass();
+
+// r.answer= answer;
+// r.infoMessages= infoMessages;
+// r.fullWord= fullWord;
+// return r;}"""));
+//   });
+// }
