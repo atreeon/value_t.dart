@@ -9,16 +9,17 @@ String genValueT(ElementSuperType element, String extendsClass) {
 
   List.unmodifiable(() sync* {
     yield () => classDefinition(className, extendsClass);
-    if (fields.length == 0) return;
-
-    yield () => finalFields(fields);
-    yield () => constructor(className, fields);
-    yield () => constructorAssertions(fields);
-    yield () => copyWithSignature(className);
-    yield () => copyWithParams(fields);
-    yield () => copyWithCreate(className);
-    yield () => copyWithLines(fields);
-    yield () => closing();
+    if (fields.length > 0) {
+      yield () => finalFields(fields);
+      yield () => constructor(className, fields);
+      yield () => constructorAssertions(fields);
+      yield () => copyWithSignature(className);
+      yield () => copyWithParams(fields);
+      yield () => copyWithCreate(className);
+      yield () => copyWithLines(fields);
+      yield () => closeCopyWith();
+    }
+    yield () => closeClass();
   }())
       .forEach((x) => sb.writeln(x()));
 
@@ -47,7 +48,9 @@ String copyWithCreate(String className) => "${className}(";
 String copyWithLines(List<ElementAccessor> fields) => fields.fold(
     "", (v, k) => "${v}\n${k.name} == null ? this.${k.name} : ${k.name},");
 
-String closing() => ");}";
+String closeCopyWith() => ");";
+
+String closeClass() => "}";
 
 //reusable
 List<ElementAccessor> distinctFields(ElementSuperType element) {

@@ -136,7 +136,8 @@ String fullWord,
 MyClass(
 
 fullWord == null ? this.fullWord : fullWord,
-);}
+);
+}
 """));
 
     test("2", () => exp_genValueT(exampleDuplicates, //
@@ -163,11 +164,13 @@ MyClass(
 answer == null ? this.answer : answer,
 fullWord == null ? this.fullWord : fullWord,
 infoMessages == null ? this.infoMessages : infoMessages,
-);}
+);
+}
 """));
 
     test("3", () => exp_genValueT(exampleNoFields, //
         """class MyClass implements \$MyClass {
+}
 """));
   });
 }
