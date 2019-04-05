@@ -3,8 +3,18 @@ import 'package:quiver/core.dart';
 class ElementSuperType {
   final ElementSuperType elementSuperType;
   final List<ElementAccessor> elementAccessors;
+  final List<Interface> interfaces;
 
-  ElementSuperType(this.elementSuperType, this.elementAccessors);
+  ElementSuperType(
+      this.elementSuperType, this.elementAccessors, this.interfaces);
+}
+
+class Interface {
+  final ElementSuperType elementSuperType;
+  final List<ElementAccessor> elementAccessors;
+  final List<Interface> interfaces;
+
+  Interface(this.elementSuperType, this.elementAccessors, this.interfaces);
 }
 
 ///The fields of each class

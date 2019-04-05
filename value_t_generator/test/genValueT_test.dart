@@ -1,121 +1,10 @@
-import 'package:collection/collection.dart';
+import "package:test/test.dart";
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/genValueT.dart';
-import "package:test/test.dart";
+
+import 'testData.dart';
 
 void main() {
-  Function deepEq = const DeepCollectionEquality.unordered().equals;
-
-  var example1 = ElementSuperType(
-      ElementSuperType(
-        null,
-        [ElementAccessor("fullWord", "String")],
-      ),
-      []);
-
-  var example2 = ElementSuperType(
-      ElementSuperType(
-        ElementSuperType(
-          null,
-          [ElementAccessor("fullWord", "String")],
-        ),
-        [],
-      ),
-      []);
-
-  var example3 = ElementSuperType(
-    ElementSuperType(
-      ElementSuperType(
-        null,
-        [ElementAccessor("fullWord", "String")],
-      ),
-      [],
-    ),
-    [
-      ElementAccessor("answer", "String"),
-      ElementAccessor("infoMessages", "List<String>"),
-    ],
-  );
-
-  var exampleDuplicates = ElementSuperType(
-    ElementSuperType(
-      ElementSuperType(
-        null,
-        [ElementAccessor("fullWord", "String")],
-      ),
-      [ElementAccessor("fullWord", "String")],
-    ),
-    [
-      ElementAccessor("answer", "String"),
-      ElementAccessor("infoMessages", "List<String>"),
-    ],
-  );
-
-  var exampleNoFields = ElementSuperType(
-    ElementSuperType(
-      ElementSuperType(
-        null,
-        [],
-      ),
-      [],
-    ),
-    [],
-  );
-
-  //get className
-  //
-
-  group("distinctFields", () {
-    void exp_distinctFields(
-        ElementSuperType element, List<ElementAccessor> expected) {
-      var result = distinctFields(element).toList();
-      expect(deepEq(result, expected), true);
-    }
-
-    test(
-        "1",
-        () => exp_distinctFields(
-            example1, [ElementAccessor("fullWord", "String")]));
-
-    test(
-        "2",
-        () => exp_distinctFields(
-            example2, [ElementAccessor("fullWord", "String")]));
-
-    test(
-        "3",
-        () => exp_distinctFields(example3, [
-              ElementAccessor("fullWord", "String"),
-              ElementAccessor("answer", "String"),
-              ElementAccessor("infoMessages", "List<String>"),
-            ]));
-
-    test(
-        "4",
-        () => exp_distinctFields(exampleDuplicates, [
-              ElementAccessor("fullWord", "String"),
-              ElementAccessor("answer", "String"),
-              ElementAccessor("infoMessages", "List<String>"),
-            ]));
-  });
-
-//   group("parameterList", () {
-//     void exp_parameterList(Map<String, String> fields, String expected) {
-//       var result = parameterList(fields);
-//       expect(result, expected);
-//     }
-
-//     test("1",
-//         () => exp_parameterList({"fullWord": "String"}, "String fullWord"));
-
-//     test(
-//         "2",
-//         () => exp_parameterList({"fullWord": "String", "answer": "String"},
-//             "String fullWord, String answer"));
-
-//     test("3", () => exp_parameterList({}, ""));
-//   });
-
   group("genValueT", () {
     void exp_genValueT(ElementSuperType element, String expected) {
       var result = genValueT(element, "\$MyClass");
@@ -170,6 +59,45 @@ infoMessages == null ? this.infoMessages : infoMessages,
 
     test("3", () => exp_genValueT(exampleNoFields, //
         """class MyClass implements \$MyClass {
+}
+"""));
+
+    test("4 exampleWithInterfacesSimple",
+        () => exp_genValueT(exampleWithInterfacesSimple, //
+            """class MyClass implements \$MyClass {
+
+final int A;
+final int B;
+final int C;
+final String fullWord;
+final List<String> infoMessages;
+MyClass(this.A,
+this.B,
+this.C,
+this.fullWord,
+this.infoMessages,
+){
+
+assert(this.A != null);
+assert(this.B != null);
+assert(this.C != null);
+assert(this.fullWord != null);
+assert(this.infoMessages != null);}
+MyClass copyWith({
+int A,
+int B,
+int C,
+String fullWord,
+List<String> infoMessages,
+}) =>
+MyClass(
+
+A == null ? this.A : A,
+B == null ? this.B : B,
+C == null ? this.C : C,
+fullWord == null ? this.fullWord : fullWord,
+infoMessages == null ? this.infoMessages : infoMessages,
+);
 }
 """));
   });

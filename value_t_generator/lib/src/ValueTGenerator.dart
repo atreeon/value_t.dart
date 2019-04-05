@@ -1,35 +1,12 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:value_t/ValueT.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/genValueT.dart';
-
-String addSpaces(int number) {
-  var str = "";
-  for (var i = 0; i < number; i++) {
-    str = str + " ";
-  }
-  return str;
-}
-
-StringBuffer toStringElementSuperType(
-    ElementSuperType superType, int level, StringBuffer sb) {
-  for (var accessor in superType.elementAccessors) {
-    sb.writeln("//" +
-        addSpaces(level) +
-        level.toString() +
-        accessor.name +
-        "|" +
-        accessor.type);
-  }
-
-  if (superType.elementSuperType == null) return sb;
-
-  return toStringElementSuperType(superType.elementSuperType, level + 1, sb);
-}
 
 List<ElementAccessor> createAccessors(
         List<PropertyAccessorElement> accessors) =>
@@ -41,12 +18,33 @@ List<ElementAccessor> createAccessors(
 ElementSuperType createElementSuperType(ClassElement classElement) {
   if (classElement.supertype.name == "Object") {
     return ElementSuperType(
-        null, createAccessors(classElement.accessors.toList()));
+      null,
+      createAccessors(classElement.accessors.toList()),
+      classElement.interfaces.map((x) => createInterface(x)).toList(),
+    );
   }
 
   return ElementSuperType(
-      createElementSuperType(classElement.supertype.element),
-      createAccessors(classElement.accessors));
+    createElementSuperType(classElement.supertype.element),
+    createAccessors(classElement.accessors),
+    classElement.interfaces.map((x) => createInterface(x)).toList(),
+  );
+}
+
+Interface createInterface(InterfaceType interfaceType) {
+  if (interfaceType.superclass.name == "Object") {
+    return Interface(
+      null,
+      createAccessors(interfaceType.accessors.toList()),
+      interfaceType.interfaces.map((x) => createInterface(x)).toList(),
+    );
+  }
+
+  return Interface(
+    createElementSuperType(interfaceType.superclass.element),
+    createAccessors(interfaceType.accessors.toList()),
+    interfaceType.interfaces.map((x) => createInterface(x)).toList(),
+  );
 }
 
 class ValueTGenerator extends GeneratorForAnnotation<ValueT> {
@@ -55,6 +53,7 @@ class ValueTGenerator extends GeneratorForAnnotation<ValueT> {
       Element element, ConstantReader annotation, BuildStep buildStep) {
     var sb = StringBuffer();
     if (element is ClassElement) {
+      // createElementSuperType(element);
       sb.writeln(
           genValueT(createElementSuperType(element), element.displayName));
     }

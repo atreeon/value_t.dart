@@ -1,4 +1,5 @@
 import 'package:value_t_generator/src/ElementForValueT.dart';
+import 'package:value_t_generator/src/distinctFields.dart';
 
 String genValueT(ElementSuperType element, String extendsClass) {
   var fields = distinctFields(element);
@@ -52,19 +53,4 @@ String closeCopyWith() => ");";
 
 String closeClass() => "}";
 
-//reusable
-List<ElementAccessor> distinctFields(ElementSuperType element) {
-  var fields = Set<ElementAccessor>();
-  var r = getAccessors(fields, element).toList();
-  r.sort((a, b) => a.name.compareTo(b.name));
-  return r;
-}
 
-Set<ElementAccessor> getAccessors(
-    Set<ElementAccessor> fields, ElementSuperType element) {
-  fields.addAll(element.elementAccessors);
-
-  if (element.elementSuperType == null) return fields;
-
-  return getAccessors(fields, element.elementSuperType);
-}
