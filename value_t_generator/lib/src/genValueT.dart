@@ -1,30 +1,32 @@
 import 'package:value_t_generator/src/ElementForValueT.dart';
 
-String genValueT(ElementSuperType element, String className) {
+String genValueT(ElementSuperType element, String extendsClass) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
 
-  if (className[0] != "\$") throw Exception('classes must start with \$');
+  if (extendsClass[0] != "\$") throw Exception('classes must start with \$');
+  var className = extendsClass.substring(1);
 
-  className = className.substring(1);
+  List.unmodifiable(() sync* {
+    yield () => classDefinition(className, extendsClass);
+    if (fields.length == 0) return;
 
-  [
-    () => classDefinition(className),
-    () => finalFields(fields),
-    () => constructor(className, fields),
-    () => constructorAssertions(fields),
-    () => copyWithSignature(className),
-    () => copyWithParams(fields),
-    () => copyWithCreate(className),
-    () => copyWithLines(fields),
-    () => closing(),
-  ].forEach((x) => sb.writeln(x()));
+    yield () => finalFields(fields);
+    yield () => constructor(className, fields);
+    yield () => constructorAssertions(fields);
+    yield () => copyWithSignature(className);
+    yield () => copyWithParams(fields);
+    yield () => copyWithCreate(className);
+    yield () => copyWithLines(fields);
+    yield () => closing();
+  }())
+      .forEach((x) => sb.writeln(x()));
 
   return sb.toString();
 }
 
-String classDefinition(String className) =>
-    "class ${className} implements \$${className} {";
+String classDefinition(String className, String classExtends) =>
+    "class ${className} implements ${classExtends} {";
 
 String finalFields(List<ElementAccessor> fields) =>
     fields.fold("", (v, k) => "${v}\nfinal ${k.type} ${k.name};");

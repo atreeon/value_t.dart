@@ -51,6 +51,17 @@ void main() {
     ],
   );
 
+  var exampleNoFields = ElementSuperType(
+    ElementSuperType(
+      ElementSuperType(
+        null,
+        [],
+      ),
+      [],
+    ),
+    [],
+  );
+
   //get className
   //
 
@@ -128,7 +139,7 @@ fullWord == null ? this.fullWord : fullWord,
 );}
 """));
 
-    test("4", () => exp_genValueT(exampleDuplicates, //
+    test("2", () => exp_genValueT(exampleDuplicates, //
         """class MyClass implements \$MyClass {
 
 final String answer;
@@ -153,6 +164,10 @@ answer == null ? this.answer : answer,
 fullWord == null ? this.fullWord : fullWord,
 infoMessages == null ? this.infoMessages : infoMessages,
 );}
+"""));
+
+    test("3", () => exp_genValueT(exampleNoFields, //
+        """class MyClass implements \$MyClass {
 """));
   });
 }

@@ -1,0 +1,1 @@
+Check any included class names start with $ (for fields and inheritance)
