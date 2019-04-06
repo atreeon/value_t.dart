@@ -2,6 +2,28 @@
 
 Generates code to create a copywith class and implements all the getter fields in any extended or implemented classes.
 
+```
+abstract class Marking {}
+
+abstract class IsCorrect {}
+
+abstract class HasWord {
+  String get word;
+}
+
+@ValueT() //will be made non public and getters created
+abstract class $MarkingCorrectNoWord implements Marking, IsCorrect {}
+
+@ValueT()
+abstract class $MarkingCorrect implements Marking, HasWord, IsCorrect {}
+
+@ValueT()
+abstract class $MarkingIncorrect implements Marking, HasWord {
+  String get answer;
+  List<String> get infoMessages;
+}
+```
+
 ### When defining your class put a dollar infront of the name and make it abstract
 ```
 abstract class $MyClass {
