@@ -1,6 +1,6 @@
 ## value_t
 
-Generates code to create a copywith class and properly inherits all the readonly fields in the hierarchy
+Generates code to create a copywith class and implements all the getter fields in any extended or implemented classes.
 
 ### When defining your class put a dollar infront of the name and make it abstract
 ```
@@ -18,7 +18,4 @@ abstract class $MyClass {
 var a = MyClass("Adrian");
 ```
 
-### When inheriting from a class use a dollar
-```
-abstract class $MyOtherClass extends $MyClass{
-```
+### See Marking_ValueT_extends and Marking_ValueT_implements in the example

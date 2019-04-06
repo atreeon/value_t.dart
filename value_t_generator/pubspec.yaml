@@ -1,8 +1,8 @@
 name: value_t_generator
 description: Generates code to create a class that properly inherits and implements all the readonly fields in the hierarchy creating a construtor and a copyWith method
-version: 1.0.0
-author: Adrian
-# homepage: https://github.com/...
+version: 0.1.0
+author: Adriaaan
+homepage: https://github.com/...
  
 environment:  
   sdk: ">=2.0.0 <3.0.0" 

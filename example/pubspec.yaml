@@ -15,6 +15,3 @@ dev_dependencies:
   built_value_generator: ^6.3.2
   value_t_generator:
     path: ../value_t_generator/    
-  # meta_types_generator:
-  #   path: ../../dart_meta_types/meta_types_generator
-  # # meta_types_generator: ^0.1.0

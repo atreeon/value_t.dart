@@ -1,6 +1,6 @@
 name: value_t
 description: Annotation for value_t_generator
-version: 1.0.0
+version: 0.1.0
 author: Adrian
  
 environment:  
