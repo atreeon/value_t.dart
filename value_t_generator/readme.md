@@ -2,6 +2,16 @@
 
 Generates code to create a copywith class and implements all the getter fields in any extended or implemented classes.
 
+Usage
+```
+  var a = MarkingIncorrect("my answer", <String>["blah", "blah"], "fullWord");
+
+  print("a is MarkingState:" + (a is Marking).toString());
+
+  var d = a.copyWith(answer: "blah");
+```
+
+Definition
 ```
 abstract class Marking {}
 
