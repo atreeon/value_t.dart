@@ -13,10 +13,6 @@ dependencies:
   value_t:    
     path: ../value_t/  
   quiver: ^2.0.1 
-  # dartz: ^0.8.3 
-  adi_helpers:   
-    # git: git@bitbucket.org/twistedinferno/adi_helpers.git
-    path: ../../adi_helpers/
       
 dev_dependencies:  
   # build_test: ^0.10.0  

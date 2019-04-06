@@ -1,6 +1,6 @@
 import 'package:value_t/ValueT.dart';
 
-part 'Marking_ValueT.g.dart';
+part 'Marking_ValueT_extends.g.dart';
 
 abstract class MarkingState {
   String get fullWord;
@@ -28,11 +28,13 @@ main() {
 
   print("a is MarkingState:" + (a is MarkingState).toString());
   print("a is MarkingState:" + (a is MarkingAnswered).toString());
+  print("c is MarkingUnanswered:" + (c is MarkingUnanswered).toString());
 
   typeInferenceChecks(a);
   typeInferenceChecks(b);
 
   var d = a.copyWith(answer: "blah");
+  print(d.answer);
 }
 
 void typeInferenceChecks(MarkingState markingState) {

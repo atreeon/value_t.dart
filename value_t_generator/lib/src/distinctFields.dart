@@ -20,7 +20,7 @@ Set<ElementAccessor> getAccessors(
   return getAccessors(fields, element.elementSuperType);
 }
 
-//TODO: could change interface to supertype...same thing really
+//TODO: Think I could change interface to supertype...same thing really (lazy copy and paste, eek!)
 Set<ElementAccessor> getAccessors2(
     Set<ElementAccessor> fields, Interface element) {
   fields.addAll(element.elementAccessors);
