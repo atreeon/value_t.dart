@@ -21,7 +21,7 @@ abstract class HasWord {
   String get word;
 }
 
-@ValueT() //will be made non public and getters created
+@ValueT() //will be made non abastract and getters created
 abstract class $MarkingCorrectNoWord implements Marking, IsCorrect {}
 
 @ValueT()
