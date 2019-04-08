@@ -1,4 +1,4 @@
-import 'package:value_t/ValueT.dart';
+import 'package:value_t_annotation/value_t_annotation.dart';
 
 part 'Marking_ValueT_implements.g.dart';
 

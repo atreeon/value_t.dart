@@ -7,7 +7,7 @@
 			"path": "value_t_generator"
 		},
 		{
-			"path": "value_t"
+			"path": "value_t_annotation"
 		}
 	],
 	"settings": {}

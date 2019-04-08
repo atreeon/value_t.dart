@@ -7,7 +7,7 @@ targets:
 builders:
   value_t:
     target: ":value_t_generator"
-    import: "package:value_t_generator/builder.dart"
+    import: "package:value_t_generator/value_t_generator.dart"
     builder_factories: ["valueTBuilder"]
     build_extensions: {".dart": [".x.g.part"]}
     auto_apply: dependents

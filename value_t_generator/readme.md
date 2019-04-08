@@ -51,3 +51,6 @@ var a = MyClass("Adrian");
 ```
 
 ### See Marking_ValueT_extends and Marking_ValueT_implements in the example
+
+### Inspirations
+Thanks for built_value and meta_types for inspiration (the dollar in front of the class names was copied from meta_types)
