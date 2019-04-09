@@ -10,30 +10,28 @@ class MarkingCorrectNoWord implements $MarkingCorrectNoWord {}
 
 class MarkingCorrect implements $MarkingCorrect {
   final String word;
-  MarkingCorrect(
-    this.word,
-  ) {
+  MarkingCorrect({
+    @required this.word,
+  }) {
     assert(this.word != null);
   }
   MarkingCorrect copyWith({
     String word,
   }) =>
       MarkingCorrect(
-        word == null ? this.word : word,
+        word: word == null ? this.word : word,
       );
 }
-
-///example/lib/Marking_ValueT_implements.dart
 
 class MarkingIncorrect implements $MarkingIncorrect {
   final String answer;
   final List<String> infoMessages;
   final String word;
-  MarkingIncorrect(
-    this.answer,
-    this.infoMessages,
-    this.word,
-  ) {
+  MarkingIncorrect({
+    @required this.answer,
+    @required this.infoMessages,
+    @required this.word,
+  }) {
     assert(this.answer != null);
     assert(this.infoMessages != null);
     assert(this.word != null);
@@ -44,12 +42,8 @@ class MarkingIncorrect implements $MarkingIncorrect {
     String word,
   }) =>
       MarkingIncorrect(
-        answer == null ? this.answer : answer,
-        infoMessages == null ? this.infoMessages : infoMessages,
-        word == null ? this.word : word,
+        answer: answer == null ? this.answer : answer,
+        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
+        word: word == null ? this.word : word,
       );
 }
-
-///example/lib/Marking_ValueT_implements.dart
-///example/lib/Marking_ValueT_implements.dart
-///example/lib/Marking_ValueT_implements.dart

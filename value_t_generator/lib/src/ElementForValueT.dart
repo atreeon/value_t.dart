@@ -23,7 +23,7 @@ class ElementAccessor {
   final String type;
   final String defaultValue;
 
-  ElementAccessor(this.name, this.type, this.defaultValue);
+  ElementAccessor(this.name, this.type, [this.defaultValue]);
 
   bool operator ==(o) => o is ElementAccessor && name == o.name;
   int get hashCode => hash2(name.hashCode, type.hashCode);

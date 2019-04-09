@@ -9,6 +9,7 @@ String genValueT(ElementSuperType element, String extendsClass) {
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
+    // yield () => imports();
     yield () => classDefinition(className, extendsClass);
     if (fields.isNotEmpty) {
       yield () => finalFields(fields);
@@ -21,12 +22,13 @@ String genValueT(ElementSuperType element, String extendsClass) {
       yield () => closeCopyWith();
     }
     yield () => closeClass();
-    yield () => fields.fold("", (v, k) => "${v}\n${k.defaultValue}");
   }())
       .forEach((x) => sb.writeln(x()));
 
   return sb.toString();
 }
+
+String imports() => "import 'package:meta/meta.dart';";
 
 String classDefinition(String className, String classExtends) =>
     "class ${className} implements ${classExtends} {";
@@ -35,7 +37,13 @@ String finalFields(List<ElementAccessor> fields) =>
     fields.fold("", (v, k) => "${v}\nfinal ${k.type} ${k.name};");
 
 String constructor(String className, List<ElementAccessor> fields) =>
-    "${className}(" + fields.fold("", (v, k) => "${v}this.${k.name},\n") + "){";
+    "${className}({" +
+    fields.fold(
+        "",
+        (v, k) => k.defaultValue == null
+            ? "${v}@required this.${k.name},\n"
+            : "${v}this.${k.name} = ${k.defaultValue.trim()},\n") +
+    "}){";
 
 String constructorAssertions(List<ElementAccessor> fields) =>
     fields.fold("", (v, k) => "${v}\nassert(this.${k.name} != null);") + "}";
@@ -48,7 +56,9 @@ String copyWithParams(List<ElementAccessor> fields) =>
 String copyWithCreate(String className) => "${className}(";
 
 String copyWithLines(List<ElementAccessor> fields) => fields.fold(
-    "", (v, k) => "${v}\n${k.name} == null ? this.${k.name} : ${k.name},");
+    "",
+    (v, k) =>
+        "${v}\n${k.name}: ${k.name} == null ? this.${k.name} : ${k.name},");
 
 String closeCopyWith() => ");";
 

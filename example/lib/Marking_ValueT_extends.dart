@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:value_t_annotation/value_t_annotation.dart';
 
 part 'Marking_ValueT_extends.g.dart';
@@ -22,9 +23,12 @@ abstract class $MarkingIncorrect extends MarkingAnswered {
 
 main() {
   // valueT()
-  var a = MarkingIncorrect("my answer", "fullWord", <String>["blah", "blah"]);
-  var b = MarkingCorrect("fullWord");
-  var c = MarkingUnanswered("fullWord");
+  var a = MarkingIncorrect(
+      answer: "my answer",
+      fullWord: "fullWord",
+      infoMessages: <String>["blah", "blah"]);
+  var b = MarkingCorrect(fullWord: "fullWord");
+  var c = MarkingUnanswered(fullWord: "fullWord");
 
   print("a is MarkingState:" + (a is MarkingState).toString());
   print("a is MarkingState:" + (a is MarkingAnswered).toString());

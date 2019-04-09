@@ -17,8 +17,12 @@ void main() {
 
     test(
         "1",
-        () => exp_distinctFields(
-            example1, [ElementAccessor("fullWord", "String")]));
+        () => exp_distinctFields(example1, [
+              ElementAccessor(
+                "fullWord",
+                "String",
+              )
+            ]));
 
     test(
         "2",
@@ -44,11 +48,14 @@ void main() {
     test(
         "5 WithInterfaces",
         () => exp_distinctFields(exampleWithInterfacesSimple, [
-              ElementAccessor("fullWord", "String"),
+              ElementAccessor("A", "int"),
+              ElementAccessor("B", "int"),
+              ElementAccessor("C", "int"),
+              ElementAccessor(
+                "fullWord",
+                "String",
+              ),
               ElementAccessor("infoMessages", "List<String>"),
-              ElementAccessor("int", "A"),
-              ElementAccessor("int", "B"),
-              ElementAccessor("int", "C"),
             ]));
   });
 }

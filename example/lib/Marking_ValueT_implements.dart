@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:value_t_annotation/value_t_annotation.dart';
 
 part 'Marking_ValueT_implements.g.dart';
@@ -24,8 +25,11 @@ abstract class $MarkingIncorrect implements Marking, HasWord {
 
 main() {
   // valueT()
-  var a = MarkingIncorrect("my answer", <String>["blah", "blah"], "fullWord");
-  var b = MarkingCorrect("fullWord");
+  var a = MarkingIncorrect(
+      answer: "my answer",
+      infoMessages: <String>["blah", "blah"],
+      word: "fullWord");
+  var b = MarkingCorrect(word: "fullWord");
 
   print("a is MarkingState:" + (a is Marking).toString());
   print("a is MarkingState:" + (a is MarkingIncorrect).toString());

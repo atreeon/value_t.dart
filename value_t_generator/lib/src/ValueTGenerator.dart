@@ -7,6 +7,7 @@ import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:value_t_annotation/value_t_annotation.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
+import 'package:value_t_generator/src/extractGetterBody.dart';
 import 'package:value_t_generator/src/genValueT.dart';
 
 Future<CompilationUnit> getUnit(Element accessor) => accessor.session
@@ -22,54 +23,69 @@ Future<List<ElementAccessor>> createAccessors(
     //not really sure how to get that code line
     var unit = await getUnit(x);
 
-    return ElementAccessor(
-        x.name, x.returnType.toString(), "//" + unit.toString() ?? "");
+    return ElementAccessor(x.name, x.returnType.toString(),
+        extractGetterBody(x.name, x.returnType.toString(), unit.toString()));
   }).toList();
 
   return Future.wait(blah);
 }
 
-ElementSuperType createElementSuperType(ClassElement classElement) {
+Future<ElementSuperType> createElementSuperType(
+    ClassElement classElement) async {
   if (classElement.supertype.name == "Object") {
     return ElementSuperType(
-      null,
-      createAccessors(classElement.accessors.toList()),
-      classElement.interfaces.map((x) => createInterface(x)).toList(),
-    );
+        null,
+        await createAccessors(classElement.accessors.toList()),
+        await Future.wait(
+          classElement.interfaces
+              .map((x) async => await createInterface(x))
+              .toList(),
+        ));
   }
 
   return ElementSuperType(
-    createElementSuperType(classElement.supertype.element),
-    createAccessors(classElement.accessors),
-    classElement.interfaces.map((x) => createInterface(x)).toList(),
+    await createElementSuperType(classElement.supertype.element),
+    await createAccessors(classElement.accessors),
+    await Future.wait(
+      classElement.interfaces
+          .map((x) async => await createInterface(x))
+          .toList(),
+    ),
   );
 }
 
-Interface createInterface(InterfaceType interfaceType) {
+Future<Interface> createInterface(InterfaceType interfaceType) async {
   if (interfaceType.superclass.name == "Object") {
     return Interface(
       null,
-      createAccessors(interfaceType.accessors.toList()),
-      interfaceType.interfaces.map((x) => createInterface(x)).toList(),
+      await createAccessors(interfaceType.accessors.toList()),
+      await Future.wait(
+        interfaceType.interfaces
+            .map((x) async => await createInterface(x))
+            .toList(),
+      ),
     );
   }
 
   return Interface(
-    createElementSuperType(interfaceType.superclass.element),
-    createAccessors(interfaceType.accessors.toList()),
-    interfaceType.interfaces.map((x) => createInterface(x)).toList(),
+    await createElementSuperType(interfaceType.superclass.element),
+    await createAccessors(interfaceType.accessors.toList()),
+    await Future.wait(
+      interfaceType.interfaces
+          .map((x) async => await createInterface(x))
+          .toList(),
+    ),
   );
 }
 
 class ValueTGenerator extends GeneratorForAnnotation<ValueT> {
   @override
   FutureOr<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
+      Element element, ConstantReader annotation, BuildStep buildStep) async {
     var sb = StringBuffer();
     if (element is ClassElement) {
-      // createElementSuperType(element);
-      sb.writeln(
-          genValueT(createElementSuperType(element), element.displayName));
+      sb.writeln(genValueT(
+          await createElementSuperType(element), element.displayName));
     }
 
     return sb.toString();

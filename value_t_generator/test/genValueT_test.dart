@@ -5,6 +5,28 @@ import 'package:value_t_generator/src/genValueT.dart';
 import 'testData.dart';
 
 void main() {
+  group("constructor", () {
+    void exp_constructor(
+        String className, List<ElementAccessor> fields, String expected) {
+      var result = constructor(className, fields);
+      expect(result, expected);
+    }
+
+    test(
+        "1",
+        () => exp_constructor(
+            "MyClass",
+            [ElementAccessor("word", "String", null)],
+            "MyClass({@required this.word,\n}){"));
+
+    test(
+        "2 with default value",
+        () => exp_constructor(
+            "MyClass",
+            [ElementAccessor("word", "String", """ "default" """)],
+            """MyClass({this.word = "default",\n}){"""));
+  });
+
   group("genValueT", () {
     void exp_genValueT(ElementSuperType element, String expected) {
       var result = genValueT(element, "\$MyClass");
@@ -15,8 +37,8 @@ void main() {
         """class MyClass implements \$MyClass {
 
 final String fullWord;
-MyClass(this.fullWord,
-){
+MyClass({@required this.fullWord,
+}){
 
 assert(this.fullWord != null);}
 MyClass copyWith({
@@ -24,7 +46,7 @@ String fullWord,
 }) =>
 MyClass(
 
-fullWord == null ? this.fullWord : fullWord,
+fullWord: fullWord == null ? this.fullWord : fullWord,
 );
 }
 """));
@@ -35,10 +57,10 @@ fullWord == null ? this.fullWord : fullWord,
 final String answer;
 final String fullWord;
 final List<String> infoMessages;
-MyClass(this.answer,
-this.fullWord,
-this.infoMessages,
-){
+MyClass({@required this.answer,
+@required this.fullWord,
+@required this.infoMessages,
+}){
 
 assert(this.answer != null);
 assert(this.fullWord != null);
@@ -50,9 +72,9 @@ List<String> infoMessages,
 }) =>
 MyClass(
 
-answer == null ? this.answer : answer,
-fullWord == null ? this.fullWord : fullWord,
-infoMessages == null ? this.infoMessages : infoMessages,
+answer: answer == null ? this.answer : answer,
+fullWord: fullWord == null ? this.fullWord : fullWord,
+infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 );
 }
 """));
@@ -71,12 +93,12 @@ final int B;
 final int C;
 final String fullWord;
 final List<String> infoMessages;
-MyClass(this.A,
-this.B,
-this.C,
-this.fullWord,
-this.infoMessages,
-){
+MyClass({@required this.A,
+@required this.B,
+@required this.C,
+@required this.fullWord,
+@required this.infoMessages,
+}){
 
 assert(this.A != null);
 assert(this.B != null);
@@ -92,11 +114,11 @@ List<String> infoMessages,
 }) =>
 MyClass(
 
-A == null ? this.A : A,
-B == null ? this.B : B,
-C == null ? this.C : C,
-fullWord == null ? this.fullWord : fullWord,
-infoMessages == null ? this.infoMessages : infoMessages,
+A: A == null ? this.A : A,
+B: B == null ? this.B : B,
+C: C == null ? this.C : C,
+fullWord: fullWord == null ? this.fullWord : fullWord,
+infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 );
 }
 """));

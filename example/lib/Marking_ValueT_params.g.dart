@@ -8,28 +8,26 @@ part of 'Marking_ValueT_params.dart';
 
 class MarkingCorrectNoWord implements $MarkingCorrectNoWord {
   final List<String> infoMessages;
-  MarkingCorrectNoWord(
-    this.infoMessages,
-  ) {
+  MarkingCorrectNoWord({
+    @required this.infoMessages,
+  }) {
     assert(this.infoMessages != null);
   }
   MarkingCorrectNoWord copyWith({
     List<String> infoMessages,
   }) =>
       MarkingCorrectNoWord(
-        infoMessages == null ? this.infoMessages : infoMessages,
+        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
       );
 }
-
-///example/lib/Marking_ValueT_params.dart
 
 class MarkingCorrect implements $MarkingCorrect {
   final List<String> infoMessages;
   final String word;
-  MarkingCorrect(
-    this.infoMessages,
-    this.word,
-  ) {
+  MarkingCorrect({
+    @required this.infoMessages,
+    @required this.word,
+  }) {
     assert(this.infoMessages != null);
     assert(this.word != null);
   }
@@ -38,23 +36,20 @@ class MarkingCorrect implements $MarkingCorrect {
     String word,
   }) =>
       MarkingCorrect(
-        infoMessages == null ? this.infoMessages : infoMessages,
-        word == null ? this.word : word,
+        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
+        word: word == null ? this.word : word,
       );
 }
-
-///example/lib/Marking_ValueT_params.dart
-///example/lib/Marking_ValueT_params.dart
 
 class MarkingIncorrect implements $MarkingIncorrect {
   final String answer;
   final List<String> infoMessages;
   final String word;
-  MarkingIncorrect(
-    this.answer,
-    this.infoMessages,
-    this.word,
-  ) {
+  MarkingIncorrect({
+    this.answer = "",
+    @required this.infoMessages,
+    @required this.word,
+  }) {
     assert(this.answer != null);
     assert(this.infoMessages != null);
     assert(this.word != null);
@@ -65,12 +60,8 @@ class MarkingIncorrect implements $MarkingIncorrect {
     String word,
   }) =>
       MarkingIncorrect(
-        answer == null ? this.answer : answer,
-        infoMessages == null ? this.infoMessages : infoMessages,
-        word == null ? this.word : word,
+        answer: answer == null ? this.answer : answer,
+        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
+        word: word == null ? this.word : word,
       );
 }
-
-///example/lib/Marking_ValueT_params.dart
-///example/lib/Marking_ValueT_params.dart
-///example/lib/Marking_ValueT_params.dart
