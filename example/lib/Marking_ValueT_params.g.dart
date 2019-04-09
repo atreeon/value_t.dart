@@ -6,7 +6,8 @@ part of 'Marking_ValueT_params.dart';
 // ValueTGenerator
 // **************************************************************************
 
-class MarkingCorrectNoWord implements $MarkingCorrectNoWord {
+class MarkingCorrectNoWord extends $MarkingCorrectNoWord
+    implements arking, sCorrect {
   final List<String> infoMessages;
   MarkingCorrectNoWord({
     @required this.infoMessages,
@@ -21,7 +22,8 @@ class MarkingCorrectNoWord implements $MarkingCorrectNoWord {
       );
 }
 
-class MarkingCorrect implements $MarkingCorrect {
+class MarkingCorrect extends $MarkingCorrect
+    implements arking, asWord, sCorrect {
   final List<String> infoMessages;
   final String word;
   MarkingCorrect({
@@ -41,7 +43,7 @@ class MarkingCorrect implements $MarkingCorrect {
       );
 }
 
-class MarkingIncorrect implements $MarkingIncorrect {
+class MarkingIncorrect extends $MarkingIncorrect implements arking, asWord {
   final String answer;
   final List<String> infoMessages;
   final String word;

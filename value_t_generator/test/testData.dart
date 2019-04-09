@@ -5,9 +5,11 @@ var example1 = ElementSuperType(
     null,
     [ElementAccessor("fullWord", "String", null)],
     [],
+    null,
   ),
   [],
   [],
+  null,
 );
 
 var example2 = ElementSuperType(
@@ -16,12 +18,15 @@ var example2 = ElementSuperType(
       null,
       [ElementAccessor("fullWord", "String", null)],
       [],
+      null,
     ),
     [],
     [],
+    null,
   ),
   [],
   [],
+  null,
 );
 
 var example3 = ElementSuperType(
@@ -30,15 +35,18 @@ var example3 = ElementSuperType(
       null,
       [ElementAccessor("fullWord", "String", null)],
       [],
+      null,
     ),
     [],
     [],
+    null,
   ),
   [
     ElementAccessor("answer", "String", null),
     ElementAccessor("infoMessages", "List<String>", null),
   ],
   [],
+  null,
 );
 
 var exampleDuplicates = ElementSuperType(
@@ -47,15 +55,18 @@ var exampleDuplicates = ElementSuperType(
       null,
       [ElementAccessor("fullWord", "String", null)],
       [],
+      null,
     ),
     [ElementAccessor("fullWord", "String", null)],
     [],
+    null,
   ),
   [
     ElementAccessor("answer", "String", null),
     ElementAccessor("infoMessages", "List<String>", null),
   ],
   [],
+  null,
 );
 
 var exampleNoFields = ElementSuperType(
@@ -64,12 +75,15 @@ var exampleNoFields = ElementSuperType(
       null,
       [],
       [],
+      null,
     ),
     [],
     [],
+    null,
   ),
   [],
   [],
+  null,
 );
 
 var exampleWithInterfacesSimple = ElementSuperType(
@@ -85,16 +99,20 @@ var exampleWithInterfacesSimple = ElementSuperType(
             ElementAccessor("B", "int", null),
           ],
           [],
+          null,
         ),
         [ElementAccessor("C", "int", null)],
         [],
+        null,
       )
     ],
+    null,
   ),
   [
     ElementAccessor("infoMessages", "List<String>", null),
   ],
   [],
+  null,
 );
 
 var exampleWithDefaultValue = ElementSuperType(
@@ -110,14 +128,18 @@ var exampleWithDefaultValue = ElementSuperType(
             ElementAccessor("B", "int", null),
           ],
           [],
+          null,
         ),
         [ElementAccessor("C", "int", null)],
         [],
+        null,
       )
     ],
+    null,
   ),
   [
     ElementAccessor("infoMessages", "List<String>", """ List<String>() """),
   ],
   [],
+  null,
 );

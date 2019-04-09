@@ -6,7 +6,7 @@ part of 'Marking_ValueT_extends.dart';
 // ValueTGenerator
 // **************************************************************************
 
-class MarkingUnanswered implements $MarkingUnanswered {
+class MarkingUnanswered extends arkingState {
   final String fullWord;
   MarkingUnanswered({
     @required this.fullWord,
@@ -21,7 +21,7 @@ class MarkingUnanswered implements $MarkingUnanswered {
       );
 }
 
-class MarkingCorrect implements $MarkingCorrect {
+class MarkingCorrect extends arkingAnswered {
   final String fullWord;
   MarkingCorrect({
     @required this.fullWord,
@@ -36,7 +36,7 @@ class MarkingCorrect implements $MarkingCorrect {
       );
 }
 
-class MarkingIncorrect implements $MarkingIncorrect {
+class MarkingIncorrect extends arkingAnswered {
   final String answer;
   final String fullWord;
   final List<String> infoMessages;

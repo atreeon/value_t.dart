@@ -6,7 +6,7 @@ homepage: https://github.com/twistedinferno/value_t.dart
  
 environment:  
   sdk: ">=2.0.0 <3.0.0" 
-   
+  
 dependencies:  
   build: ^1.1.1
   source_gen: ^0.9.4+1

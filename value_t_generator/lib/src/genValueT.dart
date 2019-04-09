@@ -1,25 +1,37 @@
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/distinctFields.dart';
 
-String genValueT(ElementSuperType element, String extendsClass) {
+String genValueT(
+    bool isAbstract, ElementSuperType element, String extendsClass) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
+  var superTypeName = element.name?.substring(1);
+  var interfaceNames =
+      element?.interfaces?.map((x) => x.name?.substring(1))?.toList();
 
   if (extendsClass[0] != "\$") throw Exception('classes must start with \$');
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
     // yield () => imports();
-    yield () => classDefinition(className, extendsClass);
+    yield () => classDefinition(isAbstract, className, extendsClass);
+    yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
+    yield () => "{";
     if (fields.isNotEmpty) {
-      yield () => finalFields(fields);
-      yield () => constructor(className, fields);
-      yield () => constructorAssertions(fields);
+      yield () => finalFields(isAbstract, fields);
+      if (!isAbstract) {
+        yield () => constructor(className, fields);
+        yield () => constructorAssertions(fields);
+      }
       yield () => copyWithSignature(className);
       yield () => copyWithParams(fields);
-      yield () => copyWithCreate(className);
-      yield () => copyWithLines(fields);
-      yield () => closeCopyWith();
+      if (isAbstract) {
+        yield () => ";";
+      } else {
+        yield () => copyWithCreate(className);
+        yield () => copyWithLines(fields);
+        yield () => closeCopyWith();
+      }
     }
     yield () => closeClass();
   }())
@@ -30,13 +42,32 @@ String genValueT(ElementSuperType element, String extendsClass) {
 
 String imports() => "import 'package:meta/meta.dart';";
 
-String classDefinition(String className, String classExtends) =>
-    "class ${className} implements ${classExtends} {";
+String classDefinition(
+        bool isAbstract, String className, String classExtends) =>
+    (isAbstract ? "abstract " : "") +
+    "class ${className}"; // implements ${classExtends} {";
 
-String finalFields(List<ElementAccessor> fields) =>
-    fields.fold("", (v, k) => "${v}\nfinal ${k.type} ${k.name};");
+String extendsAndInterfaces(
+    String className, String superTypeName, List<String> interfaceNames) {
+  var extend = superTypeName == null
+      ? " extends \$${className} "
+      : " extends ${superTypeName} ";
+
+  var implement = interfaceNames.length > 0
+      ? "implements " + interfaceNames.join(",") + " "
+      : "";
+  return extend + implement;
+}
+
+String finalFields(bool isAbstract, List<ElementAccessor> fields) =>
+    fields.fold(
+        "",
+        (v, k) => isAbstract
+            ? "${v}\n${k.type} get ${k.name};"
+            : "${v}\nfinal ${k.type} ${k.name};");
 
 String constructor(String className, List<ElementAccessor> fields) =>
+    "" +
     "${className}({" +
     fields.fold(
         "",
@@ -51,9 +82,9 @@ String constructorAssertions(List<ElementAccessor> fields) =>
 String copyWithSignature(String className) => "${className} copyWith({";
 
 String copyWithParams(List<ElementAccessor> fields) =>
-    fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n") + "}) =>";
+    fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n") + "})";
 
-String copyWithCreate(String className) => "${className}(";
+String copyWithCreate(String className) => " => ${className}(";
 
 String copyWithLines(List<ElementAccessor> fields) => fields.fold(
     "",

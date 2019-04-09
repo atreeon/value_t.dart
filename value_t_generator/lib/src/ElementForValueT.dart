@@ -4,17 +4,20 @@ class ElementSuperType {
   final ElementSuperType elementSuperType;
   final List<ElementAccessor> elementAccessors;
   final List<Interface> interfaces;
+  final String name;
 
   ElementSuperType(
-      this.elementSuperType, this.elementAccessors, this.interfaces);
+      this.elementSuperType, this.elementAccessors, this.interfaces, this.name);
 }
 
 class Interface {
   final ElementSuperType elementSuperType;
   final List<ElementAccessor> elementAccessors;
   final List<Interface> interfaces;
+  final String name;
 
-  Interface(this.elementSuperType, this.elementAccessors, this.interfaces);
+  Interface(
+      this.elementSuperType, this.elementAccessors, this.interfaces, this.name);
 }
 
 ///The fields of each class

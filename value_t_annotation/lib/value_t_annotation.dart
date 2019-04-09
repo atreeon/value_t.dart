@@ -1,6 +1,7 @@
 ///value type - for annotation
 class ValueT {
-  const ValueT();
+  final bool isAbstract;
+  const ValueT([this.isAbstract = false]);
 }
 
 class DefaultValue {

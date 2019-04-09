@@ -28,13 +28,16 @@ void main() {
   });
 
   group("genValueT", () {
-    void exp_genValueT(ElementSuperType element, String expected) {
-      var result = genValueT(element, "\$MyClass");
+    void exp_genValueT(
+        bool isAbstract, ElementSuperType element, String expected) {
+      var result = genValueT(isAbstract, element, "\$MyClass");
       expect(result, expected);
     }
 
-    test("1", () => exp_genValueT(example1, //
-        """class MyClass implements \$MyClass {
+    test("1", () => exp_genValueT(false, example1, //
+        """class MyClass
+ extends \$MyClass 
+{
 
 final String fullWord;
 MyClass({@required this.fullWord,
@@ -43,16 +46,18 @@ MyClass({@required this.fullWord,
 assert(this.fullWord != null);}
 MyClass copyWith({
 String fullWord,
-}) =>
-MyClass(
+})
+ => MyClass(
 
 fullWord: fullWord == null ? this.fullWord : fullWord,
 );
 }
 """));
 
-    test("2", () => exp_genValueT(exampleDuplicates, //
-        """class MyClass implements \$MyClass {
+    test("2", () => exp_genValueT(false, exampleDuplicates, //
+        """class MyClass
+ extends \$MyClass 
+{
 
 final String answer;
 final String fullWord;
@@ -69,8 +74,8 @@ MyClass copyWith({
 String answer,
 String fullWord,
 List<String> infoMessages,
-}) =>
-MyClass(
+})
+ => MyClass(
 
 answer: answer == null ? this.answer : answer,
 fullWord: fullWord == null ? this.fullWord : fullWord,
@@ -79,14 +84,18 @@ infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 }
 """));
 
-    test("3", () => exp_genValueT(exampleNoFields, //
-        """class MyClass implements \$MyClass {
+    test("3", () => exp_genValueT(false, exampleNoFields, //
+        """class MyClass
+ extends \$MyClass 
+{
 }
 """));
 
     test("4 exampleWithInterfacesSimple",
-        () => exp_genValueT(exampleWithInterfacesSimple, //
-            """class MyClass implements \$MyClass {
+        () => exp_genValueT(false, exampleWithInterfacesSimple, //
+            """class MyClass
+ extends \$MyClass 
+{
 
 final int A;
 final int B;
@@ -111,8 +120,8 @@ int B,
 int C,
 String fullWord,
 List<String> infoMessages,
-}) =>
-MyClass(
+})
+ => MyClass(
 
 A: A == null ? this.A : A,
 B: B == null ? this.B : B,
@@ -120,6 +129,23 @@ C: C == null ? this.C : C,
 fullWord: fullWord == null ? this.fullWord : fullWord,
 infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 );
+}
+"""));
+
+    test("5 abstract", () => exp_genValueT(true, exampleDuplicates, //
+        """abstract class MyClass
+ extends \$MyClass 
+{
+
+String get answer;
+String get fullWord;
+List<String> get infoMessages;
+MyClass copyWith({
+String answer,
+String fullWord,
+List<String> infoMessages,
+})
+;
 }
 """));
   });
