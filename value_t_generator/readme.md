@@ -1,6 +1,13 @@
 ## value_t
 
-Generates code to create a copywith class and implements all the getter fields in any extended or implemented classes.
+Generates code to create simple type with a copywith class and implements all the getter fields in any extended or implemented classes.
+
+### Advantages over coding it yourself
+So much less code to write and then read back over too.  Also, refactoring can be less because you don't need to change all the names in the copyWith definitions and where a class has been extended multiple times.
+
+### Downsides over coding it yourself
+Go to definition will take you to the generated class...one workaround is to name the file the same as your class and instead of pressing f12 find the filename.  This sounds like more work but because of the conciseness of your classes you can fit whole class heirarchies and related interfaces in a single file and still view all the definitions.
+Renaming classes, you must rename both your defition and the generated name `$PersonClass` and `PersonClass`.  This one is more fiddly, press f2 on PersonClass and rename, then change the name of $PersonClass...this order will result in just two changes.
 
 Usage
 ```

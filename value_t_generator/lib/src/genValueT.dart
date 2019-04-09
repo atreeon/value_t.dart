@@ -10,7 +10,7 @@ String genValueT(ElementSuperType element, String extendsClass) {
 
   List.unmodifiable(() sync* {
     yield () => classDefinition(className, extendsClass);
-    if (fields.length > 0) {
+    if (fields.isNotEmpty) {
       yield () => finalFields(fields);
       yield () => constructor(className, fields);
       yield () => constructorAssertions(fields);
@@ -21,6 +21,7 @@ String genValueT(ElementSuperType element, String extendsClass) {
       yield () => closeCopyWith();
     }
     yield () => closeClass();
+    yield () => fields.fold("", (v, k) => "${v}\n${k.defaultValue}");
   }())
       .forEach((x) => sb.writeln(x()));
 
@@ -52,5 +53,3 @@ String copyWithLines(List<ElementAccessor> fields) => fields.fold(
 String closeCopyWith() => ");";
 
 String closeClass() => "}";
-
-

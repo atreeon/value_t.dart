@@ -438,9 +438,9 @@ packages:
   value_t_annotation:
     dependency: "direct main"
     description:
-      name: value_t_annotation
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../value_t_annotation"
+      relative: true
+    source: path
     version: "0.1.0"
   vm_service_client:
     dependency: transitive

@@ -4,8 +4,9 @@ environment:
   sdk: ">=2.0.0 <3.0.0" 
 
 dependencies: 
-  value_t_annotation: 0.1.0
-    
+  value_t_annotation: #^0.1.0
+    path: ../value_t_annotation
+      
 dev_dependencies:
   build_runner: ^1.2.8
   value_t_generator:

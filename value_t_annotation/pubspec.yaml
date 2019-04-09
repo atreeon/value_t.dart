@@ -3,7 +3,7 @@ description: Annotation for value_t_generator
 version: 0.1.0
 author: Adriaaan Hill <gu64rk@gmail.com>
 homepage: https://github.com/twistedinferno/value_t.dart
- 
+  
 environment:  
   sdk: ">=2.0.0 <3.0.0" 
 

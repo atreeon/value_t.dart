@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/src/builder/build_step.dart';
@@ -8,12 +9,25 @@ import 'package:value_t_annotation/value_t_annotation.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/genValueT.dart';
 
-List<ElementAccessor> createAccessors(
-        List<PropertyAccessorElement> accessors) =>
-    accessors
-        .where((x) => x.isGetter)
-        .map((x) => ElementAccessor(x.name, x.returnType.toString()))
-        .toList();
+Future<CompilationUnit> getUnit(Element accessor) => accessor.session
+        .getResolvedLibraryByElement(accessor.library)
+        .then((resolvedLibrary) {
+      var declaration = resolvedLibrary.getElementDeclaration(accessor);
+      return declaration.resolvedUnit.unit;
+    });
+
+Future<List<ElementAccessor>> createAccessors(
+    List<PropertyAccessorElement> accessors) async {
+  var blah = accessors.where((x) => x.isGetter).map((x) async {
+    //not really sure how to get that code line
+    var unit = await getUnit(x);
+
+    return ElementAccessor(
+        x.name, x.returnType.toString(), "//" + unit.toString() ?? "");
+  }).toList();
+
+  return Future.wait(blah);
+}
 
 ElementSuperType createElementSuperType(ClassElement classElement) {
   if (classElement.supertype.name == "Object") {
