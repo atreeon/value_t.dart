@@ -32,28 +32,33 @@ abstract class Employee extends Person {
 class WindowCleaner extends Employee implements OftenWet {
   final int employeeId;
   final String name;
+  final Pet pet;
   final String wetness;
   final String windowMaxSize;
   WindowCleaner({
     @required this.employeeId,
     @required this.name,
+    @required this.pet,
     @required this.wetness,
     this.windowMaxSize = "big",
   }) {
     assert(this.employeeId != null);
     assert(this.name != null);
+    assert(this.pet != null);
     assert(this.wetness != null);
     assert(this.windowMaxSize != null);
   }
   WindowCleaner copyWith({
     int employeeId,
     String name,
+    Pet pet,
     String wetness,
     String windowMaxSize,
   }) =>
       WindowCleaner(
         employeeId: employeeId == null ? this.employeeId : employeeId,
         name: name == null ? this.name : name,
+        pet: pet == null ? this.pet : pet,
         wetness: wetness == null ? this.wetness : wetness,
         windowMaxSize:
             windowMaxSize == null ? this.windowMaxSize : windowMaxSize,

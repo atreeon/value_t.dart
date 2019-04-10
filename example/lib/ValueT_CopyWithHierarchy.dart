@@ -1,3 +1,4 @@
+import 'package:example/ValueT_Pets.dart';
 import 'package:meta/meta.dart';
 import 'package:value_t_annotation/value_t_annotation.dart';
 
@@ -9,8 +10,6 @@ abstract class $Person {
 }
 
 @ValueT(true)
-
-///Anything can be wet...used as an interface
 abstract class $OftenWet {
   String get wetness;
 }
@@ -23,6 +22,7 @@ abstract class $Employee extends $Person {
 @ValueT()
 abstract class $WindowCleaner extends $Employee implements $OftenWet {
   String get windowMaxSize => "big";
+  $Pet get pet;
 }
 
 @ValueT()
@@ -31,7 +31,7 @@ abstract class $Manager extends $Person {
 }
 
 main() {
-  Person a = WindowCleaner(name: "Bob", employeeId: 5);
+  Person a = WindowCleaner(name: "Bob", employeeId: 5, wetness: "wet");
 
   if (a is Employee) {
     print('I am an employee');

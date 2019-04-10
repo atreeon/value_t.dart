@@ -25,8 +25,15 @@ class ElementAccessor {
   final String name;
   final String type;
   final String defaultValue;
+  final String extra;
 
-  ElementAccessor(this.name, this.type, [this.defaultValue]);
+  ElementAccessor(this.name, this.type, {this.defaultValue, this.extra});
+
+  ElementAccessor copyWith(String type) => ElementAccessor(
+        this.name,
+        type,
+        defaultValue: this.defaultValue,
+      );
 
   bool operator ==(o) => o is ElementAccessor && name == o.name;
   int get hashCode => hash2(name.hashCode, type.hashCode);

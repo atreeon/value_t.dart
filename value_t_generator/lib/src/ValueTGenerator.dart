@@ -23,7 +23,12 @@ Future<List<ElementAccessor>> createAccessors(
     var unit = await getUnit(x);
 
     return ElementAccessor(x.name, x.returnType.toString(),
-        extractGetterBody(x.name, x.returnType.toString(), unit.toString()));
+        defaultValue:
+            extractGetterBody(x.name, x.returnType.toString(), unit.toString()),
+        extra: "x.type:" +
+            x.type.toString() +
+            "|runtimeType:" +
+            x.runtimeType.toString());
   }).toList();
 
   return Future.wait(blah);

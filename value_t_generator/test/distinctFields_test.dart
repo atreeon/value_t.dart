@@ -57,5 +57,13 @@ void main() {
               ),
               ElementAccessor("infoMessages", "List<String>"),
             ]));
+
+    test(
+        "6",
+        () => exp_distinctFields(exampleWithDollar, [
+              ElementAccessor("pet", "Pet"),
+              ElementAccessor("answer", "String"),
+              ElementAccessor("infoMessages", "List<String>"),
+            ]));
   });
 }

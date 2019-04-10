@@ -3,7 +3,7 @@ import 'package:value_t_generator/src/ElementForValueT.dart';
 var example1 = ElementSuperType(
   ElementSuperType(
     null,
-    [ElementAccessor("fullWord", "String", null)],
+    [ElementAccessor("fullWord", "String")],
     [],
     null,
   ),
@@ -16,7 +16,7 @@ var example2 = ElementSuperType(
   ElementSuperType(
     ElementSuperType(
       null,
-      [ElementAccessor("fullWord", "String", null)],
+      [ElementAccessor("fullWord", "String")],
       [],
       null,
     ),
@@ -33,7 +33,7 @@ var example3 = ElementSuperType(
   ElementSuperType(
     ElementSuperType(
       null,
-      [ElementAccessor("fullWord", "String", null)],
+      [ElementAccessor("fullWord", "String")],
       [],
       null,
     ),
@@ -42,8 +42,8 @@ var example3 = ElementSuperType(
     null,
   ),
   [
-    ElementAccessor("answer", "String", null),
-    ElementAccessor("infoMessages", "List<String>", null),
+    ElementAccessor("answer", "String"),
+    ElementAccessor("infoMessages", "List<String>"),
   ],
   [],
   null,
@@ -53,17 +53,17 @@ var exampleDuplicates = ElementSuperType(
   ElementSuperType(
     ElementSuperType(
       null,
-      [ElementAccessor("fullWord", "String", null)],
+      [ElementAccessor("fullWord", "String")],
       [],
       null,
     ),
-    [ElementAccessor("fullWord", "String", null)],
+    [ElementAccessor("fullWord", "String")],
     [],
     null,
   ),
   [
-    ElementAccessor("answer", "String", null),
-    ElementAccessor("infoMessages", "List<String>", null),
+    ElementAccessor("answer", "String"),
+    ElementAccessor("infoMessages", "List<String>"),
   ],
   [],
   null,
@@ -89,19 +89,19 @@ var exampleNoFields = ElementSuperType(
 var exampleWithInterfacesSimple = ElementSuperType(
   ElementSuperType(
     null,
-    [ElementAccessor("fullWord", "String", null)],
+    [ElementAccessor("fullWord", "String")],
     [
       Interface(
         ElementSuperType(
           null,
           [
-            ElementAccessor("A", "int", null),
-            ElementAccessor("B", "int", null),
+            ElementAccessor("A", "int"),
+            ElementAccessor("B", "int"),
           ],
           [],
           null,
         ),
-        [ElementAccessor("C", "int", null)],
+        [ElementAccessor("C", "int")],
         [],
         null,
       )
@@ -109,7 +109,7 @@ var exampleWithInterfacesSimple = ElementSuperType(
     null,
   ),
   [
-    ElementAccessor("infoMessages", "List<String>", null),
+    ElementAccessor("infoMessages", "List<String>"),
   ],
   [],
   null,
@@ -118,19 +118,19 @@ var exampleWithInterfacesSimple = ElementSuperType(
 var exampleWithDefaultValue = ElementSuperType(
   ElementSuperType(
     null,
-    [ElementAccessor("fullWord", "String", """ "default" """)],
+    [ElementAccessor("fullWord", "String", defaultValue: """ "default" """)],
     [
       Interface(
         ElementSuperType(
           null,
           [
-            ElementAccessor("A", "int", null),
-            ElementAccessor("B", "int", null),
+            ElementAccessor("A", "int"),
+            ElementAccessor("B", "int"),
           ],
           [],
           null,
         ),
-        [ElementAccessor("C", "int", null)],
+        [ElementAccessor("C", "int")],
         [],
         null,
       )
@@ -138,7 +138,28 @@ var exampleWithDefaultValue = ElementSuperType(
     null,
   ),
   [
-    ElementAccessor("infoMessages", "List<String>", """ List<String>() """),
+    ElementAccessor("infoMessages", "List<String>",
+        defaultValue: """ List<String>() """),
+  ],
+  [],
+  null,
+);
+
+var exampleWithDollar = ElementSuperType(
+  ElementSuperType(
+    ElementSuperType(
+      null,
+      [ElementAccessor("pet", "\$Pet")],
+      [],
+      null,
+    ),
+    [],
+    [],
+    null,
+  ),
+  [
+    ElementAccessor("answer", "String"),
+    ElementAccessor("infoMessages", "List<String>"),
   ],
   [],
   null,

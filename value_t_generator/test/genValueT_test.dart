@@ -16,14 +16,14 @@ void main() {
         "1",
         () => exp_constructor(
             "MyClass",
-            [ElementAccessor("word", "String", null)],
+            [ElementAccessor("word", "String")],
             "MyClass({@required this.word,\n}){"));
 
     test(
         "2 with default value",
         () => exp_constructor(
             "MyClass",
-            [ElementAccessor("word", "String", """ "default" """)],
+            [ElementAccessor("word", "String", defaultValue: """ "default" """)],
             """MyClass({this.word = "default",\n}){"""));
   });
 
