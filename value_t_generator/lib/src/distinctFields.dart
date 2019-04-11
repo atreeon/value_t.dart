@@ -3,11 +3,13 @@ import 'package:value_t_generator/src/ElementForValueT.dart';
 List<ElementAccessor> distinctFields(ElementSuperType element) {
   var fields = Set<ElementAccessor>();
   var r = getAccessors(fields, element).toList();
-  r = r
-      .map((x) => x.copyWith(x.type[0] == "\$" ? x.type.substring(1) : x.type))
-      .toList();
+  r = r.map((x) => x.copyWith(type: removeDollarFromType(x.type))).toList();
   r.sort((a, b) => a.name.compareTo(b.name));
   return r;
+}
+
+String removeDollarFromType(String type) {
+  return type.replaceAll("\$", "");
 }
 
 Set<ElementAccessor> getAccessors(

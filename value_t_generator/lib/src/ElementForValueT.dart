@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:quiver/core.dart';
 
 class ElementSuperType {
@@ -29,7 +30,7 @@ class ElementAccessor {
 
   ElementAccessor(this.name, this.type, {this.defaultValue, this.extra});
 
-  ElementAccessor copyWith(String type) => ElementAccessor(
+  ElementAccessor copyWith({@required String type}) => ElementAccessor(
         this.name,
         type,
         defaultValue: this.defaultValue,

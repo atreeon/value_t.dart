@@ -66,4 +66,21 @@ void main() {
               ElementAccessor("infoMessages", "List<String>"),
             ]));
   });
+
+  group("removeDollarFromType", () {
+    void exp_removeDollarFromType(String type, String expected) {
+      var result = removeDollarFromType(type);
+      expect(result, expected);
+    }
+
+    test("1", () => exp_removeDollarFromType("\$Foreign", "Foreign"));
+
+    test("2 in generic type",
+        () => exp_removeDollarFromType("List<\$Foreign>", "List<Foreign>"));
+
+    test(
+        "3 in multiple levels down type",
+        () => exp_removeDollarFromType(
+            "List<List<List<\$Foreign>>>", "List<List<List<Foreign>>>"));
+  });
 }
