@@ -22,6 +22,8 @@ String genValueT(
       if (!isAbstract) {
         yield () => constructor(className, fields);
         yield () => constructorAssertions(fields);
+      } else {
+        yield () => constructorNoFields(className);
       }
       yield () => copyWithSignature(className);
       yield () => copyWithParams(fields);
@@ -32,6 +34,8 @@ String genValueT(
         yield () => copyWithLines(fields);
         yield () => closeCopyWith();
       }
+    } else {
+      yield () => constructorNoFields(className);
     }
     yield () => closeClass();
   }())
@@ -66,18 +70,23 @@ String finalFields(bool isAbstract, List<ElementAccessor> fields) =>
             ? "${v}\n${k.type} get ${k.name};"
             : "${v}\nfinal ${k.type} ${k.name};");
 
+String constructorNoFields(String className) => "const ${className}();";
+
 String constructor(String className, List<ElementAccessor> fields) =>
     "" +
-    "${className}({" +
+    "const ${className}({" +
     fields.fold(
         "",
         (v, k) => k.defaultValue == null
             ? "${v}@required this.${k.name},\n"
             : "${v}this.${k.name} = ${k.defaultValue.trim()},\n") +
-    "}){";
+    "}):";
 
-String constructorAssertions(List<ElementAccessor> fields) =>
-    fields.fold("", (v, k) => "${v}\nassert(this.${k.name} != null);") + "}";
+String constructorAssertions(List<ElementAccessor> fields) {
+  var assertions =
+      fields.fold("", (v, k) => "${v}\nassert(${k.name} != null),");
+  return assertions.substring(0, assertions.length - 1) + ";";
+}
 
 String copyWithSignature(String className) => "${className} copyWith({";
 

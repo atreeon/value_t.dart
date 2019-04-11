@@ -2,7 +2,7 @@ import 'package:example/ValueT_Pets.dart';
 import 'package:meta/meta.dart';
 import 'package:value_t_annotation/value_t_annotation.dart';
 
-part 'ValueT_CopyWithHierarchy.g.dart';
+part 'ValueT_ConstDefault.g.dart';
 
 @ValueT(true)
 abstract class $Person {
@@ -24,31 +24,10 @@ abstract class $Employee extends $Person {
 @ValueT()
 abstract class $WindowCleaner extends $Employee implements $OftenWet {
   String get windowMaxSize => "big";
-  $Pet get pet;
+  $Pet get pet => const Pet(type:"cat");
 }
 
 @ValueT()
 abstract class $Manager extends $Person {
   String get bosses;
-}
-
-main() {
-  Person a = WindowCleaner(name: "Bob", employeeId: 5, wetness: "wet");
-
-  if (a is Employee) {
-    print('I am an employee');
-    print(a.employeeId);
-  }
-
-  if (a is Person) {
-    print('I am a Person');
-    print(a.name);
-  }
-
-  var b = a.copyWith(name: "bobby");
-  print(b.name);
-
-  if (b is OftenWet) {
-    print("windowCleaners are OftenWet");
-  }
 }

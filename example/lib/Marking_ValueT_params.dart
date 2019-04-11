@@ -5,25 +5,37 @@ part 'Marking_ValueT_params.g.dart';
 
 List<String> blah() => List<String>();
 
-abstract class Marking {
+@ValueT(true)
+abstract class $Marking {
   List<String> get infoMessages;
+  const $Marking();
 }
 
-abstract class IsCorrect {}
+@ValueT(true)
+abstract class $IsCorrect {
+  const $IsCorrect();
+}
 
-abstract class HasWord {
+@ValueT(true)
+abstract class $HasWord {
   String get word;
+  const $HasWord();
 }
 
 @ValueT()
-abstract class $MarkingCorrectNoWord implements Marking, IsCorrect {}
+abstract class $MarkingCorrectNoWord implements $Marking, $IsCorrect {
+  const $MarkingCorrectNoWord();
+}
 
 @ValueT()
-abstract class $MarkingCorrect implements Marking, HasWord, IsCorrect {}
+abstract class $MarkingCorrect implements $Marking, $HasWord, $IsCorrect {
+  const $MarkingCorrect();
+}
 
 @ValueT()
-abstract class $MarkingIncorrect implements Marking, HasWord {
+abstract class $MarkingIncorrect implements $Marking, $HasWord {
   String get answer => "";
+  const $MarkingIncorrect();
 }
 
 main() {

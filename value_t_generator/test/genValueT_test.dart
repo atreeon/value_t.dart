@@ -17,14 +17,14 @@ void main() {
         () => exp_constructor(
             "MyClass",
             [ElementAccessor("word", "String")],
-            "MyClass({@required this.word,\n}){"));
+            "const MyClass({@required this.word,\n}):"));
 
     test(
         "2 with default value",
         () => exp_constructor(
             "MyClass",
             [ElementAccessor("word", "String", defaultValue: """ "default" """)],
-            """MyClass({this.word = "default",\n}){"""));
+            """const MyClass({this.word = "default",\n}):"""));
   });
 
   group("genValueT", () {
@@ -40,10 +40,10 @@ void main() {
 {
 
 final String fullWord;
-MyClass({@required this.fullWord,
-}){
+const MyClass({@required this.fullWord,
+}):
 
-assert(this.fullWord != null);}
+assert(this.fullWord != null);
 MyClass copyWith({
 String fullWord,
 })
@@ -62,14 +62,14 @@ fullWord: fullWord == null ? this.fullWord : fullWord,
 final String answer;
 final String fullWord;
 final List<String> infoMessages;
-MyClass({@required this.answer,
+const MyClass({@required this.answer,
 @required this.fullWord,
 @required this.infoMessages,
-}){
+}):
 
-assert(this.answer != null);
-assert(this.fullWord != null);
-assert(this.infoMessages != null);}
+assert(this.answer != null),
+assert(this.fullWord != null),
+assert(this.infoMessages != null);
 MyClass copyWith({
 String answer,
 String fullWord,
@@ -88,6 +88,7 @@ infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
         """class MyClass
  extends \$MyClass 
 {
+const MyClass()
 }
 """));
 
@@ -102,18 +103,18 @@ final int B;
 final int C;
 final String fullWord;
 final List<String> infoMessages;
-MyClass({@required this.A,
+const MyClass({@required this.A,
 @required this.B,
 @required this.C,
 @required this.fullWord,
 @required this.infoMessages,
-}){
+}):
 
-assert(this.A != null);
-assert(this.B != null);
-assert(this.C != null);
-assert(this.fullWord != null);
-assert(this.infoMessages != null);}
+assert(this.A != null),
+assert(this.B != null),
+assert(this.C != null),
+assert(this.fullWord != null),
+assert(this.infoMessages != null);
 MyClass copyWith({
 int A,
 int B,
@@ -140,6 +141,7 @@ infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 String get answer;
 String get fullWord;
 List<String> get infoMessages;
+const MyClass()
 MyClass copyWith({
 String answer,
 String fullWord,

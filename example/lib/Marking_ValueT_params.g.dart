@@ -6,14 +6,32 @@ part of 'Marking_ValueT_params.dart';
 // ValueTGenerator
 // **************************************************************************
 
+abstract class Marking extends $Marking {
+  List<String> get infoMessages;
+  const Marking();
+  Marking copyWith({
+    List<String> infoMessages,
+  });
+}
+
+abstract class IsCorrect extends $IsCorrect {
+  const IsCorrect();
+}
+
+abstract class HasWord extends $HasWord {
+  String get word;
+  const HasWord();
+  HasWord copyWith({
+    String word,
+  });
+}
+
 class MarkingCorrectNoWord extends $MarkingCorrectNoWord
-    implements arking, sCorrect {
+    implements Marking, IsCorrect {
   final List<String> infoMessages;
-  MarkingCorrectNoWord({
+  const MarkingCorrectNoWord({
     @required this.infoMessages,
-  }) {
-    assert(this.infoMessages != null);
-  }
+  }) : assert(infoMessages != null);
   MarkingCorrectNoWord copyWith({
     List<String> infoMessages,
   }) =>
@@ -23,16 +41,14 @@ class MarkingCorrectNoWord extends $MarkingCorrectNoWord
 }
 
 class MarkingCorrect extends $MarkingCorrect
-    implements arking, asWord, sCorrect {
+    implements Marking, HasWord, IsCorrect {
   final List<String> infoMessages;
   final String word;
-  MarkingCorrect({
+  const MarkingCorrect({
     @required this.infoMessages,
     @required this.word,
-  }) {
-    assert(this.infoMessages != null);
-    assert(this.word != null);
-  }
+  })  : assert(infoMessages != null),
+        assert(word != null);
   MarkingCorrect copyWith({
     List<String> infoMessages,
     String word,
@@ -43,19 +59,17 @@ class MarkingCorrect extends $MarkingCorrect
       );
 }
 
-class MarkingIncorrect extends $MarkingIncorrect implements arking, asWord {
+class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   final String answer;
   final List<String> infoMessages;
   final String word;
-  MarkingIncorrect({
+  const MarkingIncorrect({
     this.answer = "",
     @required this.infoMessages,
     @required this.word,
-  }) {
-    assert(this.answer != null);
-    assert(this.infoMessages != null);
-    assert(this.word != null);
-  }
+  })  : assert(answer != null),
+        assert(infoMessages != null),
+        assert(word != null);
   MarkingIncorrect copyWith({
     String answer,
     List<String> infoMessages,

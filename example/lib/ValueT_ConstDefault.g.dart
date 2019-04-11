@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ValueT_CopyWithHierarchy.dart';
+part of 'ValueT_ConstDefault.dart';
 
 // **************************************************************************
 // ValueTGenerator
@@ -41,7 +41,7 @@ class WindowCleaner extends Employee implements OftenWet {
   const WindowCleaner({
     @required this.employeeId,
     @required this.name,
-    @required this.pet,
+    this.pet = const Pet(type: "cat"),
     @required this.wetness,
     this.windowMaxSize = "big",
   })  : assert(employeeId != null),

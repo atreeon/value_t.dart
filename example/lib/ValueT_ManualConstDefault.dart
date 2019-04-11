@@ -1,6 +1,11 @@
 import 'package:meta/meta.dart';
 
 // @ValueT(true)
+abstract class $OftenWet {
+  String get wetness;
+}
+
+// @ValueT(true)
 abstract class $Person {
   String get name;
 
@@ -13,7 +18,7 @@ abstract class $Employee extends $Person {
 }
 
 // @ValueT()
-abstract class $WindowCleaner extends $Employee {
+abstract class $WindowCleaner extends $Employee implements $OftenWet {
   String get windowMaxSize => "big";
 }
 
@@ -28,7 +33,13 @@ abstract class Person extends $Person {
 
   const Person();
 
-  Person copyWith({int name});
+  Person copyWith({String name});
+}
+
+abstract class OftenWet extends $OftenWet {
+  String get wetness;
+
+  OftenWet copyWith({String wetness});
 }
 
 //if is abstract
@@ -44,26 +55,29 @@ abstract class Employee extends Person {
   const Employee();
 
   Employee copyWith({
-    int name,
+    String name,
     String employeeId,
   });
 }
 
-class WindowCleaner extends Employee {
+class WindowCleaner extends Employee implements OftenWet {
   final String name;
   final String employeeId;
   final String windowMaxSize;
+  final String wetness;
 
   const WindowCleaner({
     @required this.name,
     @required this.employeeId,
     this.windowMaxSize = "big",
-  });
+    this.wetness,
+  }) : assert(name != null), assert(employeeId !=null);
 
   WindowCleaner copyWith({
-    int name,
+    String name,
     String employeeId,
     String windowMaxSize,
+    String wetness,
   }) =>
       WindowCleaner(
         name: name == null ? this.name : name,
@@ -74,16 +88,19 @@ class WindowCleaner extends Employee {
 }
 
 main() {
-  Person a = WindowCleaner(name: "Bob", employeeId: "window cleaner");
-  a.copyWith(name: 7);
+  Person a = WindowCleaner(name: null, employeeId: "window cleaner");
+  var c = a.copyWith(name: "Bob");
 
-  if (a is Employee) {
+  //null check
+  Person b = WindowCleaner(name: "Bob", employeeId: "window cleaner");
+
+  if (c is Employee) {
     print('I am an employee');
-    print(a.employeeId);
+    print(c.employeeId);
   }
 
-  if (a is Person) {
+  if (c is Person) {
     print('I am an employee');
-    print(a.name);
+    print(c.name);
   }
 }

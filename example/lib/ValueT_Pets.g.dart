@@ -6,9 +6,15 @@ part of 'ValueT_Pets.dart';
 // ValueTGenerator
 // **************************************************************************
 
-abstract class Pet extends $Pet {
-  String get type;
+class Pet extends $Pet {
+  final String type;
+  const Pet({
+    @required this.type,
+  }) : assert(type != null);
   Pet copyWith({
     String type,
-  });
+  }) =>
+      Pet(
+        type: type == null ? this.type : type,
+      );
 }

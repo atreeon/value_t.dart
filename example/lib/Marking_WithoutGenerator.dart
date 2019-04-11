@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:value_t_annotation/value_t_annotation.dart';
 
 abstract class MarkingState {
   String get fullWord;

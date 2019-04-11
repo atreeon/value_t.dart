@@ -3,20 +3,22 @@ import 'package:value_t_annotation/value_t_annotation.dart';
 
 part 'Marking_ValueT_extends.g.dart';
 
-abstract class MarkingState {
+@ValueT(true)
+abstract class $MarkingState {
   String get fullWord;
 }
 
-abstract class MarkingAnswered extends MarkingState {}
+@ValueT(true)
+abstract class $MarkingAnswered extends $MarkingState {}
 
 @ValueT()
-abstract class $MarkingUnanswered extends MarkingState {}
+abstract class $MarkingUnanswered extends $MarkingState {}
 
 @ValueT()
-abstract class $MarkingCorrect extends MarkingAnswered {}
+abstract class $MarkingCorrect extends $MarkingAnswered {}
 
 @ValueT()
-abstract class $MarkingIncorrect extends MarkingAnswered {
+abstract class $MarkingIncorrect extends $MarkingAnswered {
   String get answer;
   List<String> get infoMessages;
 }

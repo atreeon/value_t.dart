@@ -6,13 +6,11 @@ part of 'Marking_ValueT_extends.dart';
 // ValueTGenerator
 // **************************************************************************
 
-class MarkingUnanswered extends arkingState {
+class MarkingUnanswered extends $MarkingState {
   final String fullWord;
-  MarkingUnanswered({
+  const MarkingUnanswered({
     @required this.fullWord,
-  }) {
-    assert(this.fullWord != null);
-  }
+  }) : assert(fullWord != null);
   MarkingUnanswered copyWith({
     String fullWord,
   }) =>
@@ -21,13 +19,11 @@ class MarkingUnanswered extends arkingState {
       );
 }
 
-class MarkingCorrect extends arkingAnswered {
+class MarkingCorrect extends MarkingAnswered {
   final String fullWord;
-  MarkingCorrect({
+  const MarkingCorrect({
     @required this.fullWord,
-  }) {
-    assert(this.fullWord != null);
-  }
+  }) : assert(fullWord != null);
   MarkingCorrect copyWith({
     String fullWord,
   }) =>
@@ -36,19 +32,17 @@ class MarkingCorrect extends arkingAnswered {
       );
 }
 
-class MarkingIncorrect extends arkingAnswered {
+class MarkingIncorrect extends MarkingAnswered {
   final String answer;
   final String fullWord;
   final List<String> infoMessages;
-  MarkingIncorrect({
+  const MarkingIncorrect({
     @required this.answer,
     @required this.fullWord,
     @required this.infoMessages,
-  }) {
-    assert(this.answer != null);
-    assert(this.fullWord != null);
-    assert(this.infoMessages != null);
-  }
+  })  : assert(answer != null),
+        assert(fullWord != null),
+        assert(infoMessages != null);
   MarkingIncorrect copyWith({
     String answer,
     String fullWord,
