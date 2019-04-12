@@ -6,7 +6,23 @@ part of 'Marking_ValueT_extends.dart';
 // ValueTGenerator
 // **************************************************************************
 
-class MarkingUnanswered extends $MarkingState {
+abstract class MarkingState extends $MarkingState {
+  String get fullWord;
+  const MarkingState();
+  MarkingState copyWith({
+    String fullWord,
+  });
+}
+
+abstract class MarkingAnswered extends MarkingState {
+  String get fullWord;
+  const MarkingAnswered();
+  MarkingAnswered copyWith({
+    String fullWord,
+  });
+}
+
+class MarkingUnanswered extends MarkingState {
   final String fullWord;
   const MarkingUnanswered({
     @required this.fullWord,
@@ -17,6 +33,7 @@ class MarkingUnanswered extends $MarkingState {
       MarkingUnanswered(
         fullWord: fullWord == null ? this.fullWord : fullWord,
       );
+  String toString() => "|fullWord:" + fullWord.toString();
 }
 
 class MarkingCorrect extends MarkingAnswered {
@@ -30,6 +47,7 @@ class MarkingCorrect extends MarkingAnswered {
       MarkingCorrect(
         fullWord: fullWord == null ? this.fullWord : fullWord,
       );
+  String toString() => "|fullWord:" + fullWord.toString();
 }
 
 class MarkingIncorrect extends MarkingAnswered {
@@ -53,4 +71,11 @@ class MarkingIncorrect extends MarkingAnswered {
         fullWord: fullWord == null ? this.fullWord : fullWord,
         infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
       );
+  String toString() =>
+      "|answer:" +
+      answer.toString() +
+      "|fullWord:" +
+      fullWord.toString() +
+      "|infoMessages:" +
+      infoMessages.toString();
 }

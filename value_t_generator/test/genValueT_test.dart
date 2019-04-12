@@ -14,17 +14,27 @@ void main() {
 
     test(
         "1",
-        () => exp_constructor(
-            "MyClass",
-            [ElementAccessor("word", "String")],
+        () => exp_constructor("MyClass", [ElementAccessor("word", "String")],
             "const MyClass({@required this.word,\n}):"));
 
     test(
         "2 with default value",
-        () => exp_constructor(
-            "MyClass",
-            [ElementAccessor("word", "String", defaultValue: """ "default" """)],
-            """const MyClass({this.word = "default",\n}):"""));
+        () => exp_constructor("MyClass", [
+              ElementAccessor("word", "String", defaultValue: """ "default" """)
+            ], """const MyClass({this.word = "default",\n}):"""));
+  });
+
+  group("toString", () {
+    void exp_toString(List<ElementAccessor> fields, String expected) {
+      var result = toString(fields);
+      expect(result, expected);
+    }
+
+    test(
+        "1",
+        () => exp_toString(
+            [ElementAccessor("age", "int"), ElementAccessor("word", "String")],
+            """@override String toString() =>  "|age:" + age.toString() + "|word:" + word.toString() ;"""));
   });
 
   group("genValueT", () {
@@ -43,7 +53,7 @@ final String fullWord;
 const MyClass({@required this.fullWord,
 }):
 
-assert(this.fullWord != null);
+assert(fullWord != null);
 MyClass copyWith({
 String fullWord,
 })
@@ -51,6 +61,7 @@ String fullWord,
 
 fullWord: fullWord == null ? this.fullWord : fullWord,
 );
+@override String toString() =>  "|fullWord:" + fullWord.toString() ;
 }
 """));
 
@@ -67,9 +78,9 @@ const MyClass({@required this.answer,
 @required this.infoMessages,
 }):
 
-assert(this.answer != null),
-assert(this.fullWord != null),
-assert(this.infoMessages != null);
+assert(answer != null),
+assert(fullWord != null),
+assert(infoMessages != null);
 MyClass copyWith({
 String answer,
 String fullWord,
@@ -81,6 +92,7 @@ answer: answer == null ? this.answer : answer,
 fullWord: fullWord == null ? this.fullWord : fullWord,
 infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 );
+@override String toString() =>  "|answer:" + answer.toString() + "|fullWord:" + fullWord.toString() + "|infoMessages:" + infoMessages.toString() ;
 }
 """));
 
@@ -88,7 +100,7 @@ infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
         """class MyClass
  extends \$MyClass 
 {
-const MyClass()
+const MyClass();
 }
 """));
 
@@ -110,11 +122,11 @@ const MyClass({@required this.A,
 @required this.infoMessages,
 }):
 
-assert(this.A != null),
-assert(this.B != null),
-assert(this.C != null),
-assert(this.fullWord != null),
-assert(this.infoMessages != null);
+assert(A != null),
+assert(B != null),
+assert(C != null),
+assert(fullWord != null),
+assert(infoMessages != null);
 MyClass copyWith({
 int A,
 int B,
@@ -130,6 +142,7 @@ C: C == null ? this.C : C,
 fullWord: fullWord == null ? this.fullWord : fullWord,
 infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 );
+@override String toString() =>  "|A:" + A.toString() + "|B:" + B.toString() + "|C:" + C.toString() + "|fullWord:" + fullWord.toString() + "|infoMessages:" + infoMessages.toString() ;
 }
 """));
 
@@ -141,7 +154,7 @@ infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
 String get answer;
 String get fullWord;
 List<String> get infoMessages;
-const MyClass()
+const MyClass();
 MyClass copyWith({
 String answer,
 String fullWord,

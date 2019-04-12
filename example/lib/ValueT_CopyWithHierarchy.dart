@@ -33,7 +33,7 @@ abstract class $Manager extends $Person {
 }
 
 main() {
-  Person a = WindowCleaner(name: "Bob", employeeId: 5, wetness: "wet");
+  Person a = WindowCleaner(pet: Pet(type: "cat"), name: "Bob", employeeId: 5, wetness: "wet");
 
   if (a is Employee) {
     print('I am an employee');

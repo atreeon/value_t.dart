@@ -33,6 +33,7 @@ String genValueT(
         yield () => copyWithCreate(className);
         yield () => copyWithLines(fields);
         yield () => closeCopyWith();
+        yield () => toString(fields);
       }
     } else {
       yield () => constructorNoFields(className);
@@ -101,5 +102,12 @@ String copyWithLines(List<ElementAccessor> fields) => fields.fold(
         "${v}\n${k.name}: ${k.name} == null ? this.${k.name} : ${k.name},");
 
 String closeCopyWith() => ");";
+
+String toString(List<ElementAccessor> fields) {
+  var toString = fields.fold("@override String toString() => ",
+      (v, k) => """${v} "|${k.name}:" + ${k.name}.toString() +""");
+  
+  return toString.substring(0, toString.length - 1) + ";";
+}
 
 String closeClass() => "}";

@@ -93,6 +93,7 @@ main() {
 
   //null check
   Person b = WindowCleaner(name: "Bob", employeeId: "window cleaner");
+  print("b:" + b.toString());
 
   if (c is Employee) {
     print('I am an employee');

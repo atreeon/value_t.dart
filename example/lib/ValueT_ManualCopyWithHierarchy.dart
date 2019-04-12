@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:value_t_annotation/value_t_annotation.dart';
 
 // @ValueT(true)
 abstract class $Person {

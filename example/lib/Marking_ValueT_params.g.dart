@@ -38,6 +38,7 @@ class MarkingCorrectNoWord extends $MarkingCorrectNoWord
       MarkingCorrectNoWord(
         infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
       );
+  String toString() => "|infoMessages:" + infoMessages.toString();
 }
 
 class MarkingCorrect extends $MarkingCorrect
@@ -57,6 +58,8 @@ class MarkingCorrect extends $MarkingCorrect
         infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
         word: word == null ? this.word : word,
       );
+  String toString() =>
+      "|infoMessages:" + infoMessages.toString() + "|word:" + word.toString();
 }
 
 class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
@@ -80,4 +83,11 @@ class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
         infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
         word: word == null ? this.word : word,
       );
+  String toString() =>
+      "|answer:" +
+      answer.toString() +
+      "|infoMessages:" +
+      infoMessages.toString() +
+      "|word:" +
+      word.toString();
 }

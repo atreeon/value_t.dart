@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:value_t_annotation/value_t_annotation.dart';
 
 abstract class MarkingState {
   String get fullWord;
@@ -40,4 +39,7 @@ main() {
   var a = MarkingUnanswered(fullWord: "blah", category: "sdf");
   var b = MarkingUnanswered(fullWord: "blah");
   var c = MarkingUnanswered(fullWord: "blah");
+  print(a.toString());
+  print(b.toString());
+  print(c.toString());
 }

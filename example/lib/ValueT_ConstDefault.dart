@@ -24,10 +24,16 @@ abstract class $Employee extends $Person {
 @ValueT()
 abstract class $WindowCleaner extends $Employee implements $OftenWet {
   String get windowMaxSize => "big";
-  $Pet get pet => const Pet(type:"cat");
+  $Pet get pet => const Pet(type: "cat");
 }
 
 @ValueT()
 abstract class $Manager extends $Person {
   String get bosses;
+}
+
+main() {
+  var a = WindowCleaner(
+      employeeId: 5, name: "bob", wetness: "very wet", pet: Pet(type: "dog"));
+  print(a.toString());
 }

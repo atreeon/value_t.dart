@@ -17,4 +17,5 @@ class Pet extends $Pet {
       Pet(
         type: type == null ? this.type : type,
       );
+  String toString() => "|type:" + type.toString();
 }

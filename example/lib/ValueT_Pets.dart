@@ -9,3 +9,9 @@ abstract class $Pet {
 
   const $Pet();
 }
+
+main() {
+  var a = Pet(type: "cat");
+  var b = Pet(type: "cat");
+  print(a == b); //false
+}

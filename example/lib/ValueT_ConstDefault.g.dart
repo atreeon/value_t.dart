@@ -64,6 +64,18 @@ class WindowCleaner extends Employee implements OftenWet {
         windowMaxSize:
             windowMaxSize == null ? this.windowMaxSize : windowMaxSize,
       );
+      
+  String toString() =>
+      "|employeeId:" +
+      employeeId.toString() +
+      "|name:" +
+      name.toString() +
+      "|pet:" +
+      pet.toString() +
+      "|wetness:" +
+      wetness.toString() +
+      "|windowMaxSize:" +
+      windowMaxSize.toString();
 }
 
 class Manager extends Person {
@@ -82,4 +94,6 @@ class Manager extends Person {
         bosses: bosses == null ? this.bosses : bosses,
         name: name == null ? this.name : name,
       );
+  String toString() =>
+      "|bosses:" + bosses.toString() + "|name:" + name.toString();
 }

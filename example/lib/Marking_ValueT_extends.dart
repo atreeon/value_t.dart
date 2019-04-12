@@ -6,6 +6,7 @@ part 'Marking_ValueT_extends.g.dart';
 @ValueT(true)
 abstract class $MarkingState {
   String get fullWord;
+  const $MarkingState();
 }
 
 @ValueT(true)
