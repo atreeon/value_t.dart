@@ -3,10 +3,11 @@
 Generates code to create simple type with a copywith class and implements all the getter fields in any extended or implemented classes.
 
 ### Advantages over coding it yourself
-So much less code to write and then read back over too.  Also, refactoring can be less because you don't need to change all the names in the copyWith definitions and where a class has been extended multiple times.
+Less code to write and then read back over too.  Also, refactoring can be less because you don't need to change all the names in the copyWith definitions and where a class has been extended multiple times.  A free toString implementation (useful for equality in testing)
 
 ### Downsides over coding it yourself
 ####Go to definition will take you to the generated class...two work arounds
++ Need to define a const constructor in the base type
 + Go to definition then on the $MyClass go to definition again...not much of an impedement
 + name the file the same as your class and instead of pressing f12 cmd + p and type the filename.  This sounds like more work but because of the conciseness of your classes you can fit whole class heirarchies and related interfaces in a single file and still view all the definitions.
 + Also, the generated file will have the fields names so you can is it as a reference anyway
@@ -61,7 +62,7 @@ abstract class $MyClass {
 var a = MyClass("Adrian");
 ```
 
-### See Marking_ValueT_extends and Marking_ValueT_implements in the example
+### See example folder for usage
 
 ### Inspirations
 Thanks for built_value and meta_types for inspiration (the dollar in front of the class names was copied from meta_types)
