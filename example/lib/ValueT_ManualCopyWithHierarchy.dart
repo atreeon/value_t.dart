@@ -13,6 +13,7 @@ abstract class $Employee extends $Person {
 // @ValueT()
 abstract class $WindowCleaner extends $Employee {
   String get windowMaxSize => "big";
+  Pet get pet;
 }
 
 // @ValueT()
@@ -47,24 +48,35 @@ class WindowCleaner extends Employee {
   final String name;
   final String employeeId;
   final String windowMaxSize;
+  final Pet pet;
 
   WindowCleaner({
     @required this.name,
     @required this.employeeId,
     this.windowMaxSize = "big",
+    this.pet,
   });
 
   WindowCleaner copyWith({
     int name,
     String employeeId,
     String windowMaxSize,
+    Pet pet,
+    String pet_type,
+    String pet_name,
   }) =>
       WindowCleaner(
-        name: name == null ? this.name : name,
-        employeeId: employeeId == null ? this.employeeId : employeeId,
-        windowMaxSize:
-            windowMaxSize == null ? this.windowMaxSize : windowMaxSize,
-      );
+          name: name == null ? this.name : name,
+          employeeId: employeeId == null ? this.employeeId : employeeId,
+          windowMaxSize:
+              windowMaxSize == null ? this.windowMaxSize : windowMaxSize,
+          pet: pet == null
+              ? this.pet
+              : pet_type == null && pet_name == null
+                  ? pet
+                  : Pet(
+                      type: pet_type == null ? this.pet.type : pet_type,
+                      name: pet_name == null ? this.pet.name : pet_name));
 }
 
 main() {
@@ -80,4 +92,22 @@ main() {
     print('I am an employee');
     print(a.name);
   }
+}
+
+class Pet {
+  final String type;
+  final String name;
+  const Pet({
+    @required this.type,
+    @required this.name,
+  }) : assert(type != null);
+  Pet copyWith({
+    String type,
+    String name,
+  }) =>
+      Pet(
+        type: type == null ? this.type : type,
+        name: name == null ? this.name : name,
+      );
+  String toString() => "|type:" + type.toString();
 }

@@ -8,5 +8,15 @@ TODO:
 * if a getter is redefined further down the hierarchy (overriden) make
   sure that the default value is overridden too
 * have two constructors, one named and one not named
+    possibly for this, if the constructor list is <= 4 then have
+    not named; or only have named for base types (string, int, bool etc)
+    because objects usually define what the named type is quite well
+    or some combination of that logic.  Named parameters are a bit verbose
+    and often not necessary (can always name my variables a bit better
+    if I want additional clarity)
+* to avoid vm.copyWith(person: vm.copyWith(pet: vm.person.pet.copyWith(type: Mitzy)))
+    we could combine the next three levels all into the copywith, this would
+    be a great help and really reduce code for my vms.
+    See my pairs view model for a good idea of the problem 
 */
 }

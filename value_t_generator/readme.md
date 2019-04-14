@@ -1,9 +1,9 @@
 ## value_t
 
-Generates code to create simple type with a copywith class and implements all the getter fields in any extended or implemented classes.
+Generates code to create a simple type with a copywith class and implements all the getter fields in any extended or implemented classes.
 
 ### Advantages over coding it yourself
-Less code to write and then read back over too.  Also, refactoring can be less because you don't need to change all the names in the copyWith definitions and where a class has been extended multiple times.  A free toString implementation (useful for equality in testing)
+Less code to write and less code to read back over too.  Refactoring can be less because you don't need to change all the names in the copyWith definitions, constructors and where a class has been extended multiple times.  A free toString implementation (I find this useful when comparing objects for tests)
 
 ### Downsides over coding it yourself
 ####Go to definition will take you to the generated class...two work arounds
@@ -25,24 +25,24 @@ Usage
 
 Definition
 ```
-abstract class Marking {}
+  Person a = WindowCleaner(pet: Pet(type: "cat"), name: "Bob", employeeId: 5, wetness: "wet");
 
-abstract class IsCorrect {}
+  if (a is Employee) {
+    print('I am an employee');
+    print(a.employeeId);
+  }
 
-abstract class HasWord {
-  String get word;
-}
+  if (a is Person) {
+    print('I am a Person');
+    print(a.name);
+  }
 
-@ValueT() //will be made non abastract and getters created
-abstract class $MarkingCorrectNoWord implements Marking, IsCorrect {}
+  var b = a.copyWith(name: "bobby");
+  print(b.name);
 
-@ValueT()
-abstract class $MarkingCorrect implements Marking, HasWord, IsCorrect {}
-
-@ValueT()
-abstract class $MarkingIncorrect implements Marking, HasWord {
-  String get answer;
-  List<String> get infoMessages;
+  if (b is OftenWet) {
+    print("windowCleaners are OftenWet");
+  }
 }
 ```
 
@@ -59,10 +59,10 @@ abstract class $MyClass {
 
 ### When using your class in code remove the dollar
 ```
-var a = MyClass("Adrian");
+var a = MyClass("Adriaaan");
 ```
 
 ### See example folder for usage
 
-### Inspirations
-Thanks for built_value and meta_types for inspiration (the dollar in front of the class names was copied from meta_types)
+### Inspirations and alternatives
+built_value and meta_types
