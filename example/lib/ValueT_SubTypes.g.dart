@@ -6,7 +6,7 @@ part of 'ValueT_SubTypes.dart';
 // ValueTGenerator
 // **************************************************************************
 
-////|//@ValueT(true)
+//__name:false,pet:true,__type:false,colour:false,collar:true,__size:false,
 abstract class Person extends $Person {
   String get name;
   Pet get pet;
@@ -17,7 +17,7 @@ abstract class Person extends $Person {
   });
 }
 
-////@ValueT(false)|//|//
+//__type:false,colour:false,collar:true,__size:false,
 abstract class Pet extends $Pet {
   Collar get collar;
   String get colour;
@@ -30,7 +30,7 @@ abstract class Pet extends $Pet {
   });
 }
 
-////
+//__size:false,
 class Collar extends $Collar {
   final String size;
   const Collar({

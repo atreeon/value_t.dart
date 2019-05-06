@@ -6,7 +6,7 @@ part of 'Marking_ValueT_params.dart';
 // ValueTGenerator
 // **************************************************************************
 
-////
+//__infoMessages:false,
 abstract class Marking extends $Marking {
   List<String> get infoMessages;
   const Marking();
@@ -15,12 +15,12 @@ abstract class Marking extends $Marking {
   });
 }
 
-//
+//__
 abstract class IsCorrect extends $IsCorrect {
   const IsCorrect();
 }
 
-////
+//__word:false,
 abstract class HasWord extends $HasWord {
   String get word;
   const HasWord();
@@ -29,7 +29,7 @@ abstract class HasWord extends $HasWord {
   });
 }
 
-////
+//__
 class MarkingCorrectNoWord extends $MarkingCorrectNoWord
     implements Marking, IsCorrect {
   final List<String> infoMessages;
@@ -46,7 +46,7 @@ class MarkingCorrectNoWord extends $MarkingCorrectNoWord
   String toString() => "|infoMessages:" + infoMessages.toString();
 }
 
-////|//
+//__
 class MarkingCorrect extends $MarkingCorrect
     implements Marking, HasWord, IsCorrect {
   final List<String> infoMessages;
@@ -69,7 +69,7 @@ class MarkingCorrect extends $MarkingCorrect
       "|infoMessages:" + infoMessages.toString() + "|word:" + word.toString();
 }
 
-////|//|//
+//__answer:false,
 class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   final String answer;
   final List<String> infoMessages;

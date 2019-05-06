@@ -5,10 +5,11 @@ class ElementSuperType {
   final ElementSuperType elementSuperType;
   final List<ElementAccessor> elementAccessors;
   final List<Interface> interfaces;
+  final List<Property> properties;
   final String name;
 
-  ElementSuperType(
-      this.elementSuperType, this.elementAccessors, this.interfaces, this.name);
+  ElementSuperType(this.elementSuperType, this.elementAccessors,
+      this.interfaces, this.properties, this.name);
 }
 
 class Interface {
@@ -39,4 +40,12 @@ class ElementAccessor {
 
   bool operator ==(o) => o is ElementAccessor && name == o.name;
   int get hashCode => hash2(name.hashCode, type.hashCode);
+}
+
+class Property {
+  final String name;
+  final bool includeSubList;
+  final List<Property> properties;
+
+  Property(this.name, this.includeSubList, this.properties);
 }

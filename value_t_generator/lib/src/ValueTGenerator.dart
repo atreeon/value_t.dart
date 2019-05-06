@@ -10,14 +10,6 @@ import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/extractGetterBody.dart';
 import 'package:value_t_generator/src/genValueT.dart';
 
-class Property {
-  final String name;
-  final bool includeSubList;
-  final List<Property> properties;
-
-  Property(this.name, this.includeSubList, this.properties);
-}
-
 Future<CompilationUnit> getUnit(Element accessor) => accessor.session
         .getResolvedLibraryByElement(accessor.library)
         .then((resolvedLibrary) {
@@ -25,20 +17,21 @@ Future<CompilationUnit> getUnit(Element accessor) => accessor.session
       return declaration.resolvedUnit.unit;
     });
 
-List<Property> createSubListProperties(
+List<Property> createSubListProperties(List<ElementAnnotation> metadata,
     List<PropertyAccessorElement> accessors, List<Property> properties) {
   accessors.where((x) => x.isGetter).forEach((x) {
     if (x.returnType.element is ClassElement) {
       var element = x.returnType.element as ClassElement;
 
-      if ((x.returnType.element as ClassElement).metadata.length > 0) {
-        var metaData = element.metadata.first.toSource();
-        if (metaData.indexOf(x.name) > 0) {
-          properties.add(Property(x.name, true,
-              createSubListProperties(element.accessors, properties)));
-        } else {
-          properties.add(Property(x.name, false, null));
-        }
+      if (metadata.length > 0 &&
+          metadata.first.toSource().indexOf(x.name) > 0) {
+        properties.add(Property(
+            x.name,
+            true,
+            createSubListProperties(
+                element.metadata, element.accessors, List<Property>())));
+      } else {
+        properties.add(Property(x.name, false, null));
       }
     }
   });
@@ -84,6 +77,8 @@ Future<ElementSuperType> createElementSuperType(
               .map((x) async => await createInterface(x))
               .toList(),
         ),
+        createSubListProperties(classElement.metadata,
+            classElement.accessors.toList(), List<Property>()),
         null);
   }
 
@@ -95,6 +90,8 @@ Future<ElementSuperType> createElementSuperType(
             .map((x) async => await createInterface(x))
             .toList(),
       ),
+      createSubListProperties(classElement.metadata,
+          classElement.accessors.toList(), List<Property>()),
       classElement.supertype?.name ?? "");
 }
 

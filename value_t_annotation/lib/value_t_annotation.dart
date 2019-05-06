@@ -1,7 +1,10 @@
 ///value type - for annotation
 class ValueT {
   final bool isAbstract;
-  const ValueT([this.isAbstract = false]);
+
+  ///Sub property names for CopyWith function
+  final List<String> props;
+  const ValueT([this.isAbstract = false, this.props = null]);
 }
 
 class DefaultValue {

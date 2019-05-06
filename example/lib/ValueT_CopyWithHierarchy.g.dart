@@ -6,7 +6,7 @@ part of 'ValueT_CopyWithHierarchy.dart';
 // ValueTGenerator
 // **************************************************************************
 
-////
+//__name:false,
 abstract class Person extends $Person {
   String get name;
   const Person();
@@ -15,7 +15,7 @@ abstract class Person extends $Person {
   });
 }
 
-////
+//__wetness:false,
 abstract class OftenWet extends $OftenWet {
   String get wetness;
   const OftenWet();
@@ -24,7 +24,7 @@ abstract class OftenWet extends $OftenWet {
   });
 }
 
-////|//
+//__employeeId:false,
 abstract class Employee extends Person {
   int get employeeId;
   String get name;
@@ -35,7 +35,7 @@ abstract class Employee extends Person {
   });
 }
 
-////|//|//@ValueT()|//|//
+//__windowMaxSize:false,pet:false,
 class WindowCleaner extends Employee implements OftenWet {
   final int employeeId;
   final String name;
@@ -82,7 +82,7 @@ class WindowCleaner extends Employee implements OftenWet {
       windowMaxSize.toString();
 }
 
-////|//
+//__bosses:false,
 class Manager extends Person {
   final String bosses;
   final String name;

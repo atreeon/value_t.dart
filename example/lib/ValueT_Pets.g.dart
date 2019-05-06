@@ -6,7 +6,7 @@ part of 'ValueT_Pets.dart';
 // ValueTGenerator
 // **************************************************************************
 
-////
+//__type:false,
 class Pet extends $Pet {
   final String type;
   const Pet({

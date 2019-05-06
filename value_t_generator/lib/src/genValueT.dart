@@ -1,6 +1,23 @@
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/distinctFields.dart';
 
+StringBuffer combine(List<Property> properties) {
+  var sb = StringBuffer();
+  sb.write("__");
+  for (var item in properties) {
+    if (item.properties != null) {
+      sb.write(item.name +
+          ":" +
+          item.includeSubList.toString() +
+          "," +
+          combine(item.properties).toString());
+    } else {
+      sb.write(item.name + ":" + item.includeSubList.toString() + ",");
+    }
+  }
+  return sb;
+}
+
 String genValueT(
     bool isAbstract, ElementSuperType element, String extendsClass) {
   var fields = distinctFields(element);
@@ -13,7 +30,8 @@ String genValueT(
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
-    yield () => "//" + fields.map((x) => x.extra).join("|");
+    yield () => "//" + combine(element.properties).toString();
+    // yield () => "//" + fields.map((x) => x.extra).join("|");
     yield () => classDefinition(isAbstract, className, extendsClass);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
     yield () => "{";
@@ -106,7 +124,7 @@ String closeCopyWith() => ");";
 String toString(List<ElementAccessor> fields) {
   var toString = fields.fold("@override String toString() => ",
       (v, k) => """${v} "|${k.name}:" + ${k.name}.toString() +""");
-  
+
   return toString.substring(0, toString.length - 1) + ";";
 }
 

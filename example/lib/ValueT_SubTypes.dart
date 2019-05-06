@@ -3,7 +3,7 @@ import 'package:value_t_annotation/value_t_annotation.dart';
 
 part 'ValueT_SubTypes.g.dart';
 
-@ValueT(true)
+@ValueT(true, ["pet"])
 abstract class $Person {
   String get name;
   $Pet get pet;
@@ -11,7 +11,7 @@ abstract class $Person {
   const $Person();
 }
 
-@ValueT(true)
+@ValueT(true, ["collar"])
 abstract class $Pet {
   String get type;
   String get colour;
