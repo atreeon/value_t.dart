@@ -3,15 +3,15 @@ description: Generates code to create a value type including a copyWith method a
 version: 0.4.0
 author: Adriaaan Hill <gu64rk@gmail.com>
 homepage: https://github.com/twistedinferno/value_t.dart
- 
+
 environment:  
   sdk: ">=2.0.0 <3.0.0" 
-  
+
 dependencies:  
   build: ^1.1.1
   source_gen: ^0.9.4+1
-  value_t_annotation: ^0.4.0
-    # path: ../value_t_annotation
+  value_t_annotation: #^0.4.0
+    path: ../value_t_annotation
   quiver: ^2.0.1 
   analyzer: '>=0.35.4 <0.36.0'
   collection: ^1.14.11

@@ -10,12 +10,41 @@ import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/extractGetterBody.dart';
 import 'package:value_t_generator/src/genValueT.dart';
 
+class Property {
+  final String name;
+  final bool includeSubList;
+  final List<Property> properties;
+
+  Property(this.name, this.includeSubList, this.properties);
+}
+
 Future<CompilationUnit> getUnit(Element accessor) => accessor.session
         .getResolvedLibraryByElement(accessor.library)
         .then((resolvedLibrary) {
       var declaration = resolvedLibrary.getElementDeclaration(accessor);
       return declaration.resolvedUnit.unit;
     });
+
+List<Property> createSubListProperties(
+    List<PropertyAccessorElement> accessors, List<Property> properties) {
+  accessors.where((x) => x.isGetter).forEach((x) {
+    if (x.returnType.element is ClassElement) {
+      var element = x.returnType.element as ClassElement;
+
+      if ((x.returnType.element as ClassElement).metadata.length > 0) {
+        var metaData = element.metadata.first.toSource();
+        if (metaData.indexOf(x.name) > 0) {
+          properties.add(Property(x.name, true,
+              createSubListProperties(element.accessors, properties)));
+        } else {
+          properties.add(Property(x.name, false, null));
+        }
+      }
+    }
+  });
+
+  return properties;
+}
 
 Future<List<ElementAccessor>> createAccessors(
     List<PropertyAccessorElement> accessors) async {
@@ -25,10 +54,20 @@ Future<List<ElementAccessor>> createAccessors(
     return ElementAccessor(x.name, x.returnType.toString(),
         defaultValue:
             extractGetterBody(x.name, x.returnType.toString(), unit.toString()),
-        extra: "x.type:" +
-            x.type.toString() +
-            "|runtimeType:" +
-            x.runtimeType.toString());
+        extra: x.returnType.element is ClassElement
+            ? "//" +
+                ((x.returnType.element as ClassElement).metadata.length > 0
+                    ? (x.returnType.element as ClassElement)
+                        .metadata
+                        .first
+                        .toSource()
+                    : "")
+
+            // ?.firstWhere(
+            //     (x) => x.toSource()?.contains("@ValueT") ?? false)
+            // ?.toSource() ??
+            // ""
+            : "//${x.name} - NOT a");
   }).toList();
 
   return Future.wait(blah);
@@ -84,7 +123,6 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
 }
 
 class ValueTGenerator extends GeneratorForAnnotation<ValueT> {
-  @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
     var sb = StringBuffer();

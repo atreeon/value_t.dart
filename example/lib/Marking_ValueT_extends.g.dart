@@ -6,6 +6,7 @@ part of 'Marking_ValueT_extends.dart';
 // ValueTGenerator
 // **************************************************************************
 
+////
 abstract class MarkingState extends $MarkingState {
   String get fullWord;
   const MarkingState();
@@ -14,6 +15,7 @@ abstract class MarkingState extends $MarkingState {
   });
 }
 
+////
 abstract class MarkingAnswered extends MarkingState {
   String get fullWord;
   const MarkingAnswered();
@@ -22,6 +24,7 @@ abstract class MarkingAnswered extends MarkingState {
   });
 }
 
+////
 class MarkingUnanswered extends MarkingState {
   final String fullWord;
   const MarkingUnanswered({
@@ -33,9 +36,11 @@ class MarkingUnanswered extends MarkingState {
       MarkingUnanswered(
         fullWord: fullWord == null ? this.fullWord : fullWord,
       );
+  @override
   String toString() => "|fullWord:" + fullWord.toString();
 }
 
+////
 class MarkingCorrect extends MarkingAnswered {
   final String fullWord;
   const MarkingCorrect({
@@ -47,9 +52,11 @@ class MarkingCorrect extends MarkingAnswered {
       MarkingCorrect(
         fullWord: fullWord == null ? this.fullWord : fullWord,
       );
+  @override
   String toString() => "|fullWord:" + fullWord.toString();
 }
 
+////|//|//
 class MarkingIncorrect extends MarkingAnswered {
   final String answer;
   final String fullWord;
@@ -71,6 +78,7 @@ class MarkingIncorrect extends MarkingAnswered {
         fullWord: fullWord == null ? this.fullWord : fullWord,
         infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
       );
+  @override
   String toString() =>
       "|answer:" +
       answer.toString() +

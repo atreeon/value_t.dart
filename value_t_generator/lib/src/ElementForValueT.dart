@@ -33,6 +33,7 @@ class ElementAccessor {
   ElementAccessor copyWith({@required String type}) => ElementAccessor(
         this.name,
         type,
+        extra: this.extra,
         defaultValue: this.defaultValue,
       );
 

@@ -6,6 +6,7 @@ part of 'ValueT_Pets.dart';
 // ValueTGenerator
 // **************************************************************************
 
+////
 class Pet extends $Pet {
   final String type;
   const Pet({
@@ -17,5 +18,6 @@ class Pet extends $Pet {
       Pet(
         type: type == null ? this.type : type,
       );
+  @override
   String toString() => "|type:" + type.toString();
 }

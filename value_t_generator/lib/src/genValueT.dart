@@ -13,7 +13,7 @@ String genValueT(
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
-    // yield () => "//" + fields.map((x) => x.extra).join("|");
+    yield () => "//" + fields.map((x) => x.extra).join("|");
     yield () => classDefinition(isAbstract, className, extendsClass);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
     yield () => "{";

@@ -8,7 +8,7 @@ abstract class $MarkingState {
   String get fullWord;
   const $MarkingState();
 }
-
+ 
 @ValueT(true)
 abstract class $MarkingAnswered extends $MarkingState {}
 
