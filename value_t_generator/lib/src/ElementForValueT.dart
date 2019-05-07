@@ -16,10 +16,11 @@ class Interface {
   final ElementSuperType elementSuperType;
   final List<ElementAccessor> elementAccessors;
   final List<Interface> interfaces;
+  final List<Property> properties;
   final String name;
 
-  Interface(
-      this.elementSuperType, this.elementAccessors, this.interfaces, this.name);
+  Interface(this.elementSuperType, this.elementAccessors, this.interfaces,
+      this.properties, this.name);
 }
 
 ///The fields of each class
@@ -44,8 +45,9 @@ class ElementAccessor {
 
 class Property {
   final String name;
+  final String type;
   final bool includeSubList;
   final List<Property> properties;
 
-  Property(this.name, this.includeSubList, this.properties);
+  Property(this.name, this.type, this.includeSubList, [this.properties]);
 }

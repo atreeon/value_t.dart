@@ -10,9 +10,9 @@ part of 'Marking_ValueT_params.dart';
 abstract class Marking extends $Marking {
   List<String> get infoMessages;
   const Marking();
-  Marking copyWith({
-    List<String> infoMessages,
-  });
+//Marking copyWith({
+/*List<String> infoMessages,
+*/
 }
 
 //__
@@ -24,9 +24,9 @@ abstract class IsCorrect extends $IsCorrect {
 abstract class HasWord extends $HasWord {
   String get word;
   const HasWord();
-  HasWord copyWith({
-    String word,
-  });
+//HasWord copyWith({
+/*String word,
+*/
 }
 
 //__
@@ -36,14 +36,11 @@ class MarkingCorrectNoWord extends $MarkingCorrectNoWord
   const MarkingCorrectNoWord({
     @required this.infoMessages,
   }) : assert(infoMessages != null);
-  MarkingCorrectNoWord copyWith({
-    List<String> infoMessages,
-  }) =>
-      MarkingCorrectNoWord(
-        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
-      );
-  @override
-  String toString() => "|infoMessages:" + infoMessages.toString();
+//MarkingCorrectNoWord copyWith({
+/*List<String> infoMessages,
+*/
+/* => MarkingCorrectNoWord(*/
+//);
 }
 
 //__
@@ -56,17 +53,12 @@ class MarkingCorrect extends $MarkingCorrect
     @required this.word,
   })  : assert(infoMessages != null),
         assert(word != null);
-  MarkingCorrect copyWith({
-    List<String> infoMessages,
-    String word,
-  }) =>
-      MarkingCorrect(
-        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
-        word: word == null ? this.word : word,
-      );
-  @override
-  String toString() =>
-      "|infoMessages:" + infoMessages.toString() + "|word:" + word.toString();
+//MarkingCorrect copyWith({
+/*List<String> infoMessages,
+String word,
+*/
+/* => MarkingCorrect(*/
+//);
 }
 
 //__answer:false,
@@ -81,22 +73,11 @@ class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   })  : assert(answer != null),
         assert(infoMessages != null),
         assert(word != null);
-  MarkingIncorrect copyWith({
-    String answer,
-    List<String> infoMessages,
-    String word,
-  }) =>
-      MarkingIncorrect(
-        answer: answer == null ? this.answer : answer,
-        infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
-        word: word == null ? this.word : word,
-      );
-  @override
-  String toString() =>
-      "|answer:" +
-      answer.toString() +
-      "|infoMessages:" +
-      infoMessages.toString() +
-      "|word:" +
-      word.toString();
+//MarkingIncorrect copyWith({
+/*String answer,
+List<String> infoMessages,
+String word,
+*/
+/* => MarkingIncorrect(*/
+//);
 }

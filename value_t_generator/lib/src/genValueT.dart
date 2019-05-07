@@ -43,15 +43,17 @@ String genValueT(
       } else {
         yield () => constructorNoFields(className);
       }
-      yield () => copyWithSignature(className);
-      yield () => copyWithParams(fields);
+      yield () => "//" + copyWithSignature(className);
+      yield () => "/*" + copyWithParams(fields, element.properties) + "*/";
+      // yield () => "})";
       if (isAbstract) {
-        yield () => ";";
+        // yield () => ";";
       } else {
-        yield () => copyWithCreate(className);
-        yield () => copyWithLines(fields);
-        yield () => closeCopyWith();
-        yield () => toString(fields);
+        //why is collar_id there twice???
+        yield () => "/*" + copyWithCreate(className) + "*/";
+        // yield () => copyWithLines(fields);
+        yield () => "//" + closeCopyWith();
+        // yield () => toString(fields);
       }
     } else {
       yield () => constructorNoFields(className);
@@ -62,6 +64,11 @@ String genValueT(
 
   return sb.toString();
 }
+
+/*
+HOUSTON
+
+*/
 
 String imports() => "import 'package:meta/meta.dart';";
 
@@ -109,15 +116,82 @@ String constructorAssertions(List<ElementAccessor> fields) {
 
 String copyWithSignature(String className) => "${className} copyWith({";
 
-String copyWithParams(List<ElementAccessor> fields) =>
-    fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n") + "})";
+// String copyWithParams(List<ElementAccessor> fields) =>
+//     fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n");
+
+String copyWithParams(List<ElementAccessor> fields, List<Property> properties) {
+  var blah = fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n");
+
+  for (var item in properties) {
+    if (item.includeSubList) {
+      blah = addProperties(blah, item.name, item.properties);
+    }
+  }
+
+  return blah;
+}
+
+String addProperties(
+    String blah, String propertyName, List<Property> properties) {
+  for (var item in properties) {
+    blah = blah + "${item.type} ${propertyName}_${item.name},\n";
+
+    if (item.includeSubList) {
+      blah =
+          addProperties(blah, propertyName + "_" + item.name, item.properties);
+    }
+  }
+
+  return blah;
+}
 
 String copyWithCreate(String className) => " => ${className}(";
 
-String copyWithLines(List<ElementAccessor> fields) => fields.fold(
-    "",
-    (v, k) =>
-        "${v}\n${k.name}: ${k.name} == null ? this.${k.name} : ${k.name},");
+class PropertyName {
+  final String name;
+  final List<String> subProperties;
+
+  PropertyName(this.name, this.subProperties);
+}
+
+List<String> getPropertyNames(List<Property> properties,
+    [String levelName = "", List<String> propertyNames]) {
+  if (propertyNames == null) propertyNames = List<String>(); //default value
+
+  var newPropertyNames = <String>[];
+  for (var p in properties) {
+    if (levelName != "") newPropertyNames.add(levelName + p.name);
+    if (p.includeSubList) {
+      newPropertyNames.addAll(getPropertyNames(
+          p.properties, levelName + p.name + "_", propertyNames));
+    }
+  }
+
+  return []..addAll(propertyNames)..addAll(newPropertyNames);
+}
+
+String copyWithLines(List<ElementAccessor> fields, List<Property> properties) {
+  var sb = StringBuffer();
+
+  for (var p in properties) {
+    if (p.includeSubList) {
+      //need to down to every level in the properties
+      sb.writeln("${p.name}: ${p.name} == null");
+      p.properties.forEach((x) => sb.write(" && ${x.name} == null"));
+      sb.writeln("? ${p.name}");
+      sb.writeln(": ${p.name}.copyWith");
+    } else {
+      sb.writeln("${p.name}: ${p.name} == null ? this.${p.name} : ${p.name},");
+    }
+  }
+
+  return sb.toString();
+}
+
+// String copyWithLines(List<ElementAccessor> fields) => fields.fold(
+//     "",
+//     (v, k) =>
+//         "${v}\n${k.name}: ${k.name} == null ? this.${k.name} : ${k.name},");
 
 String closeCopyWith() => ");";
 

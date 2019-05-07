@@ -12,12 +12,9 @@ class Pet extends $Pet {
   const Pet({
     @required this.type,
   }) : assert(type != null);
-  Pet copyWith({
-    String type,
-  }) =>
-      Pet(
-        type: type == null ? this.type : type,
-      );
-  @override
-  String toString() => "|type:" + type.toString();
+//Pet copyWith({
+/*String type,
+*/
+/* => Pet(*/
+//);
 }

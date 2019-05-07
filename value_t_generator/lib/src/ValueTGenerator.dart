@@ -25,13 +25,27 @@ List<Property> createSubListProperties(List<ElementAnnotation> metadata,
 
       if (metadata.length > 0 &&
           metadata.first.toSource().indexOf(x.name) > 0) {
+        var accessorsForProperty = element.accessors.toList();
+        // element.interfaces.forEach((x) {
+        //   if (x.name != "Object") {
+        //     accessorsForProperty.addAll(x.accessors);
+        //   }
+        // });
+        element.allSupertypes.forEach((x) {
+          if (x.name != "Object") {
+            accessorsForProperty.addAll(x.accessors);
+          }
+        });
+
         properties.add(Property(
             x.name,
+            x.returnType.toString().replaceFirst("\$", ""),
             true,
             createSubListProperties(
-                element.metadata, element.accessors, List<Property>())));
+                element.metadata, accessorsForProperty, List<Property>())));
       } else {
-        properties.add(Property(x.name, false, null));
+        properties.add(Property(x.name,
+            x.returnType.toString().replaceFirst("\$", ""), false, null));
       }
     }
   });
@@ -105,6 +119,7 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
               .map((x) async => await createInterface(x))
               .toList(),
         ),
+        [], //TODO:add properties here
         interfaceType.name);
   }
 
@@ -116,6 +131,7 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
             .map((x) async => await createInterface(x))
             .toList(),
       ),
+      [], //TODO:add properties here
       interfaceType.name);
 }
 
