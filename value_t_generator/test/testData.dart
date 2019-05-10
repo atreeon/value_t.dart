@@ -5,12 +5,12 @@ var example1 = ElementSuperType(
     null,
     [ElementAccessor("fullWord", "String")],
     [],
-    [],
+    [Property("fullWord", "String")],
     null,
   ),
   [],
   [],
-  [],
+  [Property("fullWord", "String")],
   null,
 );
 
@@ -30,7 +30,7 @@ var example2 = ElementSuperType(
   ),
   [],
   [],
-  [],
+  [Property("fullWord", "String")],
   null,
 );
 
@@ -76,7 +76,11 @@ var exampleDuplicates = ElementSuperType(
     ElementAccessor("infoMessages", "List<String>"),
   ],
   [],
-  [],
+  [
+    Property("fullWord", "String"),
+    Property("answer", "String"),
+    Property("infoMessages", "List<String>")
+  ],
   null,
 );
 
@@ -129,7 +133,13 @@ var exampleWithInterfacesSimple = ElementSuperType(
     ElementAccessor("infoMessages", "List<String>"),
   ],
   [],
-  [],
+  [
+    Property("fullWord", "String"),
+    Property("A", "int"),
+    Property("B", "int"),
+    Property("C", "int"),
+    Property("infoMessages", "List<String>"),
+  ],
   null,
 );
 

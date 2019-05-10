@@ -26,7 +26,7 @@ abstract class $Accessory{
 
   const $Accessory();
 }
-
+ 
 @ValueT(false)
 abstract class $Collar implements $Accessory {
   String get size;

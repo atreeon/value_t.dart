@@ -46,8 +46,25 @@ class ElementAccessor {
 class Property {
   final String name;
   final String type;
-  final bool includeSubList;
+  final String nameHierarchy;
+
+  ///whether this property has a list of sub properties (ie property Pet has pet_name, pet_type)
+  final bool hasSub;
   final List<Property> properties;
 
-  Property(this.name, this.type, this.includeSubList, [this.properties]);
+  Property(this.name, this.type,
+      {this.nameHierarchy, this.hasSub = false, this.properties});
+
+  @override
+  String toString() {
+    return name +
+        "|" +
+        type +
+        "|" +
+        nameHierarchy.toString() +
+        "|" +
+        hasSub.toString() +
+        "|" +
+        properties.toString();
+  }
 }

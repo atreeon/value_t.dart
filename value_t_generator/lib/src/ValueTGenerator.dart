@@ -23,29 +23,26 @@ List<Property> createSubListProperties(List<ElementAnnotation> metadata,
     if (x.returnType.element is ClassElement) {
       var element = x.returnType.element as ClassElement;
 
-      if (metadata.length > 0 &&
+      if (metadata != null &&
+          metadata.length > 0 &&
           metadata.first.toSource().indexOf(x.name) > 0) {
         var accessorsForProperty = element.accessors.toList();
-        // element.interfaces.forEach((x) {
-        //   if (x.name != "Object") {
-        //     accessorsForProperty.addAll(x.accessors);
-        //   }
-        // });
-        element.allSupertypes.forEach((x) {
+
+        element.allSupertypes.forEach((y) {
           if (x.name != "Object") {
-            accessorsForProperty.addAll(x.accessors);
+            accessorsForProperty.addAll(y.accessors);
           }
         });
 
         properties.add(Property(
-            x.name,
-            x.returnType.toString().replaceFirst("\$", ""),
-            true,
-            createSubListProperties(
+            x.name, x.returnType.toString().replaceFirst("\$", ""),
+            hasSub: true,
+            properties: createSubListProperties(
                 element.metadata, accessorsForProperty, List<Property>())));
       } else {
-        properties.add(Property(x.name,
-            x.returnType.toString().replaceFirst("\$", ""), false, null));
+        properties.add(Property(
+            x.name, x.returnType.toString().replaceFirst("\$", ""),
+            hasSub: false));
       }
     }
   });
@@ -80,6 +77,8 @@ Future<List<ElementAccessor>> createAccessors(
   return Future.wait(blah);
 }
 
+//add my interfaces and supertypes to a list
+
 Future<ElementSuperType> createElementSuperType(
     ClassElement classElement) async {
   if (classElement.supertype.name == "Object") {
@@ -91,10 +90,16 @@ Future<ElementSuperType> createElementSuperType(
               .map((x) async => await createInterface(x))
               .toList(),
         ),
-        createSubListProperties(classElement.metadata,
-            classElement.accessors.toList(), List<Property>()),
+        [],
+        // createSubListProperties(classElement.metadata,
+        //     classElement.accessors.toList(), List<Property>()),
         null);
   }
+
+  // var accessors2 = classElement.allSupertypes
+  //     .where((a2) => a2.name != "Object")
+  //     .expand((a2) => a2.accessors)
+  //     .toList();
 
   return ElementSuperType(
       await createElementSuperType(classElement.supertype.element),
@@ -104,8 +109,15 @@ Future<ElementSuperType> createElementSuperType(
             .map((x) async => await createInterface(x))
             .toList(),
       ),
-      createSubListProperties(classElement.metadata,
-          classElement.accessors.toList(), List<Property>()),
+      createSubListProperties(
+          classElement.metadata,
+          classElement.accessors.toList()// + accessors2
+          //   if (x.name != "Object") {
+          //     accessorsForProperty.addAll(y.accessors);
+          //   }
+          // }
+          ,
+          List<Property>()),
       classElement.supertype?.name ?? "");
 }
 
@@ -119,9 +131,15 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
               .map((x) async => await createInterface(x))
               .toList(),
         ),
-        [], //TODO:add properties here
+        createSubListProperties(
+            null, interfaceType.accessors.toList(), List<Property>()),
         interfaceType.name);
   }
+
+  var accessors2 = interfaceType.interfaces
+      .where((a2) => a2.name != "Object")
+      .expand((a2) => a2.accessors)
+      .toList();
 
   return Interface(
       await createElementSuperType(interfaceType.superclass.element),
@@ -131,7 +149,11 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
             .map((x) async => await createInterface(x))
             .toList(),
       ),
-      [], //TODO:add properties here
+      createSubListProperties(
+          // interfaceType.metadata,
+          null,
+          interfaceType.accessors.toList() + accessors2,
+          List<Property>()),
       interfaceType.name);
 }
 

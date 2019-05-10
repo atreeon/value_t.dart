@@ -8,14 +8,36 @@ StringBuffer combine(List<Property> properties) {
     if (item.properties != null) {
       sb.write(item.name +
           ":" +
-          item.includeSubList.toString() +
+          item.hasSub.toString() +
           "," +
           combine(item.properties).toString());
     } else {
-      sb.write(item.name + ":" + item.includeSubList.toString() + ",");
+      sb.write(item.name + ":" + item.hasSub.toString() + ",");
     }
   }
   return sb;
+}
+
+List<Property> combineProperties(ElementSuperType element) {
+  var list = List<Property>();
+
+  list.addAll(element.properties);
+  list.addAll(getInterfaces(element));
+  return list;
+}
+
+List<Property> getInterfaces(ElementSuperType superType) {
+  var list = List<Property>();
+
+  for (var item in superType.interfaces) {
+    list.addAll(item.properties);
+  }
+
+  if (superType.elementSuperType != null) {
+    list.addAll(getInterfaces(superType.elementSuperType));
+  }
+
+  return list;
 }
 
 String genValueT(
@@ -25,12 +47,16 @@ String genValueT(
   var superTypeName = element.name?.substring(1);
   var interfaceNames =
       element?.interfaces?.map((x) => x.name?.substring(1))?.toList();
+  var properties = combineProperties(element);
+  sb.writeln("//" + (superTypeName ?? "null"));
+  sb.writeln("//" + (interfaceNames?.toString() ?? "null"));
+  sb.writeln("//" + (properties.toString()));
 
   if (extendsClass[0] != "\$") throw Exception('classes must start with \$');
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
-    yield () => "//" + combine(element.properties).toString();
+    yield () => "//" + combine(element.properties).toString(); //keep me
     // yield () => "//" + fields.map((x) => x.extra).join("|");
     yield () => classDefinition(isAbstract, className, extendsClass);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
@@ -43,16 +69,14 @@ String genValueT(
       } else {
         yield () => constructorNoFields(className);
       }
-      yield () => "//" + copyWithSignature(className);
-      yield () => "/*" + copyWithParams(fields, element.properties) + "*/";
-      // yield () => "})";
+      yield () => copyWithSignature(className);
+      yield () => copyWithParams(properties);
+      yield () => "})";
       if (isAbstract) {
-        // yield () => ";";
+        yield () => ";";
       } else {
-        //why is collar_id there twice???
-        yield () => "/*" + copyWithCreate(className) + "*/";
-        // yield () => copyWithLines(fields);
-        yield () => "//" + closeCopyWith();
+        yield () => copyWithCreate(className);
+        yield () => copyWithLines(className, properties);
         // yield () => toString(fields);
       }
     } else {
@@ -64,11 +88,6 @@ String genValueT(
 
   return sb.toString();
 }
-
-/*
-HOUSTON
-
-*/
 
 String imports() => "import 'package:meta/meta.dart';";
 
@@ -116,74 +135,87 @@ String constructorAssertions(List<ElementAccessor> fields) {
 
 String copyWithSignature(String className) => "${className} copyWith({";
 
-// String copyWithParams(List<ElementAccessor> fields) =>
-//     fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n");
+String copyWithParams(List<Property> properties) {
+  var properties1Level = getPropertiesOneLevel(properties);
 
-String copyWithParams(List<ElementAccessor> fields, List<Property> properties) {
-  var blah = fields.fold("", (v, k) => "${v}${k.type} ${k.name},\n");
+  var l1 = properties1Level.toList();
+  var l2 = properties1Level
+      .where((x) => x.properties != null)
+      .expand((i) => i.properties)
+      .toList();
+
+  return (l1 + l2).fold("", (v, k) => "${v}${k.type} ${k.nameHierarchy},\n");
+}
+
+/*TODO
+ - create test for main create part
+ - move some types outside of this file
+*/
+
+String copyWithCreate(String className) => " => ";
+
+List<Property> getPropertiesOneLevel(List<Property> properties) {
+  var properties1Level = List<Property>();
 
   for (var item in properties) {
-    if (item.includeSubList) {
-      blah = addProperties(blah, item.name, item.properties);
+    if (item.hasSub) {
+      properties1Level.add(Property(item.name, item.type,
+          nameHierarchy: item.name,
+          properties: addProperties([item.name], item.properties, 0)));
+    } else {
+      properties1Level
+          .add(Property(item.name, item.type, nameHierarchy: item.name));
     }
   }
 
-  return blah;
+  return properties1Level;
 }
 
-String addProperties(
-    String blah, String propertyName, List<Property> properties) {
+List<Property> addProperties(
+    List<String> propertyName, List<Property> properties, int level) {
+  var propertiesNew = List<Property>();
   for (var item in properties) {
-    blah = blah + "${item.type} ${propertyName}_${item.name},\n";
+    propertiesNew.add(Property(
+      level == 0 ? item.name : "${propertyName.skip(1).join("_")}_${item.name}",
+      item.type,
+      nameHierarchy: "${propertyName.join("_")}_${item.name}",
+    ));
 
-    if (item.includeSubList) {
-      blah =
-          addProperties(blah, propertyName + "_" + item.name, item.properties);
+    if (item.hasSub) {
+      propertiesNew.addAll(addProperties(
+          propertyName + [item.name], item.properties, level + 1));
     }
   }
 
-  return blah;
+  return propertiesNew;
 }
 
-String copyWithCreate(String className) => " => ${className}(";
-
-class PropertyName {
-  final String name;
-  final List<String> subProperties;
-
-  PropertyName(this.name, this.subProperties);
-}
-
-List<String> getPropertyNames(List<Property> properties,
-    [String levelName = "", List<String> propertyNames]) {
-  if (propertyNames == null) propertyNames = List<String>(); //default value
-
-  var newPropertyNames = <String>[];
-  for (var p in properties) {
-    if (levelName != "") newPropertyNames.add(levelName + p.name);
-    if (p.includeSubList) {
-      newPropertyNames.addAll(getPropertyNames(
-          p.properties, levelName + p.name + "_", propertyNames));
-    }
-  }
-
-  return []..addAll(propertyNames)..addAll(newPropertyNames);
-}
-
-String copyWithLines(List<ElementAccessor> fields, List<Property> properties) {
+String copyWithLines(String className, List<Property> properties) {
+  var properties1 = getPropertiesOneLevel(properties);
   var sb = StringBuffer();
 
-  for (var p in properties) {
-    if (p.includeSubList) {
-      //need to down to every level in the properties
-      sb.writeln("${p.name}: ${p.name} == null");
-      p.properties.forEach((x) => sb.write(" && ${x.name} == null"));
-      sb.writeln("? ${p.name}");
-      sb.writeln(": ${p.name}.copyWith");
+  sb.writeln("$className(");
+  //TODO: collar_size not size
+  for (var item in properties1) {
+    if (item.properties != null && item.properties.length > 0) {
+      sb.write("${item.name}: ${item.name} == null");
+      for (var subProp in item.properties) {
+        sb.write(" && ${subProp.nameHierarchy} == null");
+      }
+
+      sb.write("\n? this.${item.name}");
+      sb.write("\n: ${item.name}.copyWith(");
+
+      for (var subProp in item.properties) {
+        sb.write("${subProp.name}: ${subProp.nameHierarchy}, ");
+      }
+      sb.write(")");
     } else {
-      sb.writeln("${p.name}: ${p.name} == null ? this.${p.name} : ${p.name},");
+      sb.writeln(
+          "${item.name}: ${item.name} == null ? this.${item.name} : ${item.name},");
     }
   }
+  sb.write("\n);");
 
   return sb.toString();
 }
@@ -193,7 +225,7 @@ String copyWithLines(List<ElementAccessor> fields, List<Property> properties) {
 //     (v, k) =>
 //         "${v}\n${k.name}: ${k.name} == null ? this.${k.name} : ${k.name},");
 
-String closeCopyWith() => ");";
+// String closeCopyWith() => ");";
 
 String toString(List<ElementAccessor> fields) {
   var toString = fields.fold("@override String toString() => ",

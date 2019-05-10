@@ -56,10 +56,12 @@ const MyClass({@required this.fullWord,
 assert(fullWord != null);
 MyClass copyWith({
 String fullWord,
-})
- => MyClass(
 
+})
+ => 
+MyClass(
 fullWord: fullWord == null ? this.fullWord : fullWord,
+
 );
 @override String toString() =>  "|fullWord:" + fullWord.toString() ;
 }
@@ -82,15 +84,17 @@ assert(answer != null),
 assert(fullWord != null),
 assert(infoMessages != null);
 MyClass copyWith({
-String answer,
 String fullWord,
+String answer,
 List<String> infoMessages,
-})
- => MyClass(
 
-answer: answer == null ? this.answer : answer,
+})
+ => 
+MyClass(
 fullWord: fullWord == null ? this.fullWord : fullWord,
+answer: answer == null ? this.answer : answer,
 infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
+
 );
 @override String toString() =>  "|answer:" + answer.toString() + "|fullWord:" + fullWord.toString() + "|infoMessages:" + infoMessages.toString() ;
 }
@@ -128,19 +132,21 @@ assert(C != null),
 assert(fullWord != null),
 assert(infoMessages != null);
 MyClass copyWith({
+String fullWord,
 int A,
 int B,
 int C,
-String fullWord,
 List<String> infoMessages,
-})
- => MyClass(
 
+})
+ => 
+MyClass(
+fullWord: fullWord == null ? this.fullWord : fullWord,
 A: A == null ? this.A : A,
 B: B == null ? this.B : B,
 C: C == null ? this.C : C,
-fullWord: fullWord == null ? this.fullWord : fullWord,
 infoMessages: infoMessages == null ? this.infoMessages : infoMessages,
+
 );
 @override String toString() =>  "|A:" + A.toString() + "|B:" + B.toString() + "|C:" + C.toString() + "|fullWord:" + fullWord.toString() + "|infoMessages:" + infoMessages.toString() ;
 }
@@ -156,9 +162,10 @@ String get fullWord;
 List<String> get infoMessages;
 const MyClass();
 MyClass copyWith({
-String answer,
 String fullWord,
+String answer,
 List<String> infoMessages,
+
 })
 ;
 }

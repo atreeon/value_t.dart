@@ -80,11 +80,16 @@ class Pet extends $Pet {
     String collar_id,
   }) =>
       Pet(
-          colour: colour == null ? this.colour : colour,
           type: type == null ? this.type : type,
-          collar: collar == null && collar_size == null && collar_id == null
+          colour: colour == null ? this.colour : colour,
+          collar: collar == null && 
+                collar_size == null && 
+                collar_id == null
               ? this.collar
-              : collar.copyWith(size: collar_size, id: collar_id));
+              : collar.copyWith(
+                  size: collar_size, 
+                  id: collar_id
+              ));
 }
 
 abstract class Accessory extends $Accessory {

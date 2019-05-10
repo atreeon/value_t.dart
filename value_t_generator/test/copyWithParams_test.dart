@@ -4,19 +4,15 @@ import 'package:value_t_generator/src/genValueT.dart';
 
 void main() {
   group("copyWithParams", () {
-    void exp_copyWithParams(List<ElementAccessor> fields,
-        List<Property> properties, String expected) {
-      var result = copyWithParams(fields, properties);
+    void exp_copyWithParams(List<Property> properties, String expected) {
+      var result = copyWithParams(properties);
       expect(result, expected);
     }
 
     test("1", () {
       exp_copyWithParams([
-        ElementAccessor("id", "int"),
-        ElementAccessor("name", "String")
-      ], [
-        Property("id", "int", false),
-        Property("name", "String", false),
+        Property("id", "int", hasSub: false),
+        Property("name", "String", hasSub: false),
       ], """int id,
 String name,
 """);
@@ -24,13 +20,10 @@ String name,
 
     test("2", () {
       exp_copyWithParams([
-        ElementAccessor("name", "String"),
-        ElementAccessor("pet", "Pet"),
-      ], [
-        Property("name", "String", false),
-        Property("pet", "Pet", true, [
-          Property("type", "String", false),
-          Property("colour", "String", false),
+        Property("name", "String", hasSub: false),
+        Property("pet", "Pet", hasSub: true, properties: [
+          Property("type", "String", hasSub: false),
+          Property("colour", "String", hasSub: false),
         ]),
       ], """String name,
 Pet pet,
@@ -41,16 +34,13 @@ String pet_colour,
 
     test("3", () {
       exp_copyWithParams([
-        ElementAccessor("name", "String"),
-        ElementAccessor("pet", "Pet"),
-      ], [
-        Property("name", "String", false),
-        Property("pet", "Pet", true, [
-          Property("type", "String", false),
-          Property("colour", "String", false),
-          Property("collar", "Collar", true, [
-            Property("id", "int", false),
-            Property("size", "String", false),
+        Property("name", "String", hasSub: false),
+        Property("pet", "Pet", hasSub: true, properties: [
+          Property("type", "String", hasSub: false),
+          Property("colour", "String", hasSub: false),
+          Property("collar", "Collar", hasSub: true, properties: [
+            Property("id", "int", hasSub: false),
+            Property("size", "String", hasSub: false),
           ]),
         ]),
       ], """String name,
