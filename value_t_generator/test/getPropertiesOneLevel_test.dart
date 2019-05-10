@@ -56,5 +56,27 @@ void main() {
         ])
       ]);
     });
+
+    test("3", () {
+      exp_getPropertiesOneLevel([
+        Property("name", "String"),
+        Property("employeeId", "int"),
+        Property("pet", "Pet", hasSub: true, properties: [
+          Property("type", "String"),
+        ]),
+        Property("windowMaxSize", "String"),
+        Property("wetness", "String"),
+      ], [
+        Property("name", "String", nameHierarchy: "name"),
+        Property("employeeId", "int", nameHierarchy: "employeeId"),
+        Property("pet", "Pet", nameHierarchy: "pet", properties: [
+          Property("type", "String", nameHierarchy: "pet_type"),
+        ]),
+        Property("windowMaxSize", "String", nameHierarchy: "windowMaxSize"),
+        Property("wetness", "String", nameHierarchy: "wetness"),
+      ]);
+    });
+
+// [windowMaxSize|String|windowMaxSize|false|null, pet|Pet|pet|false|null, employeeId|int|employeeId|false|null, wetness|String|wetness|false|null, name|String|name|false|null, wetness|String|wetness|false|null]
   });
 }

@@ -19,12 +19,14 @@ abstract class $OftenWet {
 @ValueT(true)
 abstract class $Employee extends $Person {
   int get employeeId;
+  const $Employee();
 }
 
-@ValueT()
+@ValueT(false)
 abstract class $WindowCleaner extends $Employee implements $OftenWet {
   String get windowMaxSize => "big";
   $Pet get pet;
+  const $WindowCleaner();
 }
 
 @ValueT()
@@ -33,7 +35,8 @@ abstract class $Manager extends $Person {
 }
 
 main() {
-  Person a = WindowCleaner(pet: Pet(type: "cat"), name: "Bob", employeeId: 5, wetness: "wet");
+  Person a = WindowCleaner(
+      pet: Pet(type: "cat"), name: "Bob", employeeId: 5, wetness: "wet");
 
   if (a is Employee) {
     print('I am an employee');

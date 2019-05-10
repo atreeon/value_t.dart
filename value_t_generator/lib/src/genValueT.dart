@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/distinctFields.dart';
 
@@ -22,11 +23,12 @@ List<Property> combineProperties(ElementSuperType element) {
   var list = List<Property>();
 
   list.addAll(element.properties);
-  list.addAll(getInterfaces(element));
+  list.addAll(getInterfaceProperties(element));
+
   return list;
 }
 
-List<Property> getInterfaces(ElementSuperType superType) {
+List<Property> getInterfaceProperties(ElementSuperType superType) {
   var list = List<Property>();
 
   for (var item in superType.interfaces) {
@@ -34,7 +36,7 @@ List<Property> getInterfaces(ElementSuperType superType) {
   }
 
   if (superType.elementSuperType != null) {
-    list.addAll(getInterfaces(superType.elementSuperType));
+    list.addAll(getInterfaceProperties(superType.elementSuperType));
   }
 
   return list;
@@ -48,16 +50,19 @@ String genValueT(
   var interfaceNames =
       element?.interfaces?.map((x) => x.name?.substring(1))?.toList();
   var properties = combineProperties(element);
-  sb.writeln("//" + (superTypeName ?? "null"));
-  sb.writeln("//" + (interfaceNames?.toString() ?? "null"));
-  sb.writeln("//" + (properties.toString()));
+  // sb.writeln("//" + (superTypeName ?? "null"));
+  // sb.writeln("//" + (interfaceNames?.toString() ?? "null"));
+  // sb.writeln("//" + (properties.toString()));
+  // sb.writeln("//" + (element.properties.toString()));
+  // sb.writeln("//" + (getInterfaceProperties(element).toString()));
 
   if (extendsClass[0] != "\$") throw Exception('classes must start with \$');
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
-    yield () => "//" + combine(element.properties).toString(); //keep me
+    // yield () => "//" + combine(element.properties).toString(); //keep me
     // yield () => "//" + fields.map((x) => x.extra).join("|");
+    // yield () => "/*";
     yield () => classDefinition(isAbstract, className, extendsClass);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
     yield () => "{";
@@ -77,12 +82,13 @@ String genValueT(
       } else {
         yield () => copyWithCreate(className);
         yield () => copyWithLines(className, properties);
-        // yield () => toString(fields);
+        yield () => toString(fields);
       }
     } else {
       yield () => constructorNoFields(className);
     }
     yield () => closeClass();
+    // yield () => "*/";
   }())
       .forEach((x) => sb.writeln(x()));
 
@@ -103,7 +109,7 @@ String extendsAndInterfaces(
       : " extends ${superTypeName} ";
 
   var implement = interfaceNames.length > 0
-      ? "implements " + interfaceNames.join(",") + " "
+      ? " implements " + interfaceNames.join(",") + " "
       : "";
   return extend + implement;
 }
@@ -144,13 +150,10 @@ String copyWithParams(List<Property> properties) {
       .expand((i) => i.properties)
       .toList();
 
-  return (l1 + l2).fold("", (v, k) => "${v}${k.type} ${k.nameHierarchy},\n");
+  return
+      // "//" + properties.toString() + "\n" +
+      (l1 + l2).fold("", (v, k) => "${v}${k.type} ${k.nameHierarchy},\n");
 }
-
-/*TODO
- - create test for main create part
- - move some types outside of this file
-*/
 
 String copyWithCreate(String className) => " => ";
 
@@ -168,7 +171,10 @@ List<Property> getPropertiesOneLevel(List<Property> properties) {
     }
   }
 
-  return properties1Level;
+  return groupBy(properties1Level, (x) => x.name)
+      .map((x, y) => MapEntry(x, y.first))
+      .values
+      .toList();
 }
 
 List<Property> addProperties(

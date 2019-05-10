@@ -28,10 +28,8 @@ List<Property> createSubListProperties(List<ElementAnnotation> metadata,
           metadata.first.toSource().indexOf(x.name) > 0) {
         var accessorsForProperty = element.accessors.toList();
 
-        element.allSupertypes.forEach((y) {
-          if (x.name != "Object") {
-            accessorsForProperty.addAll(y.accessors);
-          }
+        element.allSupertypes.where((x) => x.name != "Object").forEach((y) {
+          accessorsForProperty.addAll(y.accessors);
         });
 
         properties.add(Property(
@@ -40,9 +38,11 @@ List<Property> createSubListProperties(List<ElementAnnotation> metadata,
             properties: createSubListProperties(
                 element.metadata, accessorsForProperty, List<Property>())));
       } else {
-        properties.add(Property(
-            x.name, x.returnType.toString().replaceFirst("\$", ""),
-            hasSub: false));
+        if (x.returnType != "Object") {
+          properties.add(Property(
+              x.name, x.returnType.toString().replaceFirst("\$", ""),
+              hasSub: false));
+        }
       }
     }
   });
@@ -90,16 +90,15 @@ Future<ElementSuperType> createElementSuperType(
               .map((x) async => await createInterface(x))
               .toList(),
         ),
-        [],
-        // createSubListProperties(classElement.metadata,
-        //     classElement.accessors.toList(), List<Property>()),
+        createSubListProperties(classElement.metadata,
+            classElement.accessors.toList(), List<Property>()),
         null);
   }
 
-  // var accessors2 = classElement.allSupertypes
-  //     .where((a2) => a2.name != "Object")
-  //     .expand((a2) => a2.accessors)
-  //     .toList();
+  var accessors2 = classElement.allSupertypes
+      .where((a2) => a2.name != "Object")
+      .expand((a2) => a2.accessors)
+      .toList();
 
   return ElementSuperType(
       await createElementSuperType(classElement.supertype.element),
@@ -109,15 +108,8 @@ Future<ElementSuperType> createElementSuperType(
             .map((x) async => await createInterface(x))
             .toList(),
       ),
-      createSubListProperties(
-          classElement.metadata,
-          classElement.accessors.toList()// + accessors2
-          //   if (x.name != "Object") {
-          //     accessorsForProperty.addAll(y.accessors);
-          //   }
-          // }
-          ,
-          List<Property>()),
+      createSubListProperties(classElement.metadata,
+          classElement.accessors.toList() + accessors2, List<Property>()),
       classElement.supertype?.name ?? "");
 }
 
@@ -150,7 +142,7 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
             .toList(),
       ),
       createSubListProperties(
-          // interfaceType.metadata,
+          // interfaceType.metadata, TODO:??
           null,
           interfaceType.accessors.toList() + accessors2,
           List<Property>()),
