@@ -10,6 +10,8 @@ import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/extractGetterBody.dart';
 import 'package:value_t_generator/src/genValueT/genValueT.dart';
 
+///Unit is the full text of the function / class and this returns the unit
+/// from the accessor that was passed in.
 Future<CompilationUnit> getUnit(Element accessor) => accessor.session
         .getResolvedLibraryByElement(accessor.library)
         .then((resolvedLibrary) {
@@ -17,6 +19,8 @@ Future<CompilationUnit> getUnit(Element accessor) => accessor.session
       return declaration.resolvedUnit.unit;
     });
 
+///Where we have a Pet object inside a Person object.  This will retrieve all the
+/// accessors from inside the Pet object so we can use them in the CopyWith object
 List<Property> createSubListProperties(List<ElementAnnotation> metadata,
     List<PropertyAccessorElement> accessors, List<Property> properties) {
   accessors.where((x) => x.isGetter).forEach((x) {
@@ -66,18 +70,11 @@ Future<List<ElementAccessor>> createAccessors(
                         .first
                         .toSource()
                     : "")
-
-            // ?.firstWhere(
-            //     (x) => x.toSource()?.contains("@ValueT") ?? false)
-            // ?.toSource() ??
-            // ""
             : "//${x.name} - NOT a");
   }).toList();
 
   return Future.wait(blah);
 }
-
-//add my interfaces and supertypes to a list
 
 Future<ElementSuperType> createElementSuperType(
     ClassElement classElement) async {
