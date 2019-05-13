@@ -11,7 +11,6 @@ List<ElementAccessor> distinctFields(ElementSuperType element) {
   return r;
 }
 
-
 Set<ElementAccessor> getAccessors(
     Set<ElementAccessor> fields, ElementSuperType element) {
   fields.addAll(element.elementAccessors);

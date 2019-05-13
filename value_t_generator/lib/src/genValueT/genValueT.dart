@@ -1,7 +1,10 @@
-import 'package:collection/collection.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/genValueT/distinctFields.dart';
+import 'package:value_t_generator/src/genValueT/getPropertiesOneLevel.dart';
 
+///Combines all the properties from the ElementSuperType into one
+/// the properties from the main element and the various hierarchies
+/// of the interfaces too
 List<Property> combineProperties(ElementSuperType element) {
   var list = List<Property>();
 
@@ -11,6 +14,7 @@ List<Property> combineProperties(ElementSuperType element) {
   return list;
 }
 
+///Recursive looping through all the levels of the ElementSuperType
 List<Property> getInterfaceProperties(ElementSuperType superType) {
   var list = List<Property>();
 
@@ -27,6 +31,7 @@ List<Property> getInterfaceProperties(ElementSuperType superType) {
 
 String removeDollarFromString(String type) => type.replaceAll("\$", "");
 
+///main function that takes our ElementSuperType and creates an output
 String genValueT(
     bool isAbstract, ElementSuperType element, String extendsClass) {
   var fields = distinctFields(element);
@@ -84,8 +89,7 @@ String imports() => "import 'package:meta/meta.dart';";
 
 String classDefinition(
         bool isAbstract, String className, String classExtends) =>
-    (isAbstract ? "abstract " : "") +
-    "class ${className}"; // implements ${classExtends} {";
+    (isAbstract ? "abstract " : "") + "class ${className}";
 
 String extendsAndInterfaces(
     String className, String superTypeName, List<String> interfaceNames) {
@@ -135,58 +139,16 @@ String copyWithParams(List<Property> properties) {
       .expand((i) => i.properties)
       .toList();
 
-  return
-      // "//" + properties.toString() + "\n" +
-      (l1 + l2).fold("", (v, k) => "${v}${k.type} ${k.nameHierarchy},\n");
+  return (l1 + l2).fold("", (v, k) => "${v}${k.type} ${k.nameHierarchy},\n");
 }
 
 String copyWithCreate(String className) => " => ";
-
-List<Property> getPropertiesOneLevel(List<Property> properties) {
-  var properties1Level = List<Property>();
-
-  for (var item in properties) {
-    if (item.hasSub) {
-      properties1Level.add(Property(item.name, item.type,
-          nameHierarchy: item.name,
-          properties: addProperties([item.name], item.properties, 0)));
-    } else {
-      properties1Level
-          .add(Property(item.name, item.type, nameHierarchy: item.name));
-    }
-  }
-
-  return groupBy(properties1Level, (x) => x.name)
-      .map((x, y) => MapEntry(x, y.first))
-      .values
-      .toList();
-}
-
-List<Property> addProperties(
-    List<String> propertyName, List<Property> properties, int level) {
-  var propertiesNew = List<Property>();
-  for (var item in properties) {
-    propertiesNew.add(Property(
-      level == 0 ? item.name : "${propertyName.skip(1).join("_")}_${item.name}",
-      item.type,
-      nameHierarchy: "${propertyName.join("_")}_${item.name}",
-    ));
-
-    if (item.hasSub) {
-      propertiesNew.addAll(addProperties(
-          propertyName + [item.name], item.properties, level + 1));
-    }
-  }
-
-  return propertiesNew;
-}
 
 String copyWithLines(String className, List<Property> properties) {
   var properties1 = getPropertiesOneLevel(properties);
   var sb = StringBuffer();
 
   sb.writeln("$className(");
-  //TODO: collar_size not size
   for (var item in properties1) {
     if (item.properties != null && item.properties.length > 0) {
       sb.write("${item.name}: ${item.name} == null");
