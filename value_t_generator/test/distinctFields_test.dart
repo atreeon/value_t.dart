@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
-import 'package:value_t_generator/src/distinctFields.dart';
+import 'package:value_t_generator/src/genValueT/distinctFields.dart';
+import 'package:value_t_generator/src/genValueT/genValueT.dart';
 
 import 'testData.dart';
 
@@ -69,7 +70,7 @@ void main() {
 
   group("removeDollarFromType", () {
     void exp_removeDollarFromType(String type, String expected) {
-      var result = removeDollarFromType(type);
+      var result = removeDollarFromString(type);
       expect(result, expected);
     }
 

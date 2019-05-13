@@ -1,23 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
-import 'package:value_t_generator/src/distinctFields.dart';
-
-StringBuffer combine(List<Property> properties) {
-  var sb = StringBuffer();
-  sb.write("__");
-  for (var item in properties) {
-    if (item.properties != null) {
-      sb.write(item.name +
-          ":" +
-          item.hasSub.toString() +
-          "," +
-          combine(item.properties).toString());
-    } else {
-      sb.write(item.name + ":" + item.hasSub.toString() + ",");
-    }
-  }
-  return sb;
-}
+import 'package:value_t_generator/src/genValueT/distinctFields.dart';
 
 List<Property> combineProperties(ElementSuperType element) {
   var list = List<Property>();
@@ -42,13 +25,15 @@ List<Property> getInterfaceProperties(ElementSuperType superType) {
   return list;
 }
 
+String removeDollarFromString(String type) => type.replaceAll("\$", "");
+
 String genValueT(
     bool isAbstract, ElementSuperType element, String extendsClass) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
   var superTypeName = element.name?.substring(1);
   var interfaceNames =
-      element?.interfaces?.map((x) => x.name?.substring(1))?.toList();
+      element?.interfaces?.map((x) => removeDollarFromString(x.name))?.toList();
   var properties = combineProperties(element);
   // sb.writeln("//" + (superTypeName ?? "null"));
   // sb.writeln("//" + (interfaceNames?.toString() ?? "null"));
@@ -210,7 +195,7 @@ String copyWithLines(String className, List<Property> properties) {
       }
 
       sb.write("\n? this.${item.name}");
-      sb.write("\n: ${item.name}.copyWith(");
+      sb.write("\n: this.${item.name}.copyWith(");
 
       for (var subProp in item.properties) {
         sb.write("${subProp.name}: ${subProp.nameHierarchy}, ");
@@ -225,13 +210,6 @@ String copyWithLines(String className, List<Property> properties) {
 
   return sb.toString();
 }
-
-// String copyWithLines(List<ElementAccessor> fields) => fields.fold(
-//     "",
-//     (v, k) =>
-//         "${v}\n${k.name}: ${k.name} == null ? this.${k.name} : ${k.name},");
-
-// String closeCopyWith() => ");";
 
 String toString(List<ElementAccessor> fields) {
   var toString = fields.fold("@override String toString() => ",

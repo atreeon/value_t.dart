@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
-import 'package:value_t_generator/src/genValueT.dart';
+import 'package:value_t_generator/src/genValueT/genValueT.dart';
 
 void main() {
   group("copyWithLines", () {
@@ -37,7 +37,7 @@ colour: colour == null ? this.colour : colour,
 type: type == null ? this.type : type,
 collar: collar == null && collar_size == null && collar_id == null
 ? this.collar
-: collar.copyWith(size: collar_size, id: collar_id, )
+: this.collar.copyWith(size: collar_size, id: collar_id, )
 );
 """);
     });
@@ -58,7 +58,7 @@ Person(
 name: name == null ? this.name : name,
 pet: pet == null && pet_type == null && pet_colour == null && pet_collar == null && pet_collar_size == null && pet_collar_id == null
 ? this.pet
-: pet.copyWith(type: pet_type, colour: pet_colour, collar: pet_collar, collar_size: pet_collar_size, collar_id: pet_collar_id, )
+: this.pet.copyWith(type: pet_type, colour: pet_colour, collar: pet_collar, collar_size: pet_collar_size, collar_id: pet_collar_id, )
 );
 """);
     });

@@ -7,12 +7,12 @@ part of 'Marking_ValueT_implements.dart';
 // **************************************************************************
 
 class MarkingCorrectNoWord extends $MarkingCorrectNoWord
-    implements arking, sCorrect {
+    implements Marking, IsCorrect {
   const MarkingCorrectNoWord();
 }
 
 class MarkingCorrect extends $MarkingCorrect
-    implements arking, asWord, sCorrect {
+    implements Marking, HasWord, IsCorrect {
   final String word;
   const MarkingCorrect({
     @required this.word,
@@ -27,7 +27,7 @@ class MarkingCorrect extends $MarkingCorrect
   String toString() => "|word:" + word.toString();
 }
 
-class MarkingIncorrect extends $MarkingIncorrect implements arking, asWord {
+class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   final String answer;
   final List<String> infoMessages;
   final String word;

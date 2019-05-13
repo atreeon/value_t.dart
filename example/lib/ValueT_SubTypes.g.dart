@@ -32,13 +32,13 @@ class Person extends $Person {
                   pet_collar_size == null &&
                   pet_collar_id == null
               ? this.pet
-              : pet.copyWith(
-                  type: pet_type,
-                  colour: pet_colour,
-                  collar: pet_collar,
-                  collar_size: pet_collar_size,
-                  collar_id: pet_collar_id,
-                ));
+              : this.pet.copyWith(
+                    type: pet_type,
+                    colour: pet_colour,
+                    collar: pet_collar,
+                    collar_size: pet_collar_size,
+                    collar_id: pet_collar_id,
+                  ));
   @override
   String toString() => "|name:" + name.toString() + "|pet:" + pet.toString();
 }
@@ -66,10 +66,10 @@ class Pet extends $Pet {
           colour: colour == null ? this.colour : colour,
           collar: collar == null && collar_size == null && collar_id == null
               ? this.collar
-              : collar.copyWith(
-                  size: collar_size,
-                  id: collar_id,
-                ));
+              : this.collar.copyWith(
+                    size: collar_size,
+                    id: collar_id,
+                  ));
   @override
   String toString() =>
       "|collar:" +

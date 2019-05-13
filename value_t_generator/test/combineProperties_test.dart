@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
-import 'package:value_t_generator/src/genValueT.dart';
+import 'package:value_t_generator/src/genValueT/genValueT.dart';
 
 void main() {
   group("combineProperties", () {

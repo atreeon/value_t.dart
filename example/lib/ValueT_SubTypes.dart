@@ -21,15 +21,29 @@ abstract class $Pet {
 }
 
 @ValueT(true)
-abstract class $Accessory{
+abstract class $Accessory {
   String get id;
 
   const $Accessory();
 }
- 
+
 @ValueT(false)
 abstract class $Collar implements $Accessory {
   String get size;
 
   const $Collar();
+}
+
+main() {
+  var person = Person(
+    name: "Bob",
+    pet: Pet(
+        collar: Collar(id: "2", size: "large"),
+        colour: "blue",
+        type: "stuffed"),
+  );
+
+  print(person.toString());
+  var p2 = person.copyWith(pet_collar_size: "small");
+  print(p2.toString());
 }

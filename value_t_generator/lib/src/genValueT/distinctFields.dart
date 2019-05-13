@@ -1,16 +1,16 @@
 import 'package:value_t_generator/src/ElementForValueT.dart';
+import 'package:value_t_generator/src/genValueT/genValueT.dart';
 
+///Takes an element and returns a list of all the contained
+/// elementAccessors...removing the dollar if required.
 List<ElementAccessor> distinctFields(ElementSuperType element) {
   var fields = Set<ElementAccessor>();
   var r = getAccessors(fields, element).toList();
-  r = r.map((x) => x.copyWith(type: removeDollarFromType(x.type))).toList();
+  r = r.map((x) => x.copyWith(type: removeDollarFromString(x.type))).toList();
   r.sort((a, b) => a.name.compareTo(b.name));
   return r;
 }
 
-String removeDollarFromType(String type) {
-  return type.replaceAll("\$", "");
-}
 
 Set<ElementAccessor> getAccessors(
     Set<ElementAccessor> fields, ElementSuperType element) {

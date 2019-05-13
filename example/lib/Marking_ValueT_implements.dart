@@ -12,15 +12,20 @@ abstract class HasWord {
 }
 
 @ValueT()
-abstract class $MarkingCorrectNoWord implements Marking, IsCorrect {}
+abstract class $MarkingCorrectNoWord implements Marking, IsCorrect {
+  const $MarkingCorrectNoWord();
+}
 
 @ValueT()
-abstract class $MarkingCorrect implements Marking, HasWord, IsCorrect {}
+abstract class $MarkingCorrect implements Marking, HasWord, IsCorrect {
+  const $MarkingCorrect();
+}
 
 @ValueT()
 abstract class $MarkingIncorrect implements Marking, HasWord {
   String get answer;
   List<String> get infoMessages;
+  const $MarkingIncorrect();
 }
 
 main() {
