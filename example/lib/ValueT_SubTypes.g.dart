@@ -24,21 +24,22 @@ class Person extends $Person {
     String pet_collar_id,
   }) =>
       Person(
-          name: name == null ? this.name : name,
-          pet: pet == null &&
-                  pet_type == null &&
-                  pet_colour == null &&
-                  pet_collar == null &&
-                  pet_collar_size == null &&
-                  pet_collar_id == null
-              ? this.pet
-              : this.pet.copyWith(
-                    type: pet_type,
-                    colour: pet_colour,
-                    collar: pet_collar,
-                    collar_size: pet_collar_size,
-                    collar_id: pet_collar_id,
-                  ));
+        name: name == null ? this.name : name,
+        pet: pet == null &&
+                pet_type == null &&
+                pet_colour == null &&
+                pet_collar == null &&
+                pet_collar_size == null &&
+                pet_collar_id == null
+            ? this.pet
+            : this.pet.copyWith(
+                  type: pet_type,
+                  colour: pet_colour,
+                  collar: pet_collar,
+                  collar_size: pet_collar_size,
+                  collar_id: pet_collar_id,
+                ),
+      );
   @override
   String toString() => "|name:" + name.toString() + "|pet:" + pet.toString();
 }
@@ -62,14 +63,15 @@ class Pet extends $Pet {
     String collar_id,
   }) =>
       Pet(
-          type: type == null ? this.type : type,
-          colour: colour == null ? this.colour : colour,
-          collar: collar == null && collar_size == null && collar_id == null
-              ? this.collar
-              : this.collar.copyWith(
-                    size: collar_size,
-                    id: collar_id,
-                  ));
+        type: type == null ? this.type : type,
+        colour: colour == null ? this.colour : colour,
+        collar: collar == null && collar_size == null && collar_id == null
+            ? this.collar
+            : this.collar.copyWith(
+                  size: collar_size,
+                  id: collar_id,
+                ),
+      );
   @override
   String toString() =>
       "|collar:" +

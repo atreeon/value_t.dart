@@ -162,7 +162,7 @@ String copyWithLines(String className, List<Property> properties) {
       for (var subProp in item.properties) {
         sb.write("${subProp.name}: ${subProp.nameHierarchy}, ");
       }
-      sb.write(")");
+      sb.write("),");
     } else {
       sb.writeln(
           "${item.name}: ${item.name} == null ? this.${item.name} : ${item.name},");
