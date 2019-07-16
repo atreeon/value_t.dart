@@ -6,7 +6,7 @@ part of 'ValueT_ConstDefault.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class Person extends $Person {
   String get name;
   const Person();
@@ -15,7 +15,7 @@ abstract class Person extends $Person {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class OftenWet extends $OftenWet {
   String get wetness;
   const OftenWet();
@@ -24,7 +24,7 @@ abstract class OftenWet extends $OftenWet {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class Employee extends Person {
   int get employeeId;
   String get name;
@@ -35,7 +35,7 @@ abstract class Employee extends Person {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class WindowCleaner extends Employee implements OftenWet {
   final int employeeId;
   final String name;
@@ -82,7 +82,7 @@ class WindowCleaner extends Employee implements OftenWet {
       windowMaxSize.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class Manager extends Person {
   final String bosses;
   final String name;

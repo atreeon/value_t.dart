@@ -6,7 +6,7 @@ part of 'Marking_ValueT_params.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class Marking extends $Marking {
   List<String> get infoMessages;
   const Marking();
@@ -15,12 +15,12 @@ abstract class Marking extends $Marking {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class IsCorrect extends $IsCorrect {
   const IsCorrect();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class HasWord extends $HasWord {
   String get word;
   const HasWord();
@@ -29,7 +29,7 @@ abstract class HasWord extends $HasWord {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class MarkingCorrectNoWord extends $MarkingCorrectNoWord
     implements Marking, IsCorrect {
   final List<String> infoMessages;
@@ -46,7 +46,7 @@ class MarkingCorrectNoWord extends $MarkingCorrectNoWord
   String toString() => "|infoMessages:" + infoMessages.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class MarkingCorrect extends $MarkingCorrect
     implements Marking, HasWord, IsCorrect {
   final List<String> infoMessages;
@@ -69,7 +69,7 @@ class MarkingCorrect extends $MarkingCorrect
       "|infoMessages:" + infoMessages.toString() + "|word:" + word.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   final String answer;
   final List<String> infoMessages;

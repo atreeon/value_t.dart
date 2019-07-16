@@ -6,7 +6,7 @@ part of 'ValueT_SubTypes.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class Person extends $Person {
   final String name;
   final Pet pet;
@@ -45,7 +45,7 @@ class Person extends $Person {
   String toString() => "|name:" + name.toString() + "|pet:" + pet.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class Pet extends $Pet {
   final Collar collar;
   final String colour;
@@ -84,7 +84,7 @@ class Pet extends $Pet {
       type.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class Accessory extends $Accessory {
   String get id;
   const Accessory();
@@ -93,7 +93,7 @@ abstract class Accessory extends $Accessory {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class Collar extends $Collar implements Accessory {
   final String id;
   final String size;

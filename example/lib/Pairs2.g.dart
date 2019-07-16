@@ -6,7 +6,7 @@ part of 'Pairs2.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class PairsVM extends $PairsVM {
   final PairGroup source;
   const PairsVM({
@@ -27,7 +27,7 @@ class PairsVM extends $PairsVM {
   String toString() => "|source:" + source.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class PairGroup extends $PairGroup {
   final Selected selected;
   const PairGroup({
@@ -43,7 +43,7 @@ class PairGroup extends $PairGroup {
   String toString() => "|selected:" + selected.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class Selected extends $Selected {
   final String word;
   const Selected({

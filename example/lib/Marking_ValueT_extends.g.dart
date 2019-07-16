@@ -6,7 +6,7 @@ part of 'Marking_ValueT_extends.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class MarkingState extends $MarkingState {
   String get fullWord;
   const MarkingState();
@@ -15,7 +15,7 @@ abstract class MarkingState extends $MarkingState {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 abstract class MarkingAnswered extends MarkingState {
   String get fullWord;
   const MarkingAnswered();
@@ -24,7 +24,7 @@ abstract class MarkingAnswered extends MarkingState {
   });
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class MarkingUnanswered extends MarkingState {
   final String fullWord;
   const MarkingUnanswered({
@@ -40,7 +40,7 @@ class MarkingUnanswered extends MarkingState {
   String toString() => "|fullWord:" + fullWord.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class MarkingCorrect extends MarkingAnswered {
   final String fullWord;
   const MarkingCorrect({
@@ -56,7 +56,7 @@ class MarkingCorrect extends MarkingAnswered {
   String toString() => "|fullWord:" + fullWord.toString();
 }
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class MarkingIncorrect extends MarkingAnswered {
   final String answer;
   final String fullWord;

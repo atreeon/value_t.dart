@@ -6,7 +6,7 @@ part of 'ValueT_Vet.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
 class Vet extends $Vet {
   final String name;
   final List<String> pets;

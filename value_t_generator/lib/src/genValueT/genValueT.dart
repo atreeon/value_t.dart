@@ -56,7 +56,8 @@ String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
 
     // yield () => "//" + fields.map((x) => x.extra).join("|");
     // yield () => "/*";
-    yield() => "//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work";
+    yield () =>
+        "//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith";
     yield () => classDefinition(isAbstract, className, generics);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
     yield () => "{";
@@ -68,15 +69,17 @@ String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
       } else {
         yield () => constructorNoFields(className);
       }
-      yield () => copyWithSignature(className);
-      yield () => copyWithParams(properties);
-      yield () => "})";
-      if (isAbstract) {
-        yield () => ";";
-      } else {
-        yield () => copyWithCreate(className);
-        yield () => copyWithLines(className, properties);
-        yield () => toString(fields);
+      if (properties.length > 0) {
+        yield () => copyWithSignature(className);
+        yield () => copyWithParams(properties);
+        yield () => "})";
+        if (isAbstract) {
+          yield () => ";";
+        } else {
+          yield () => copyWithCreate(className);
+          yield () => copyWithLines(className, properties);
+          yield () => toString(fields);
+        }
       }
     } else {
       yield () => constructorNoFields(className);
