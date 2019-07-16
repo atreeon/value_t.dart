@@ -37,7 +37,7 @@ colour: colour == null ? this.colour : colour,
 type: type == null ? this.type : type,
 collar: collar == null && collar_size == null && collar_id == null
 ? this.collar
-: this.collar.copyWith(size: collar_size, id: collar_id, )
+: this.collar.copyWith(size: collar_size, id: collar_id, ),
 );
 """);
     });
@@ -58,7 +58,20 @@ Person(
 name: name == null ? this.name : name,
 pet: pet == null && pet_type == null && pet_colour == null && pet_collar == null && pet_collar_size == null && pet_collar_id == null
 ? this.pet
-: this.pet.copyWith(type: pet_type, colour: pet_colour, collar: pet_collar, collar_size: pet_collar_size, collar_id: pet_collar_id, )
+: this.pet.copyWith(type: pet_type, colour: pet_colour, collar: pet_collar, collar_size: pet_collar_size, collar_id: pet_collar_id, ),
+);
+""");
+    });
+
+    test("4", () {
+      exp_copyWithLines("Person", [
+        Property("name", "String", hasSub: false),
+        Property("somethingElse", "T2", hasSub: false),
+      ], """
+Person(
+name: name == null ? this.name : name,
+somethingElse: somethingElse == null ? this.somethingElse : somethingElse,
+
 );
 """);
     });

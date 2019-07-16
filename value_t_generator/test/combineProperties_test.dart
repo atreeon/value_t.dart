@@ -59,5 +59,55 @@ void main() {
             Property("C", "int"),
           ]);
     });
+
+    test("2", () {
+      exp_combineProperties(
+          ElementSuperType(
+            ElementSuperType(
+              null,
+              [ElementAccessor("fullWord", "String")],
+              [
+                Interface(
+                  ElementSuperType(
+                    null,
+                    [
+                      ElementAccessor("A", "int"),
+                      ElementAccessor("B", "int"),
+                    ],
+                    [],
+                    [],
+                    null,
+                  ),
+                  [ElementAccessor("C", "int")],
+                  [],
+                  [
+                    Property("A", "int"),
+                    Property("B", "int"),
+                    Property("C", "int"),
+                  ],
+                  null,
+                )
+              ],
+              [],
+              null,
+            ),
+            [
+              ElementAccessor("infoMessages", "List<String>"),
+            ],
+            [],
+            [
+              Property("fullWord", "String"),
+              Property("infoMessages", "List<String>"),
+            ],
+            null,
+          ),
+          [
+            Property("fullWord", "String"),
+            Property("infoMessages", "List<String>"),
+            Property("A", "int"),
+            Property("B", "int"),
+            Property("C", "int"),
+          ]);
+    });
   });
 }

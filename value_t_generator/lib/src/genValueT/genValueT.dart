@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/genValueT/distinctFields.dart';
 import 'package:value_t_generator/src/genValueT/getPropertiesOneLevel.dart';
@@ -32,8 +33,8 @@ List<Property> getInterfaceProperties(ElementSuperType superType) {
 String removeDollarFromString(String type) => type.replaceAll("\$", "");
 
 ///main function that takes our ElementSuperType and creates an output
-String genValueT(
-    bool isAbstract, ElementSuperType element, String extendsClass) {
+String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
+    [List<String> generics]) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
   var superTypeName = element.name?.substring(1);
@@ -50,10 +51,13 @@ String genValueT(
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
-    // yield () => "//" + combine(element.properties).toString(); //keep me
+    // yield () => "//" + element.properties.map((x) => x.name.toString()).toList().toString(); //keep me
+    // yield () => "//" + element.elementAccessors.map((x) => x.name.toString()).toList().toString(); //keep me
+    // yield () => "//" + element.interfaces.map((x) => x.name.toString()).toList().toString(); //keep me
+
     // yield () => "//" + fields.map((x) => x.extra).join("|");
     // yield () => "/*";
-    yield () => classDefinition(isAbstract, className, extendsClass);
+    yield () => classDefinition(isAbstract, className, generics);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
     yield () => "{";
     if (fields.isNotEmpty) {
@@ -88,8 +92,15 @@ String genValueT(
 String imports() => "import 'package:meta/meta.dart';";
 
 String classDefinition(
-        bool isAbstract, String className, String classExtends) =>
-    (isAbstract ? "abstract " : "") + "class ${className}";
+    bool isAbstract, String className, List<String> generics) {
+  var result = (isAbstract ? "abstract " : "") + "class ${className}";
+
+  if (generics.length == 0) return result;
+
+  return result +
+      " " +
+      generics.toString().replaceAll("[", "<").replaceAll("]", ">");
+}
 
 String extendsAndInterfaces(
     String className, String superTypeName, List<String> interfaceNames) {
@@ -103,12 +114,21 @@ String extendsAndInterfaces(
   return extend + implement;
 }
 
-String finalFields(bool isAbstract, List<ElementAccessor> fields) =>
-    fields.fold(
-        "",
-        (v, k) => isAbstract
-            ? "${v}\n${k.type} get ${k.name};"
-            : "${v}\nfinal ${k.type} ${k.name};");
+String finalFields(bool isAbstract, List<ElementAccessor> fields) {
+  var result = fields.fold(
+      "",
+      (v, k) => isAbstract
+          ? "${v}\n${formatField(k.type)} get ${k.name};"
+          : "${v}\nfinal ${formatField(k.type)} ${k.name};");
+  return result;
+}
+
+String formatField(String field) {
+  if (!field.contains("→")) return field;
+
+  var function = field.split("→");
+  return "${function[1]} Function${function[0]}".trim();
+}
 
 String constructorNoFields(String className) => "const ${className}();";
 

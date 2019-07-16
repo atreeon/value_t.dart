@@ -24,6 +24,42 @@ void main() {
             ], """const MyClass({this.word = "default",\n}):"""));
   });
 
+  group("classDefinition", () {
+    void exp_classDefinition(bool isAbstract, String className,
+        List<String> generics, String expected) {
+      var result = classDefinition(isAbstract, className, generics);
+      expect(result, expected);
+    }
+
+    test("1", () => exp_classDefinition(false, "\$Pet", [], """class \$Pet"""));
+
+    test(
+        "2",
+        () => exp_classDefinition(false, "\$Pet", ["T2 extends Animal"],
+            """class \$Pet <T2 extends Animal>"""));
+  });
+
+  group("finalFields", () {
+    void exp_finalFields(
+        bool isAbstract, List<ElementAccessor> fields, String expected) {
+      var result = finalFields(isAbstract, fields);
+      expect(result, expected);
+    }
+
+    test(
+        "1",
+        () => exp_finalFields(false, [
+              ElementAccessor("age", "int"),
+              ElementAccessor("word", "String"),
+            ], """\nfinal int age;\nfinal String word;"""));
+
+    test(
+        "2",
+        () => exp_finalFields(false, [
+              ElementAccessor("getStuff", "(List<dynamic>) → List<T2>"),
+              ElementAccessor("word", "String"),
+            ], """\nfinal List<T2> Function(List<dynamic>) getStuff;\nfinal String word;"""));
+  });
   group("toString", () {
     void exp_toString(List<ElementAccessor> fields, String expected) {
       var result = toString(fields);
