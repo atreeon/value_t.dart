@@ -1,6 +1,6 @@
 ## 0.5.0
 - allows functions
-- allows generics (with restriction of generic in a generated type)
+- allows generics
 
 ## 0.4.0
 - allow constants (so that we can allow constant default values)

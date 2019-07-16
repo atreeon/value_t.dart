@@ -6,7 +6,7 @@ part of 'ValueT_Generics.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class PetShop extends $PetShop {
   final PetDepartment<Dog, String> dogs;
   final List<Dog> otherDogs;
@@ -28,8 +28,8 @@ class PetShop extends $PetShop {
       "|dogs:" + dogs.toString() + "|otherDogs:" + otherDogs.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
-class PetDepartment<T1 extends $Pet, T2> extends $PetDepartment {
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+class PetDepartment<T1 extends $Pet, T2> extends $PetDepartment<T1, T2> {
   final List<T2> Function(List<dynamic>) loadFn;
   final List<T2> pets;
   final T1 somethingElse;
@@ -59,7 +59,7 @@ class PetDepartment<T1 extends $Pet, T2> extends $PetDepartment {
       somethingElse.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class CatOwner extends $CatOwner {
   final Cat cat;
   const CatOwner({
@@ -75,7 +75,7 @@ class CatOwner extends $CatOwner {
   String toString() => "|cat:" + cat.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class Pet extends $Pet {
   final String name;
   const Pet({
@@ -91,7 +91,7 @@ class Pet extends $Pet {
   String toString() => "|name:" + name.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class Cat extends $Cat implements Pet {
   final String name;
   const Cat({
@@ -107,7 +107,7 @@ class Cat extends $Cat implements Pet {
   String toString() => "|name:" + name.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class Dog extends $Dog implements Pet {
   final String name;
   const Dog({

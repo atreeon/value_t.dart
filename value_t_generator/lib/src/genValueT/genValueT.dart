@@ -31,20 +31,31 @@ List<Property> getInterfaceProperties(ElementSuperType superType) {
 
 String removeDollarFromString(String type) => type.replaceAll("\$", "");
 
+List<String> formatInterfaces(List<Interface> interfaces) {
+  return interfaces?.map((x) {
+    var name = removeDollarFromString(x.name);
+    return x.typeParameters.isEmpty
+        ? name
+        : name + formatGeneric(x.typeParameters);
+  })?.toList();
+}
+
 ///main function that takes our ElementSuperType and creates an output
 String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
     [List<String> generics]) {
   var fields = distinctFields(element);
   var sb = StringBuffer();
   var superTypeName = element.name?.substring(1);
-  var interfaceNames =
-      element?.interfaces?.map((x) => removeDollarFromString(x.name))?.toList();
+  var interfaceNames = formatInterfaces(element.interfaces);
+
   var properties = combineProperties(element);
   // sb.writeln("//" + (superTypeName ?? "null"));
   // sb.writeln("//" + (interfaceNames?.toString() ?? "null"));
   // sb.writeln("//" + (properties.toString()));
   // sb.writeln("//" + (element.properties.toString()));
   // sb.writeln("//" + (getInterfaceProperties(element).toString()));
+
+  // var classElement = element as ClassElement;
 
   if (extendsClass[0] != "\$") throw Exception('classes must start with \$');
   var className = extendsClass.substring(1);
@@ -53,13 +64,13 @@ String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
     // yield () => "//" + element.properties.map((x) => x.name.toString()).toList().toString(); //keep me
     // yield () => "//" + element.elementAccessors.map((x) => x.name.toString()).toList().toString(); //keep me
     // yield () => "//" + element.interfaces.map((x) => x.name.toString()).toList().toString(); //keep me
-
     // yield () => "//" + fields.map((x) => x.extra).join("|");
     // yield () => "/*";
     yield () =>
-        "//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith";
+        "//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters";
     yield () => classDefinition(isAbstract, className, generics);
-    yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
+    yield () => extendsAndInterfaces(
+        className, superTypeName, interfaceNames, generics);
     yield () => "{";
     if (fields.isNotEmpty) {
       yield () => finalFields(isAbstract, fields);
@@ -98,23 +109,34 @@ String classDefinition(
     bool isAbstract, String className, List<String> generics) {
   var result = (isAbstract ? "abstract " : "") + "class ${className}";
 
-  if (generics.length == 0) return result;
+  if (generics.isEmpty) return result;
 
-  return result +
-      " " +
-      generics.toString().replaceAll("[", "<").replaceAll("]", ">");
+  return result + formatGeneric(generics);
 }
 
-String extendsAndInterfaces(
-    String className, String superTypeName, List<String> interfaceNames) {
+String formatGeneric(List<String> generics) =>
+    generics.toString().replaceAll("[", "<").replaceAll("]", ">");
+
+///Some generics have the extends keyword to specify what classes are allowed
+/// we want to remove these because we don't redefine them
+List<String> formatGenericLessExtends(List<String> generics) => generics
+    .map((x) => x.contains("extends") ? x.split("extends")[0].trim() : x)
+    .toList();
+
+String extendsAndInterfaces(String className, String superTypeName,
+    List<String> interfaceNames, List<String> generics) {
+  var className2 = generics.isEmpty
+      ? className
+      : className + formatGeneric(formatGenericLessExtends(generics));
+
   var extend = superTypeName == null
-      ? " extends \$${className} "
+      ? " extends \$${className2} "
       : " extends ${superTypeName} ";
 
   var implement = interfaceNames.length > 0
       ? " implements " + interfaceNames.join(",") + " "
       : "";
-  return extend + implement;
+  return (extend + implement).trim();
 }
 
 String finalFields(bool isAbstract, List<ElementAccessor> fields) {

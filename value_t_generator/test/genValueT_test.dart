@@ -60,6 +60,38 @@ void main() {
               ElementAccessor("word", "String"),
             ], """\nfinal List<T2> Function(List<dynamic>) getStuff;\nfinal String word;"""));
   });
+
+  group("extendsAndInterfaces", () {
+    void exp_extendsAndInterfaces(String className, String superTypeName,
+        List<String> interfaceNames, List<String> generics, String expected) {
+      var result = extendsAndInterfaces(
+          className, superTypeName, interfaceNames, generics);
+      expect(result, expected);
+    }
+
+    test(
+        "1",
+        () => exp_extendsAndInterfaces(
+            "PetDepartment",
+            null,
+            [],
+            ["T1 extends \$Pet", "T2"],
+            """extends \$PetDepartment<T1, T2>"""));
+  });
+
+  group("formatGenericLessExtends", () {
+    void exp_formatGenericLessExtends(
+        List<String> generics, List<String> expected) {
+      var result = formatGenericLessExtends(generics);
+      expect(result.toString(), expected.toString());
+    }
+
+    test(
+        "1",
+        () => exp_formatGenericLessExtends(
+            ["T1 extends \$Pet", "T2"], ["T1", "T2"]));
+  });
+
   group("toString", () {
     void exp_toString(List<ElementAccessor> fields, String expected) {
       var result = toString(fields);

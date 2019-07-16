@@ -17,10 +17,11 @@ class Interface {
   final List<ElementAccessor> elementAccessors;
   final List<Interface> interfaces;
   final List<Property> properties;
+  final List<String> typeParameters;
   final String name;
 
   Interface(this.elementSuperType, this.elementAccessors, this.interfaces,
-      this.properties, this.name);
+      this.properties, this.typeParameters, this.name);
 }
 
 ///The fields of each class

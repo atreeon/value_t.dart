@@ -6,7 +6,7 @@ part of 'ValueT_CopyWithHierarchy.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 abstract class Person extends $Person {
   String get name;
   const Person();
@@ -15,7 +15,7 @@ abstract class Person extends $Person {
   });
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 abstract class OftenWet extends $OftenWet {
   String get wetness;
   const OftenWet();
@@ -24,7 +24,7 @@ abstract class OftenWet extends $OftenWet {
   });
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 abstract class Employee extends Person {
   int get employeeId;
   String get name;
@@ -35,7 +35,7 @@ abstract class Employee extends Person {
   });
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class WindowCleaner extends Employee implements OftenWet {
   final int employeeId;
   final String name;
@@ -82,7 +82,7 @@ class WindowCleaner extends Employee implements OftenWet {
       windowMaxSize.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
 class Manager extends Person {
   final String bosses;
   final String name;

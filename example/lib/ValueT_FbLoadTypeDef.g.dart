@@ -6,8 +6,8 @@ part of 'ValueT_FbLoadTypeDef.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
-class FbLoadTypeDef<T> extends $FbLoadTypeDef {
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+class FbLoadTypeDef<T> extends $FbLoadTypeDef<T> {
   final FbLoadType fbLoadType;
   final bool Function(Store) hasDataCheck;
   final bool isStaticData;
@@ -36,16 +36,16 @@ class FbLoadTypeDef<T> extends $FbLoadTypeDef {
       isStaticData.toString();
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
-class FbLoadTypeDefList<T> extends $FbLoadTypeDefList {
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+class FbLoadTypeDefList<T> extends $FbLoadTypeDefList<T> {
   final List<T> Function(List<dynamic>) loadFn;
   const FbLoadTypeDefList({
     @required this.loadFn,
   }) : assert(loadFn != null);
 }
 
-//5 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith
-class FbLoadTypeDefSingle<T> extends $FbLoadTypeDefSingle {
+//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+class FbLoadTypeDefSingle<T> extends $FbLoadTypeDefSingle<T> {
   final T Function(List<dynamic>) loadFn;
   const FbLoadTypeDefSingle({
     @required this.loadFn,

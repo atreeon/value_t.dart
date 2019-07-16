@@ -35,6 +35,7 @@ void main() {
                     Property("B", "int"),
                     Property("C", "int"),
                   ],
+                  [],
                   null,
                 )
               ],
@@ -85,6 +86,7 @@ void main() {
                     Property("B", "int"),
                     Property("C", "int"),
                   ],
+                  [],
                   null,
                 )
               ],

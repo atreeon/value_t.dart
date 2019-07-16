@@ -123,6 +123,7 @@ var exampleWithInterfacesSimple = ElementSuperType(
         [ElementAccessor("C", "int")],
         [],
         [],
+        [],
         null,
       )
     ],
@@ -160,6 +161,7 @@ var exampleWithDefaultValue = ElementSuperType(
           null,
         ),
         [ElementAccessor("C", "int")],
+        [],
         [],
         [],
         null,

@@ -1,6 +1,4 @@
-import 'package:core/models/fbDefs/FbLoadType.dart';
 import 'package:meta/meta.dart';
-import 'package:redux/redux.dart';
 import 'package:value_t_annotation/value_t_annotation.dart';
 
 part 'ValueT_FbLoadTypeDef.g.dart';

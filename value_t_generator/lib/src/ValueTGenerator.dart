@@ -135,6 +135,7 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
         ),
         createSubListProperties(
             null, interfaceType.accessors.toList(), List<Property>()),
+        interfaceType.typeParameters.map((x) => x.toString()).toList(),
         interfaceType.name);
   }
 
@@ -151,11 +152,9 @@ Future<Interface> createInterface(InterfaceType interfaceType) async {
             .map((x) async => await createInterface(x))
             .toList(),
       ),
-      createSubListProperties(
-          // interfaceType.metadata, TODO:??
-          null,
-          interfaceType.accessors.toList() + accessors2,
-          List<Property>()),
+      createSubListProperties(null,
+          interfaceType.accessors.toList() + accessors2, List<Property>()),
+      interfaceType.typeParameters.map((x) => x.toString()).toList(),
       interfaceType.name);
 }
 
