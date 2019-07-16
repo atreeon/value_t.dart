@@ -6,11 +6,13 @@ part of 'Marking_ValueT_implements.dart';
 // ValueTGenerator
 // **************************************************************************
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class MarkingCorrectNoWord extends $MarkingCorrectNoWord
     implements Marking, IsCorrect {
   const MarkingCorrectNoWord();
 }
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class MarkingCorrect extends $MarkingCorrect
     implements Marking, HasWord, IsCorrect {
   final String word;
@@ -27,6 +29,7 @@ class MarkingCorrect extends $MarkingCorrect
   String toString() => "|word:" + word.toString();
 }
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   final String answer;
   final List<String> infoMessages;

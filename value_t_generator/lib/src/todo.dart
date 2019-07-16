@@ -14,9 +14,5 @@ TODO:
     or some combination of that logic.  Named parameters are a bit verbose
     and often not necessary (can always name my variables a bit better
     if I want additional clarity)
-* to avoid vm.copyWith(person: vm.copyWith(pet: vm.person.pet.copyWith(type: Mitzy)))
-    we could combine the next three levels all into the copywith, this would
-    be a great help and really reduce code for my vms.
-    See my pairs view model for a good idea of the problem 
 */
 }

@@ -364,14 +364,14 @@ packages:
       path: "../value_t_annotation"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.4.0"
   value_t_generator:
     dependency: "direct dev"
     description:
       path: "../value_t_generator"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.4.0"
   watcher:
     dependency: transitive
     description:
@@ -394,4 +394,4 @@ packages:
     source: hosted
     version: "2.1.15"
 sdks:
-  dart: ">=2.2.0 <3.0.0"
+  dart: ">=2.3.0 <3.0.0"

@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:value_t_generator/src/ElementForValueT.dart';
 import 'package:value_t_generator/src/genValueT/distinctFields.dart';
 import 'package:value_t_generator/src/genValueT/getPropertiesOneLevel.dart';
@@ -57,6 +56,7 @@ String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
 
     // yield () => "//" + fields.map((x) => x.extra).join("|");
     // yield () => "/*";
+    yield() => "//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work";
     yield () => classDefinition(isAbstract, className, generics);
     yield () => extendsAndInterfaces(className, superTypeName, interfaceNames);
     yield () => "{";

@@ -6,6 +6,7 @@ part of 'ValueT_Pets.dart';
 // ValueTGenerator
 // **************************************************************************
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class Pet extends $Pet {
   final String type;
   const Pet({

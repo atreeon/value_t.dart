@@ -1,11 +1,11 @@
 name: value_t_generator
 description: Generates code to create a value type including a copyWith method and handles extended and interfaces and their heirarchies
-version: 0.4.0
+version: 0.5.0
 author: Adriaaan Hill <gu64rk@gmail.com>
 homepage: https://github.com/twistedinferno/value_t.dart
 
 environment:  
-  sdk: ">=2.0.0 <3.0.0" 
+  sdk: ">=2.3.0 <3.0.0" 
 
 dependencies:  
   build: ^1.1.1

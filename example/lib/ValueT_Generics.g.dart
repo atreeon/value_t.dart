@@ -6,6 +6,7 @@ part of 'ValueT_Generics.dart';
 // ValueTGenerator
 // **************************************************************************
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class PetShop extends $PetShop {
   final PetDepartment<Dog, String> dogs;
   final List<Dog> otherDogs;
@@ -27,6 +28,7 @@ class PetShop extends $PetShop {
       "|dogs:" + dogs.toString() + "|otherDogs:" + otherDogs.toString();
 }
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class PetDepartment<T1 extends $Pet, T2> extends $PetDepartment {
   final List<T2> Function(List<dynamic>) loadFn;
   final List<T2> pets;
@@ -57,6 +59,7 @@ class PetDepartment<T1 extends $Pet, T2> extends $PetDepartment {
       somethingElse.toString();
 }
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class CatOwner extends $CatOwner {
   final Cat cat;
   const CatOwner({
@@ -72,6 +75,7 @@ class CatOwner extends $CatOwner {
   String toString() => "|cat:" + cat.toString();
 }
 
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
 class Pet extends $Pet {
   final String name;
   const Pet({
@@ -87,7 +91,8 @@ class Pet extends $Pet {
   String toString() => "|name:" + name.toString();
 }
 
-class Cat extends $Cat implements Pet  {
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+class Cat extends $Cat implements Pet {
   final String name;
   const Cat({
     @required this.name,
@@ -102,7 +107,8 @@ class Cat extends $Cat implements Pet  {
   String toString() => "|name:" + name.toString();
 }
 
-class Dog extends Pet {
+//4 rules: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work
+class Dog extends $Dog implements Pet {
   final String name;
   const Dog({
     @required this.name,

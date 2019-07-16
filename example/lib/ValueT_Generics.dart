@@ -36,12 +36,14 @@ abstract class $Pet {
 }
 
 @ValueT()
-abstract class $Cat extends $Pet {
+abstract class $Cat implements $Pet {
   String noise() => "meow";
   const $Cat();
 }
 
 @ValueT()
-abstract class $Dog extends $Pet {
-  String noise() => "meow";
+abstract class $Dog implements $Pet {
+  String noise() => "woof";
+  const $Dog();
 }
+
