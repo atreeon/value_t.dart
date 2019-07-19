@@ -6,7 +6,7 @@ part of 'ValueT_SubTypes.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class Person extends $Person {
   final String name;
   final Pet pet;
@@ -45,7 +45,7 @@ class Person extends $Person {
   String toString() => "|name:" + name.toString() + "|pet:" + pet.toString();
 }
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class Pet extends $Pet {
   final Collar collar;
   final String colour;
@@ -84,7 +84,7 @@ class Pet extends $Pet {
       type.toString();
 }
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 abstract class Accessory extends $Accessory {
   String get id;
   const Accessory();
@@ -93,7 +93,7 @@ abstract class Accessory extends $Accessory {
   });
 }
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class Collar extends $Collar implements Accessory {
   final String id;
   final String size;

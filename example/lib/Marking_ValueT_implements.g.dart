@@ -6,13 +6,13 @@ part of 'Marking_ValueT_implements.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class MarkingCorrectNoWord extends $MarkingCorrectNoWord
     implements Marking, IsCorrect {
   const MarkingCorrectNoWord();
 }
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class MarkingCorrect extends $MarkingCorrect
     implements Marking, HasWord, IsCorrect {
   final String word;
@@ -29,7 +29,7 @@ class MarkingCorrect extends $MarkingCorrect
   String toString() => "|word:" + word.toString();
 }
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class MarkingIncorrect extends $MarkingIncorrect implements Marking, HasWord {
   final String answer;
   final List<String> infoMessages;

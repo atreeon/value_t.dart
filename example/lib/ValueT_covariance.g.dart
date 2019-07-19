@@ -6,7 +6,7 @@ part of 'ValueT_covariance.dart';
 // ValueTGenerator
 // **************************************************************************
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class Pet<T> extends $Pet<T> {
   final T name;
   const Pet({
@@ -22,7 +22,7 @@ class Pet<T> extends $Pet<T> {
   String toString() => "|name:" + name.toString();
 }
 
-//6 points: abstract all classes | implements not extends | empty constant constructor | Generated classes as generics do not work | functions not included in copywith | fields should be getters
+//5 points: abstract all classes | implements not extends | empty constant constructor | functions not included in copywith | fields should be getters
 class Dog<T> extends $Dog<T> implements Pet<T> {
   final T name;
   const Dog({

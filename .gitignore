@@ -4,6 +4,7 @@
 .pub/
 build/
 pubspec.lock  # Except for application packages
+*.g.dart
 # API documentation directory created by dartdoc
 doc/api/
 # files and directories created by other development environments

@@ -6,6 +6,7 @@ environment:
 dependencies: 
   value_t_annotation: #^0.1.0
     path: ../value_t_annotation
+  redux: ^3.0.0
       
 dev_dependencies:
   build_runner: ^1.2.8
