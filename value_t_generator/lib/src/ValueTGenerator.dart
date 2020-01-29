@@ -19,17 +19,11 @@ Future<CompilationUnit> getUnit(Element accessor) => accessor.session
       return declaration.resolvedUnit.unit;
     });
 
-//TODONOW:
-//Find out where the constructor information is held
-
 ///Where we have a Pet object inside a Person object.  This will retrieve all the
 /// accessors from inside the Pet object so we can use them in the CopyWith object
 List<Property> createSubListProperties(List<ElementAnnotation> metadata,
     List<PropertyAccessorElement> accessors, List<Property> properties) {
   accessors.where((x) => x.isGetter).forEach((x) {
-    //how do I get the somethingElse property here!!!
-    //how can I view this part of the code (print?)
-
     if (x.returnType.element is TypeParameterElement) {
       if (x.returnType != "Object") {
         properties.add(Property(
@@ -39,7 +33,6 @@ List<Property> createSubListProperties(List<ElementAnnotation> metadata,
     } else if (x.returnType.element is ClassElement) {
       var element = x.returnType.element as ClassElement;
 
-      //is this a ValueT generated class?
       if (metadata != null &&
           metadata.length > 0 &&
           metadata.first.toSource().indexOf(x.name) > 0) {
@@ -69,7 +62,7 @@ List<Property> createSubListProperties(List<ElementAnnotation> metadata,
 
 Future<List<ElementAccessor>> createAccessors(
     List<PropertyAccessorElement> accessors) async {
-  var blah = accessors.where((x) => x.isGetter).map((x) async {
+  var elementAccessors = accessors.where((x) => x.isGetter).map((x) async {
     var unit = await getUnit(x);
 
     return ElementAccessor(x.name, x.returnType.toString(),
@@ -86,7 +79,7 @@ Future<List<ElementAccessor>> createAccessors(
             : "//${x.name} - NOT a");
   }).toList();
 
-  return Future.wait(blah);
+  return Future.wait(elementAccessors);
 }
 
 Future<ElementSuperType> createElementSuperType(
@@ -105,7 +98,7 @@ Future<ElementSuperType> createElementSuperType(
         null);
   }
 
-  var accessors2 = classElement.allSupertypes
+  var thisClassesAccessors = classElement.allSupertypes
       .where((a2) => a2.name != "Object")
       .expand((a2) => a2.accessors)
       .toList();
@@ -119,7 +112,7 @@ Future<ElementSuperType> createElementSuperType(
             .toList(),
       ),
       createSubListProperties(classElement.metadata,
-          classElement.accessors.toList() + accessors2, List<Property>()),
+          classElement.accessors.toList() + thisClassesAccessors, List<Property>()),
       classElement.supertype?.name ?? "");
 }
 

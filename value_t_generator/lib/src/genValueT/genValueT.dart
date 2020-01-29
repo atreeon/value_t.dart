@@ -8,6 +8,8 @@ import 'package:value_t_generator/src/genValueT/getPropertiesOneLevel.dart';
 List<Property> combineProperties(ElementSuperType element) {
   var list = List<Property>();
 
+//here I need to get the element.properties of my sub sub class
+
   list.addAll(element.properties);
   list.addAll(getInterfaceProperties(element));
 
@@ -49,6 +51,8 @@ String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
   var interfaceNames = formatInterfaces(element.interfaces);
 
   var properties = combineProperties(element);
+
+
   // sb.writeln("//" + (superTypeName ?? "null"));
   // sb.writeln("//" + (interfaceNames?.toString() ?? "null"));
   // sb.writeln("//" + (properties.toString()));
@@ -61,7 +65,13 @@ String genValueT(bool isAbstract, ElementSuperType element, String extendsClass,
   var className = extendsClass.substring(1);
 
   List.unmodifiable(() sync* {
-    // yield () => "//" + element.properties.map((x) => x.name.toString()).toList().toString(); //keep me
+    // if(element.elementSuperType != null){
+    //     yield () => "//has supertype";
+    // }    
+    // if(element.elementSuperType != null){
+    //     yield () => "//y" + element.elementSuperType.properties.map((x) => x.name.toString()).toList().toString(); //keep me
+    // }
+    // yield () => "//x" + element.properties.map((x) => x.name.toString()).toList().toString(); //keep me
     // yield () => "//" + element.elementAccessors.map((x) => x.name.toString()).toList().toString(); //keep me
     // yield () => "//" + element.interfaces.map((x) => x.name.toString()).toList().toString(); //keep me
     // yield () => "//" + fields.map((x) => x.extra).join("|");
